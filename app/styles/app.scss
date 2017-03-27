@@ -59,7 +59,7 @@ html, body {
 
 .sidebar-tab {
   position: absolute;
-  left:-15px;
+  left:0px;
   z-index: 500;
   top:49%;
 }
@@ -125,7 +125,7 @@ main {
 }
 
 .cities-map {
-  height: 85%;
+  height: 93%;
   width: 100%;
   margin: 0;
   position: relative;

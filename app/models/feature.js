@@ -2,14 +2,18 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import { faker } from 'ember-cli-mirage';
 import moment from 'moment';
+import config from '../config/environment';
 
 export default DS.Model.extend({
+  feature_name: DS.attr("string"),
   name: DS.attr("string"),
+  project: DS.attr("string"),
   address: DS.attr("string"),
   contact: DS.attr("string"),
   employer: DS.attr("boolean"),
   activating: DS.attr("boolean"),
   assetType: DS.attr("string"),
+  feature_type: DS.attr("string", { defaultValue: '' }),
   subtype: DS.attr("string"),
   comment: DS.attr("string"),
   opendate: DS.attr("date"),
@@ -18,6 +22,11 @@ export default DS.Model.extend({
     let { latitude, longitude } = this.getProperties('latitude','longitude');
     return `https://maps.googleapis.com/maps/api/streetview?size=450x450&location=${latitude},${longitude}&key=AIzaSyCO654zBIabvjSOV4Ys59Pku8pmzM387ps`;
   }),
+  iconUrl: Ember.computed('feature_type', function() {
+    let featureType = this.get('feature_type').dasherize().replace('/','');
+    return `${config.prepend ? config.prepend : '/'}images/icons/features/${featureType}.png`;
+  }),
+
   isOpen: Ember.computed('closedate', function() {
     let closedate = this.get('closedate');
     if (!closedate) return true;
@@ -53,8 +62,8 @@ export default DS.Model.extend({
   non_addressy_location: DS.attr('string'),
   is_employer: DS.attr('boolean'),
   is_street_activating: DS.attr('boolean'),
-  is_tdi_assett: DS.attr('boolean'),
-  open_or_closed: DS.attr(),
+  is_tdi_asset: DS.attr('boolean'),
+  open_or_closed: DS.attr('timeline'),
   featured_photo: DS.attr('string'),
   pub_docs: DS.attr('string'),
   priv_docs: DS.attr('string'),
@@ -98,11 +107,13 @@ export default DS.Model.extend({
   isSelected: false
 });
 
-export const FEATURE_PARAMS = ['assetTypes', 'activating', 'featureOpen', 'employer','fake_open_or_closed'];
-export const FEATURE_TYPES  = ['Food','Business','Retail','Community','Cultural & Entertainment','Health Care','Government','Temporary','Park / Open Space','Parking','Public Transit'];
+
+
+export const FEATURE_PARAMS = ['assetTypes', 'activating', 'featureOpen', 'employer','fake_open_or_closed','is_employer','is_street_activating','is_tdi_asset','is_feature_owner_engaged','is_collision_point'];
+export const FEATURE_TYPES  = ['Food','Business','Retail','Community','Cultural & Entertainment','Health Care','Eductation','Government','Temporary','Park / Open Space','Parking','Public Transit','Collision Point'];
 export const FEATURE_FILTERS_CONFIG = [
       { 
-        property: 'assetType',
+        property: 'feature_type',
         filter: 'assetTypesArray',
         filterType: 'isAny'
       },
@@ -114,6 +125,31 @@ export const FEATURE_FILTERS_CONFIG = [
       {
         property: 'isOpen',
         filter: 'featureOpen',
+        filterType: 'isTrue'
+      },
+      {
+        property: 'is_employer',
+        filter: 'is_employer',
+        filterType: 'isTrue'
+      },
+      {
+        property: 'is_street_activating',
+        filter: 'is_street_activating',
+        filterType: 'isTrue'
+      },
+      {
+        property: 'is_tdi_asset',
+        filter: 'is_tdi_asset',
+        filterType: 'isTrue'
+      },
+      {
+        property: 'is_feature_owner_engaged',
+        filter: 'is_feature_owner_engaged',
+        filterType: 'isTrue'
+      },
+      {
+        property: 'is_collision_point',
+        filter: 'is_collision_point',
         filterType: 'isTrue'
       },
       {

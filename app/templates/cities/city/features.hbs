@@ -2,14 +2,14 @@
   <h2 class="ui header">
     <img class="ui circular image" style="min-height: 60px;" src={{model.splash}}/>
     <div class="content">
-      {{model.name}}
-      <div class="sub header">{{model.assetType}}</div>
+      {{model.feature_name}}
+      <div class="sub header">{{model.feature_type}}</div>
     </div>
   </h2>
 
   <div class="ui green segment">
     <strong>
-      Want to learn more about {{if model.name model.name 'this place'}}? 
+      Want to learn more about {{if model.feature_name model.feature_name 'this place'}}? 
     </strong>
     {{#if model.cta_contact}}
       Contact {{model.cta_contact}}.
@@ -23,7 +23,7 @@
 
   {{enumerate-properties 
     model=model
-    properties=(array 'name' 'address' 'contact' 'employer' 'activating' 'assetType' 'subtype' 'comment' 'opendate' 'closedate')}}
+    properties=(array 'address'  'non_addressy_location'  'feature_type'  'feature_subtype'  'is_employer'  'is_street_activating'   'featured_photo'  'pub_docs'  'priv_docs'  'related_link_title'  'related_link_url'  'related_features'  'related_investments'  'relation_notes'  'pub_notes'  'cta_text'  'cta_contact'  'pub_contact_1'  'pub_contact_org_1'  'pub_contact_role_1'  'pub_contact_phone_1'  'pub_contact_email_1'  'pub_contact_website_1'  'pub_contact_2'  'pub_contact_org_2'  'pub_contact_role_2'  'pub_contact_phone_2'  'pub_contact_email_2'  'pub_contact_website_2'  'is_collision_point' 'open_or_closed')}}
 
   <h3>Related</h3>
   {{tabbed-results  visibleInvestments  = model.investments

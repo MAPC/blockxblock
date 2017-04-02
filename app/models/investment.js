@@ -1,4 +1,7 @@
 import DS from 'ember-data';
+import moment from 'moment';
+import getLatest from '../utils/get-latest';
+import config from '../config/environment';
 
 export default DS.Model.extend({
   name: DS.attr("string"),
@@ -11,12 +14,17 @@ export default DS.Model.extend({
   value: DS.attr("number"),
   type: DS.attr("string"),
 
+  iconUrl: Ember.computed('source_type', 'investment_type', function() {
+    let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
+    return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.decamelize()}.png`;
+  }),
+
   project: DS.attr('string'),
-  is_addressy: DS.attr('boolean'),
+  is_addressy: DS.attr('boolean', { defaultValue: true }),
   non_addressy_location: DS.attr('string'),
-  source_type: DS.attr('string'),
+  source_type: DS.attr('string', { defaultValue: '' }),
   is_tdi_influenced: DS.attr('boolean'),
-  investment_type: DS.attr('string'),
+  investment_type: DS.attr('string', { defaultValue: '' }),
   product_massdev: DS.attr('string'),
   product_public: DS.attr('string'),
   product_private: DS.attr('string'),
@@ -25,7 +33,10 @@ export default DS.Model.extend({
   is_amount_public: DS.attr('boolean'),
   amount_exact: DS.attr('number'),
   amount_estimated: DS.attr('string'),
-  investment_status: DS.attr(),
+  investment_status: DS.attr('timeline'),
+  investment_status_latest: Ember.computed('investment_status', function() {
+    return getLatest('investment_status', this);
+  }),
   is_close_date_approx: DS.attr('boolean'),
   featured_photo: DS.attr('string'),
   pub_docs: DS.attr('string'),
@@ -56,6 +67,10 @@ export default DS.Model.extend({
   pub_contact_email_2: DS.attr('string'),
   pub_contact_website_2: DS.attr('string'),
 
+  relatedInvestments: DS.hasMany('investment', { inverse: 'relatedInvestment' }),
+  relatedInvestment: DS.belongsTo('investment', { inverse: 'relatedInvestments' }),
+  feature: DS.hasMany('feature'),
+
   fake_open_or_closed: Ember.computed(function() {
     let number = 5;
     let array = [];
@@ -83,22 +98,34 @@ export default DS.Model.extend({
   isSelected: false
 });
 
-export const INVESTMENT_PARAMS = ['investmentTypes', 'valueMin', 'valueMax'];
-export const INVESTMENT_TYPES  = ['MassDev Direct','State Direct (non-MassDev)','Other Public Agency','Private','Public-Private'];
+export const INVESTMENT_PARAMS = ['investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources','investments_fake_open_or_closed'];
+export const INVESTMENT_TYPES  = ['Infrastructure','Finance','Assistance','Placemaking'];
+export const INVESTMENT_STATUSES  = ['Proposed','In Progress','Completed'];
+export const INVESTMENT_SOURCES = ['MassDevelopment','Public','Private'];
 export const INVESTMENT_FILTERS_CONFIG = [
       { 
-        property: 'type',
+        property: 'investment_type',
         filter: 'investmentTypesArray',
         filterType: 'isAny'
       },
+      {
+        property: 'investment_status_latest',
+        filter: 'investmentStatusesArray',
+        filterType: 'isAny'
+      },
       { 
-        property: 'amount_exact',
+        property: 'source_type',
+        filter: 'investmentSourcesArray',
+        filterType: 'isAny'
+      },
+      { 
+        property: 'amount_estimated',
         filter: ['valueMin', 'valueMax'],
         filterType: 'isWithin'
       },
       {
         property: 'fake_open_or_closed',
-        filter: 'fake_open_or_closed',
+        filter: 'investments_fake_open_or_closed',
         filterType: 'isLongitudinal'
       }
     ];

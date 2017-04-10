@@ -7,6 +7,7 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     fingerprint: {
       prepend: config.prepend,
+      enabled: false,
       exclude: [
         'images/layers-2x.png',
         'images/layers.png',

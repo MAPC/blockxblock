@@ -4,7 +4,7 @@
 
   <div class="ui labels">
     <a class="ui {{if cc.showFeatures 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.showFeatures) (not cc.showFeatures)}}>
-      Features
+      Places
     </a>
     <a class="ui {{if cc.showInvestments 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.showInvestments) (not cc.showInvestments)}}>
       Investments
@@ -27,11 +27,11 @@
     {{#if cc.showFeatures}}
       <div class="tdi-semi-bold title">
         <i class="dropdown icon"></i>
-        Features Filters
+        Places Filters
       </div>
       <div class="content">
         <div class="ui basic segment">
-          <h4 class="ui header">Feature Status</h4>
+          <h4 class="ui header">Place Status</h4>
           <div class="ui labels">
              <a class="ui {{if cc.is_employer 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_employer) (not cc.is_employer)}}>Is Employer</a> 
              <a class="ui {{if cc.is_street_activating 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_street_activating) (not cc.is_street_activating)}}>Is Street Activating</a> 
@@ -42,7 +42,7 @@
         </div>
         <div class="ui basic segment">
           <h4 class="ui header">
-            Feature Types
+            Place Types
           </h4>
           <div class="ui equal width grid">
             {{#each (chunk 7 cc.assetTypeOptions) as |group|}}

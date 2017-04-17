@@ -6,7 +6,7 @@
       <div class="menu">
         {{#link-to 'cities.city.new-feature' class='item'}}
           <i class="add circle icon"></i>
-          Add Feature
+          Add Place
         {{/link-to}}
 
         {{#link-to 'cities.city.new-investment' class='item'}}
@@ -27,7 +27,7 @@
                         sortBy='title'
                         on-change=(action 'transitionTo')
                         cache=false
-                        prompt='Search Features / Investments'
+                        prompt='Search Places / Investments'
                         class='item'}}
   {{/if}}
 {{/ember-wormhole}}

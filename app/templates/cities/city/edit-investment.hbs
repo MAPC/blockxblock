@@ -155,7 +155,7 @@
         </div>
 
         <div class="ui dividing header">
-          Related Features and Investments
+          Related Places and Investments
         </div>
 
         {{select-association 
@@ -225,16 +225,16 @@
         {{/liquid-if}}
 
         <div class="ui dividing header">
-          Call to Action
+          How To Get Involved
         </div>
 
         <div class="field">
-          <label>Write new Call to Action text if you wish to override the default text for this feature.</label>
+          <label>Write new "How To Get Involved" text if you wish to override the default text for this feature.</label>
           {{input type='text' name='name' value=model.cta_text}}
         </div>
 
         <div class="field">
-          <label>Select the contact revealed when a user clicks this feature's Call to Action button.</label>
+          <label>Select the contact revealed when a user clicks this feature's "How To Get Involved" button.</label>
           {{#ui-dropdown class="selection" selected=model.cta_contact onChange=(action (mut model.cta_contact))}}
             <div class="default text" data-value="">Select One</div>
             <i class="dropdown icon"></i>

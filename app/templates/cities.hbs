@@ -57,13 +57,13 @@
           {{#if showInvestments}}
             {{#each visibleInvestments as |investment|}}
               {{#if (and investment.latitude investment.id)}}
-                {{#map-popup lat=feature.latitude lng=feature.longitude as |popup|}}
+                {{#map-popup lat=investment.latitude lng=investment.longitude as |popup|}}
                   <img class="ui small image" style="max-height:300px;" src={{investment.featured_photo}}/>
                   <strong>{{investment.project}}</strong>
                     {{marker-layer  
                         lat=investment.latitude 
                         lng=investment.longitude 
-                        icon=(icon iconUrl=investment.iconUrl iconSize=(array 41 41))
+                        icon=(icon iconUrl=investment.iconUrl iconSize=(if investment.isSelected (array 61 61) (array 41 41)))
                         onClick=(action 'linkTo' 'cities.city.investments' investment)
                         onMouseover=(action popup.onMouseover)
                         onMouseout=(action popup.onMouseout)}}
@@ -83,7 +83,7 @@
                   <strong>{{feature.feature_name}}</strong>
                   {{#marker-layer lat=feature.latitude 
                                   lng=feature.longitude 
-                                  icon=(icon iconUrl=feature.iconUrl iconSize=(array 25 41))
+                                  icon=(icon iconUrl=feature.iconUrl iconSize=(if feature.isSelected (array 40 65.6) (array 25 41)))
                                   onClick=(action 'linkTo' 'cities.city.features' feature)
                                   onMouseover=(action popup.onMouseover)
                                   onMouseout=(action popup.onMouseout)

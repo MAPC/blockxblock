@@ -111,11 +111,12 @@
 
 
       {{/leaflet-map}}
-      <div class="ui links fluid menu">
+      {{over-time-chart dates=featuresOpenDates selection=fake_open_or_closed}}
+{{!--       <div class="ui links fluid menu">
         {{#each featuresOpenDates as |date|}}
           <a class="item {{if (eq fake_open_or_closed date.date) 'active'}}" onclick={{action 'updateDate' date.date}}>{{date.alias}}</a>
         {{/each}}
-      </div>
+      </div> --}}
 {{!--       {{(group-by (map-by featuresOpenDates 'key') '')}}
       {{over-time-chart dates=featuresOpenDates selection=fake_open_or_closed}} --}}
     </div>

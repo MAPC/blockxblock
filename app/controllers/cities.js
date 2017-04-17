@@ -53,40 +53,35 @@ export default Ember.Controller.extend({
     let dates = Ember.A();
     this.get('currentCity.city.features').forEach((feature) => { dates.pushObjects(feature.get('datesOpen')); });
     this.get('currentCity.city.investments').forEach((investment) => { dates.pushObjects(investment.get('datesOpen')); });
-    dates = dates.sortBy(function(o){ return new Date( o.date ) }).mapBy('date');
-    let min = dates[0];
-    let max = dates[dates.length-1];
 
-    return monthsBetween(min, max, 'MMM \'YY');
+    let grouped = nest()
+                .key((d) => { return d.date })
+                .key((d) => { return d.type })
+                .rollup((d) => { return d.length; })
+                // .key((d) => { return d.key })
+                .entries(dates)
+                .sortBy((el) => { return el.key; });
 
-    // let grouped = nest()
-    //             .key((d) => { return d.date })
-    //             .key((d) => { return d.type })
-    //             .rollup((d) => { return d.length; })
-    //             // .key((d) => { return d.key })
-    //             .entries(dates)
-    //             .sortBy((el) => { return el.key; });
+    grouped = grouped.map((el) => { 
+      let date = new Date(el.key);
+      let obj = { key: `${date.getFullYear()}-${date.getMonth()}-01` };
+      let type1 = el.values[0];
+      let type2 = el.values[1];
 
-    // grouped = grouped.map((el) => { 
-    //   let date = new Date(el.key);
-    //   let obj = { key: `${date.getFullYear()}-${date.getMonth()}-01` };
-    //   let type1 = el.values[0];
-    //   let type2 = el.values[1];
+      if(type1) {
+        obj[type1.key] = type1.value;
+      }
 
-    //   if(type1) {
-    //     obj[type1.key] = type1.value;
-    //   }
-
-    //   if(type2) {
-    //     obj[type2.key] = type2.value;
-    //   }
+      if(type2) {
+        obj[type2.key] = type2.value;
+      }
       
-    //   return obj;
-    // });
+      return obj;
+    });
 
-    // console.log(grouped);
+    console.log(grouped);
 
-    
+    return grouped;
   }),
 
   // investments

@@ -120,7 +120,6 @@ export default Ember.Controller.extend({
   showInvestments: false,
   showFeatures: false,
   showParcels: false,
-  basemap: 'default',
 
   choroplethLayer: 'forSaleLease',
   parcelsChoroplethMapping: Ember.computed('visibleParcels', 'choroplethLayer', function() {
@@ -159,40 +158,9 @@ export default Ember.Controller.extend({
 
 
   actions: {
-    // loadVisibleParcels() {
-    //   let filterParcelsTask = this.get('filterParcelsTask');
-    //   filterParcelsTask.perform();
-    // },
-
-    // in cities template:
-    // {{#if filterParcelsTask.isRunning}}
-    //   loading
-    // {{else}}
-    //    render map stuff
-    // {{/if}}
-
     selectCity(city) {
       let id = city.get('id');
       this.transitionToRoute('cities.city.city-filters', id);
-    },
-    initMap(event) {
-      let map = event.target;
-      let currentCity = this.get('currentCity');
-      this.set('mapInstance', map);
-
-      map.zoomControl.setPosition('topright');
-
-      map.createPane('points');
-      map.getPane('points').style.zIndex = 325;
-
-      map.createPane('extrusions');
-      map.getPane('extrusions').style.zIndex = 950;
-      map.getPane('extrusions').style.pointerEvents = 'none';
-
-      map.createPane('parcels');
-      map.getPane('parcels').style.zIndex = 375;
-
-      currentCity.set('mapInstance', map);
     },
     composeList(option, optionsList) {
       let list = this.get(optionsList).split('|');
@@ -212,7 +180,6 @@ export default Ember.Controller.extend({
       this.set('currentFeature', feature);
     },
     linkTo(route, model) {
-      console.log(model.get('id'));
       this.transitionToRoute(route, model);
     },
     changeProperty(key, value) {
@@ -238,38 +205,6 @@ export default Ember.Controller.extend({
         ;
       });
 
-    },
-    updateNewPoint(map) {
-      let currentCity = this.get('currentCity');
-      let center = map.target.getCenter();
-
-      Ember.run.next(this, () => {
-        currentCity.setProperties({
-          'newPointLatitude': center.lat,
-          'newPointLongitude': center.lng 
-        });
-      });
-    },
-    currentMapState(map) {
-      let center = map.target.getCenter();
-      let zoom = map.target.getZoom();
-      let layerPoint = map.target.project(center).divideBy(256).floor();
-      let currentCity = this.get('currentCity');
-
-      Ember.run.next(this, () => {
-        this.setProperties({
-          layerPointx: layerPoint.x,
-          layerPointy: layerPoint.y,
-          layerPointz: zoom
-        });
-
-        currentCity.setProperties({
-          'selectedPointLatitude': currentCity.newPointLatitude,
-          'selectedPointLongitude': currentCity.newPointLongitude 
-        });
-      });
-    },
-    zoomChanged(map) {
     },
     updateDate(date){
       this.set('fake_open_or_closed', new Date(date));

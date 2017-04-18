@@ -1,0 +1,30 @@
+<div class="ui horizontal list basemap-menu">
+  <div class="item has-pointer" onclick={{action (mut basemap) 'default'}}>
+    <img src="http://c.basemaps.cartocdn.com/light_all/{{layerPointz}}/{{layerPointx}}/{{layerPointy}}.png" class="ui mini circular bordered image"/>
+    <div class="content">
+      <div class="header">Default</div>
+    </div>
+  </div>
+  <div class="item has-pointer" onclick={{action (mut basemap) 'satellite'}}>
+    <img src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{{layerPointz}}/{{layerPointy}}/{{layerPointx}}" class="ui mini circular bordered image"/>
+    <div class="content">
+      <div class="header">Satellite</div>
+    </div>
+  </div>
+</div>
+
+{{#leaflet-map  onMove    = (action 'updateNewPoint'  ) 
+                onMoveend = (action 'currentMapState' ) 
+                onLoad    = (action 'initMap'         ) 
+                zoom      = zoom 
+                lat       = lat
+                lng       = lng
+                maxZoom   = 22 }}
+  {{#if (eq basemap 'default')}}
+    {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+  {{/if}}
+  {{#if (eq basemap 'satellite')}}
+    {{tile-layer url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'}}
+  {{/if}}
+  {{yield}}
+{{/leaflet-map}}

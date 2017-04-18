@@ -9,7 +9,7 @@ export default DS.Model.extend({
   landUseType: DS.attr('string'),
   yearBuilt: DS.attr('date'),
   // forLease: DS.attr('boolean'),
-  vacancy: DS.attr('number'),
+  vacancy: DS.attr('boolean'),
   ground_floor_vacancy: DS.attr('string'),
   upper_floor_vacancy: DS.attr('string'),
   marked: DS.attr('boolean'),

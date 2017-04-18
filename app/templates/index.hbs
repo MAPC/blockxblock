@@ -14,3 +14,36 @@
 <div class="ui container">
   {{cities-grid cities=(sort-by 'name' model)}}
 </div>
+
+<br/>
+
+{{#leaflet-map  lat               = 42.33 
+                lng               = -71.922 
+                zoom              = 9 
+                scrollWheelZoom   = false
+                doubleClickZoom   = false
+                dragging          = false
+                class             = 'statewide-view'}}
+  {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+  {{#each model as |city|}}
+    {{marker-layer  lat=city.latitude 
+                    lng=city.longitude 
+                    onClick=(action 'linkTo' 'cities.city.city-filters' city.id)
+                    icon= (icon iconUrl = (concat 'images/icons/cities/' city.name '.png')) }}
+  {{/each}}
+{{/leaflet-map}}
+
+<div class="ui basic center aligned segment">
+  <h1 class="ui splash header">
+    <div class="content">
+      Block x Block
+      <div class="sub header">Mapping the place-based economic development activity enabled by the 
+        <a href="http://www.massdevelopment.com/what-we-offer/key-initiatives/gateway-cities/" target="_blank">
+          <h3 class="ui splash semi-bold header">Transformation Development Initiative</h3>
+        </a>
+      </div>
+    </div>
+  </h1>
+</div>
+
+<br/><br/><br/>

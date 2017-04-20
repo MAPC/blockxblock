@@ -4,7 +4,6 @@ const MONTHS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
 export default Ember.Component.extend({
   setupSnapshots: function() {
     let snapshots = this.get('snapshots');
-    console.log(snapshots);
     if(!snapshots) {
       this.set('snapshots', Em.A([]));
     }

@@ -115,6 +115,10 @@ main {
   position: relative;
 }
 
+.regionX {
+  visibility: hidden;
+}
+
 .list-results {
   height: 100%;
   overflow: scroll;
@@ -132,7 +136,7 @@ main {
 }
 
 .cities-map {
-  height: 90%;
+  height: 83%;
   width: 100%;
   margin: 0;
   position: relative;
@@ -269,4 +273,13 @@ main {
     border-radius: 0;
     border-width: 0;
   }
+}
+
+.c3-grid line {
+  stroke: black;
+  stroke-width: 2px;
+}
+
+.c3-xgrid-line text {
+  fill: black;
 }

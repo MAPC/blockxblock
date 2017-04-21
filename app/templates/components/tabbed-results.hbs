@@ -1,17 +1,20 @@
 <div class="tabbed-results">
   <div class="ui pointing secondary tabular menu">
-    <a class="item active" data-tab="features">Places</a>
-    <a class="item" data-tab="investments">Investments</a>
+    <a class="item active" data-tab="features">Places and Investments</a>
+    <a class="item" data-tab="parcels">Available Spaces</a>
   </div>
   <div class="ui tab active" data-tab="features">
     <div class="ui two column stackable grid cards">
-      {{#each (sort-by "name" visibleFeatures) as |feature|}}
+      {{#each (sort-by "name" (shuffle (union visibleFeatures visibleInvestments))) as |card|}}
         <div class="column">
-          {{#tdi-card route='cities.city.features' 
-                      modelContext=feature 
-                      image=feature.splash
+          {{#tdi-card modelContext=card 
+                      image=(or card.splash card.iconUrl)
                       height=150}}
-            {{feature.feature_name}}
+            {{#if card.feature_name}}
+              {{card.feature_name}}
+            {{else}}
+              ${{number-format card.amount_estimated decimals=0}} - {{card.project}}
+            {{/if}}
           {{/tdi-card}}
         </div>
       {{else}}
@@ -21,51 +24,22 @@
       {{/each}}
     </div>
   </div>
-  <div class="ui tab" data-tab="investments">
+  <div class="ui tab" data-tab="parcels">
     <div class="ui two column grid cards">
-      {{#each (sort-by "value:desc" "project" visibleInvestments) as |investment|}}
+      {{#each (union (filter-by 'latest_is_for_sale' true visibleParcels) (filter-by 'latest_is_for_lease' true visibleParcels)) as |parcel|}}
         <div class="column">
-          {{#tdi-card route='cities.city.investments' 
-                      modelContext=investment 
-                      image=investment.iconUrl
+          {{#tdi-card route='cities.city.parcels' 
+                      modelContext=parcel 
+                      image=parcel.splash
                       height=100}}
-            ${{number-format investment.amount_estimated decimals=0}} - {{investment.project}}
+            {{parcel.address}}
           {{/tdi-card}}
         </div>
-{{!--         {{#link-to 'cities.city.investments' investment class="column"}}
-          <div class="ui fluid card">
-            <div class="content">
-              <div class="header">${{number-format investment.value decimals=0}}</div>
-              <div class="meta">
-                <a>{{investment.type}}</a>
-              </div>
-              <div class="description">
-                {{investment.project}}
-              </div>
-            </div>
-            <div class="extra content">
-              <span class="right floated">
-                Opened
-              </span>
-              <span>
-                <i class="user icon"></i>
-                {{investment.activating}}
-              </span>
-            </div>
-            {{#ui-progress value=investment.value total=maxInvestments class="ui bottom attached progress"}}
-              <div class="bar"></div>
-            {{/ui-progress}}
-          </div>
-        {{/link-to}} --}}
       {{else}}
         <h3 style="margin: 0 auto; color: rgba(0,0,0,0.44);">
           No Results
         </h3>
       {{/each}}
     </div>
-  </div>
-  <div class="ui tab segment" data-tab="parcels">
-    {{#if showParcels}}
-    {{/if}}
   </div>
 </div>

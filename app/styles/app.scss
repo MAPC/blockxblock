@@ -185,6 +185,10 @@ main {
 }
 
 
+.ui.label.legend {
+  background-color: inherit;
+}
+
 // Semantic UI overrides
 .ui.inverted.main.menu {
   background: $primary-color;

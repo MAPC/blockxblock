@@ -66,6 +66,7 @@ export default DS.Model.extend({
   pub_contact_phone_2: DS.attr('string'),
   pub_contact_email_2: DS.attr('string'),
   pub_contact_website_2: DS.attr('string'),
+  product_massdev: DS.attr('string'),
 
   relatedInvestments: DS.hasMany('investment', { inverse: 'relatedInvestment' }),
   relatedInvestment: DS.belongsTo('investment', { inverse: 'relatedInvestments' }),
@@ -98,7 +99,7 @@ export default DS.Model.extend({
   isSelected: false
 });
 
-export const INVESTMENT_PARAMS = ['investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources','investments_fake_open_or_closed'];
+export const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources','investments_fake_open_or_closed'];
 export const INVESTMENT_TYPES  = ['Infrastructure','Finance','Assistance','Placemaking'];
 export const INVESTMENT_STATUSES  = ['Proposed','In Progress','Completed'];
 export const INVESTMENT_SOURCES = ['MassDevelopment','Public','Private'];
@@ -127,5 +128,10 @@ export const INVESTMENT_FILTERS_CONFIG = [
         property: 'fake_open_or_closed',
         filter: 'investments_fake_open_or_closed',
         filterType: 'isLongitudinal'
+      },
+      {
+        property: 'is_tdi_influenced',
+        filter: 'is_tdi_influenced',
+        filterType: 'isTrue'
       }
     ];

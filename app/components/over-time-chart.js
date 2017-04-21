@@ -16,7 +16,43 @@ export default Ember.Component.extend({
       }
     }
   }),
+  legend: {
+    show: false
+  },
 
+  padding: {
+    left: 20,
+    right: 40
+  },
+
+  tooltip: {
+    show: false
+  },
+
+  grid: Ember.computed('selection', function() {
+    let selection = new Date(this.get('selection'));
+    let addMonth = new Date(selection.setMonth(selection.getMonth()+1));
+    let end = `${addMonth.getFullYear()}-${addMonth.getMonth()}-01`;
+    return {
+      x: {
+        lines: [
+          {value: end, text: end}
+        ]
+      }
+    }
+  }),
+  regions: Ember.computed('selection', function() {
+   let selection = new Date(this.get('selection'));
+   
+   let start = `${selection.getFullYear()}-${selection.getMonth()}-01`;
+   let addMonth = new Date(selection.setMonth(selection.getMonth()+1));
+
+   let end = `${addMonth.getFullYear()}-${addMonth.getMonth()}-01`;
+
+   return [
+     { axis: 'x', start: start, end: end, class: 'regionX' }
+   ];
+  }),
   axis: {
     x: {
       type: 'timeseries',
@@ -34,21 +70,8 @@ export default Ember.Component.extend({
   },
 
   size: {
-    height: 120
+    height: 100
   },
-
- regions: Ember.computed('selection', function() {
-  let selection = new Date(this.get('selection'));
-  
-  let start = `${selection.getFullYear()}-${selection.getMonth()}-01`;
-  let addMonth = new Date(selection.setMonth(selection.getMonth()+1));
-
-  let end = `${addMonth.getFullYear()}-${addMonth.getMonth()}-01`;
-
-  return [
-    { axis: 'x', start: start, end: end, class: 'regionX' }
-  ];
- }),
 
   onrendered: Ember.computed(function(c3) {
     var that = this;
@@ -57,6 +80,8 @@ export default Ember.Component.extend({
         .on('click', (d,element) => {
           that.set('selection', d.x);
         });
+      d3.selectAll('.c3-chart-lines')
+        .style('display', 'none');
     }
   })
 });

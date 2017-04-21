@@ -6,6 +6,7 @@ import { number_format } from 'ember-string-helpers/utils/functions';
 import { nest } from 'd3-collection';
 import monthsBetween from '../utils/months-between';
 import config from '../config/environment';
+import computed from 'ember-computed';
 
 import {  FEATURE_PARAMS, 
           FEATURE_TYPES,
@@ -20,18 +21,23 @@ import {  INVESTMENT_PARAMS,
 import {  PARCEL_PARAMS,
           PARCEL_TYPES,
           PARCEL_FILTERS_CONFIG,
-          PARCEL_MAP_CONFIG } from '../models/parcel';
+          PARCEL_MAP_CONFIG,
+          PARCEL_OWNERSHIP_TYPES,
+          GFVACANCY_STATUSES,
+          UFVACANCY_STATUSES  } from '../models/parcel';
 
 const SPECIAL_QUERYP_CONFIG = [ { 'activating'                : { type: 'boolean' }}, 
                                 { 'featureOpen'               : { type: 'boolean' }}, 
                                 { 'forSale'                   : { type: 'boolean' }}, 
                                 { 'forLease'                  : { type: 'boolean' }},
+                                { 'isEngagedOwner'            : { type: 'boolean' }},
                                 { 'employer'                  : { type: 'boolean' }},
-                                { 'is_employer'               : { type: 'boolean' } },
-                                { 'is_street_activating'      : { type: 'boolean' } },
-                                { 'is_tdi_asset'             : { type: 'boolean' } },
-                                { 'is_feature_owner_engaged'  : { type: 'boolean' } },
-                                { 'is_collision_point'        : { type: 'boolean' } } ];
+                                { 'is_employer'               : { type: 'boolean' }},
+                                { 'is_street_activating'      : { type: 'boolean' }},
+                                { 'is_tdi_asset'              : { type: 'boolean' }},
+                                { 'is_tdi_influenced'         : { type: 'boolean' }},
+                                { 'is_feature_owner_engaged'  : { type: 'boolean' }},
+                                { 'is_collision_point'        : { type: 'boolean' }} ];
 export default Ember.Controller.extend({
   queryParams: ['showInvestments','showFeatures','showParcels']
                 .concat(Ember.copy(FEATURE_PARAMS).removeObject('fake_open_or_closed'), 
@@ -40,27 +46,38 @@ export default Ember.Controller.extend({
                         SPECIAL_QUERYP_CONFIG),
   currentCity: Ember.inject.service(),
 
+
+
   // features
-  assetTypes: '',
-  assetTypesArray: Ember.computed('assetTypes', arrayify('assetTypes', '|')),
+  assetTypes: FEATURE_TYPES.join('|'),
+  assetTypesArray: computed('assetTypes', arrayify('assetTypes', '|')),
   assetTypeOptions: FEATURE_TYPES,
-  activating: null,
+  is_street_activating: true,
   featureOpen: null,
   employer: null,
+  
+  latestDate: computed('featuresOpenDates.[]', function() {
+    let featuresOpenDates = this.get('featuresOpenDates');
+    console.log(featuresOpenDates);
+    return featuresOpenDates[featuresOpenDates.length-1].key;
+  }),
+
+  setLatestDate: function() {
+    this.set('fake_open_or_closed', this.get('latestDate'));
+  }.on('init'),
+
   fake_open_or_closed: null,
   investments_fake_open_or_closed: null,
-  featuresOpenDates: Ember.computed('currentCity.city.features.[]', 'currentCity.city.investments.[]', function() {
+  featuresOpenDates: computed('currentCity.city.features.[]', 'currentCity.city.investments.[]', function() {
     let dates = Ember.A();
     this.get('currentCity.city.features').forEach((feature) => { dates.pushObjects(feature.get('datesOpen')); });
     this.get('currentCity.city.investments').forEach((investment) => { dates.pushObjects(investment.get('datesOpen')); });
 
-    let grouped = nest()
-                .key((d) => { return d.date })
-                .key((d) => { return d.type })
-                .rollup((d) => { return d.length; })
-                // .key((d) => { return d.key })
-                .entries(dates)
-                .sortBy((el) => { return el.key; });
+    let grouped = nest().key((d) => { return d.date })
+                        .key((d) => { return d.type })
+                        .rollup((d) => { return d.length; })
+                        .entries(dates)
+                        .sortBy((el) => { return el.key; });
 
     grouped = grouped.map((el) => { 
       let date = new Date(el.key);
@@ -79,36 +96,48 @@ export default Ember.Controller.extend({
       return obj;
     });
 
-    console.log(grouped);
-
-    return grouped;
+    return grouped.sortBy((el) => { return new Date(el.key); });
   }),
 
   // investments
-  investmentTypes: '',
-  investmentTypesArray: Ember.computed('investmentTypes', arrayify('investmentTypes', '|')),
+  investmentTypes: INVESTMENT_TYPES.join('|'),
+  investmentTypesArray: computed('investmentTypes', arrayify('investmentTypes', '|')),
   investmentTypeOptions: INVESTMENT_TYPES,
 
-  investmentStatuses: '',
-  investmentStatusesArray: Ember.computed('investmentStatuses', arrayify('investmentStatuses', '|')),
+  investmentStatuses: 'Completed',
+  investmentStatusesArray: computed('investmentStatuses', arrayify('investmentStatuses', '|')),
   investmentStatusesOptions: INVESTMENT_STATUSES,
 
-  investmentSources: '',
-  investmentSourcesArray: Ember.computed('investmentSources', arrayify('investmentSources', '|')),
+  investmentSources: INVESTMENT_SOURCES.join('|'),
+  investmentSourcesArray: computed('investmentSources', arrayify('investmentSources', '|')),
   investmentSourcesOptions: INVESTMENT_SOURCES,
 
-  allInvestments: Ember.computed.alias('currentCity.city.investments'),
-  amounts_estimates: Ember.computed.mapBy('allInvestments', 'amount_estimated'),
-  amountsMin: Ember.computed.min('amounts_estimates'),
-  amountsMax: Ember.computed.max('amounts_estimates'),
+  allInvestments: computed.alias('currentCity.city.investments'),
+  amounts_estimates: computed.mapBy('allInvestments', 'amount_estimated'),
+  amountsMin: computed.min('amounts_estimates'),
+  amountsMax: computed.max('amounts_estimates'),
 
   valueMin: 0,
   valueMax: 20000000,
+  is_tdi_influenced: true,
 
   // parcels 
   landuseTypes: '',
-  landuseTypesArray: Ember.computed('landuseTypes', arrayify('landuseTypes', '|')),
+  landuseTypesArray: computed('landuseTypes', arrayify('landuseTypes', '|')),
   landuseTypeOptions: PARCEL_TYPES,
+
+  GFVacancyStatuses: '',
+  GFVacancyStatusesArray: computed('GFVacancyStatuses', arrayify('GFVacancyStatuses', '|')),
+  GFVacancyStatusesOptions: GFVACANCY_STATUSES,
+
+  UFVacancyStatuses: '',
+  UFVacancyStatusesArray: computed('UFVacancyStatuses', arrayify('UFVacancyStatuses', '|')),
+  UFVacancyStatusesOptions: UFVACANCY_STATUSES,
+
+  OwnershipTypes: '',
+  OwnershipTypesArray: computed('OwnershipTypes', arrayify('OwnershipTypes', '|')),
+  OwnershipTypesOptions: PARCEL_OWNERSHIP_TYPES,
+
   groundFloorVacancyMin: 0,
   groundFloorVacancyMax: null,
   forSale: null,
@@ -117,21 +146,29 @@ export default Ember.Controller.extend({
   yearBuiltMax: null,
 
   // UI state
-  showInvestments: false,
-  showFeatures: false,
+  showInvestments: true,
+  showFeatures: true,
   showParcels: false,
 
-  choroplethLayer: 'forSaleLease',
-  parcelsChoroplethMapping: Ember.computed('visibleParcels', 'choroplethLayer', function() {
+  choroplethLayer: 'Available Spaces',
+  parcelsChoroplethMapping: computed('visibleParcels', 'choroplethLayer', function() {
     return (feature) => {
-      let color = setChoroplethColor(feature, this.get('choroplethLayer'), PARCEL_MAP_CONFIG);
-      let stroke = true;
+      let color = setChoroplethColor(feature, this.get('choroplethLayer'), PARCEL_MAP_CONFIG),
+          stroke = true,
+          fillOpacity=0.5,
+          strokeOpacity=1,
+          weight=1;
       return {
         color,
-        stroke
+        stroke,
+        fillOpacity,
+        strokeOpacity,
+        weight
       }
     }
   }),
+
+  parcelChoroplethConfig: PARCEL_MAP_CONFIG,
   parcelChoroplethSets: PARCEL_MAP_CONFIG.mapBy('setName'),
   iconCreateFunction: function(cluster) {
     // cluster.getChildCount()
@@ -142,20 +179,14 @@ export default Ember.Controller.extend({
   hideSidebar: false,
 
   // applied computed filters
-  visibleFeatures: Ember.computed(...FEATURE_PARAMS, 'currentCity.city.features', 
+  visibleFeatures: computed(...FEATURE_PARAMS, 'currentCity.city.features', 
     applyFiltersTo('currentCity.city.features', FEATURE_FILTERS_CONFIG)),
 
-  visibleInvestments: Ember.computed(...INVESTMENT_PARAMS, 'currentCity.city.investments', 
+  visibleInvestments: computed(...INVESTMENT_PARAMS, 'currentCity.city.investments', 
     applyFiltersTo('currentCity.city.investments', INVESTMENT_FILTERS_CONFIG)),
 
-  visibleParcels: Ember.computed(...PARCEL_PARAMS, 'currentCity.city.parcels', 
+  visibleParcels: computed(...PARCEL_PARAMS, 'currentCity.city.parcels', 
     applyFiltersTo('currentCity.city.parcels', PARCEL_FILTERS_CONFIG)),
-
-
-  // filterParcelsTask: task(function*() {
-  //   return getFilter('currentCity.city.parcels', PARCEL_FILTERS_CONFIG);
-  // }),
-
 
   actions: {
     selectCity(city) {
@@ -212,8 +243,8 @@ export default Ember.Controller.extend({
     }
   },
 
-  investmentsValues: Ember.computed.mapBy('visibleInvestments', 'value'),
-  maxInvestments: Ember.computed.max('investmentsValues', 'visibleInvestments'),
+  investmentsValues: computed.mapBy('visibleInvestments', 'value'),
+  maxInvestments: computed.max('investmentsValues', 'visibleInvestments'),
 
   tooltipsConfig: [
     { to: (num) => number_format(num, 0) },

@@ -110,7 +110,7 @@ export default DS.Model.extend({
 
 
 export const FEATURE_PARAMS = ['assetTypes', 'activating', 'featureOpen', 'employer','fake_open_or_closed','is_employer','is_street_activating','is_tdi_asset','is_feature_owner_engaged','is_collision_point'];
-export const FEATURE_TYPES  = ['Food','Business','Retail','Community','Cultural & Entertainment','Health Care','Eductation','Government','Temporary','Park / Open Space','Parking','Public Transit','Collision Point'];
+export const FEATURE_TYPES  = ['Food','Business','Retail','Community','Culture and Entertainment','Health Care','Education','Government','Temporary','Park or Open Space','Parking','Public Transit','Collision Point','Housing'];
 export const FEATURE_FILTERS_CONFIG = [
       { 
         property: 'feature_type',
@@ -227,5 +227,10 @@ export const FEATURE_SUBTYPES = {"Food":
       "Paid Structure"],
     "Public Transit":
     [ "Bus",
-      "Rail"]
+      "Rail"],
+    "Housing": 
+    ["Single Family",
+      "2-4 units",
+      "4-10 units",
+      "10+ units"]
   }

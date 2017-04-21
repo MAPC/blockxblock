@@ -83,6 +83,12 @@
             </div>
           {{/ui-dropdown}}
         </div>
+        {{#liquid-if (eq model.source_type 'MassDevelopment')}}
+          <div class="field">
+            <label>Investment Products</label>
+            {{input type='text' name='name' value=model.product_massdev}}
+          </div>
+        {{/liquid-if}}
         <div class="field">
           <div class="ui checkbox">
             {{ui-checkbox class="toggle" 

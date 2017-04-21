@@ -8,8 +8,6 @@
     <div class="cities-map">
       <i class="large circular white {{if (not hideSidebar) 'left arrow'}} link icon sidebar-tab {{if hideSidebar 'right arrow'}}" onclick={{action 'toggleSidebar'}} style="background-color:white"></i>
 
-
-
       {{#main-map}}
 
         {{#if currentCity.isPlottingPoint}}
@@ -78,7 +76,7 @@
 
 
       {{/main-map}}
-      {{over-time-chart dates=featuresOpenDates selection=fake_open_or_closed}}
+      {{over-time-chart dates=featuresOpenDates selection=fake_open_or_closed defaultSelection=latestDate}}
 {{!--       <div class="ui links fluid menu">
         {{#each featuresOpenDates as |date|}}
           <a class="item {{if (eq fake_open_or_closed date.date) 'active'}}" onclick={{action 'updateDate' date.date}}>{{date.alias}}</a>

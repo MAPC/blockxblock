@@ -10,8 +10,6 @@ export default DS.Model.extend({
   yearBuilt: DS.attr('date'),
   // forLease: DS.attr('boolean'),
   vacancy: DS.attr('boolean'),
-  ground_floor_vacancy: DS.attr('string'),
-  upper_floor_vacancy: DS.attr('string'),
   marked: DS.attr('boolean'),
   // forSale: DS.attr('boolean'),
 
@@ -22,13 +20,39 @@ export default DS.Model.extend({
     return faker.random.boolean();
   }),
 
-  ownership_type: DS.attr('string'),
   is_engaged_owner: DS.attr('timeline'),
   is_for_sale: DS.attr('timeline'),
   is_for_lease: DS.attr('timeline'),
   is_vacant_lot: DS.attr('timeline'),
   ground_floor_vacancy: DS.attr('timeline'),
   upper_floor_vacancy: DS.attr('timeline'),
+
+  latest_is_engaged_owner: Ember.computed('is_engaged_owner', function() {
+    let timeline = this.get('is_engaged_owner');
+    return timeline[timeline.length-1].status;
+  }),
+  latest_is_for_sale: Ember.computed('is_for_sale', function() {
+    let timeline = this.get('is_for_sale');
+    return timeline[timeline.length-1].status;
+  }),
+  latest_is_for_lease: Ember.computed('is_for_lease', function() {
+    let timeline = this.get('is_for_lease');
+    return timeline[timeline.length-1].status;
+  }),
+  latest_is_vacant_lot: Ember.computed('is_vacant_lot', function() {
+    let timeline = this.get('is_vacant_lot');
+    return timeline[timeline.length-1].status;
+  }),
+  latest_ground_floor_vacancy: Ember.computed('ground_floor_vacancy', function() {
+    let timeline = this.get('ground_floor_vacancy');
+    return timeline[timeline.length-1].status;
+  }),
+  latest_upper_floor_vacancy: Ember.computed('upper_floor_vacancy', function() {
+    let timeline = this.get('upper_floor_vacancy');
+    return timeline[timeline.length-1].status;
+  }),
+
+  ownership_type: DS.attr('string'),
   land_use: DS.attr('string'),
   zoning: DS.attr('string'),
   parcel_id: DS.attr('string'),
@@ -76,7 +100,15 @@ export default DS.Model.extend({
   geojson: Ember.computed('geom', function() {
     let geojson = Ember.Object.create();
     let computed_properties = ['forLease', 'forSale', 'vacancy'];
-    let properties = Object.keys(this.toJSON()).removeObjects(['geom','city']).concat(computed_properties);
+    let choroplethKeys = PARCEL_MAP_CONFIG.mapBy('colorMap')
+                                          .invoke('mapBy','key')
+                                          .reduce(  function(a, b) {
+                                            return a.concat(b);
+                                          },[])
+                                          .uniq();
+
+
+    let properties = choroplethKeys.concat(computed_properties);
 
     geojson.set('properties', this.getProperties(properties));
     geojson.set('type', 'Feature');
@@ -89,22 +121,40 @@ export default DS.Model.extend({
   isSelected: false
 });
 
-export const PARCEL_PARAMS = ['groundFloorVacancyMin','groundFloorVacancyMax','landuseTypes','forSale','forLease','yearBuiltMin','yearBuiltMax'];
-export const PARCEL_TYPES  = ['1','3','4','9'];
-export const PARCEL_OWNERSHIP_TYPES  = ['Publicly owned','Partner-Controlled','Privately owned'];
+export const PARCEL_PARAMS = ['landuseTypes','GFVacancyStatuses','UFVacancyStatuses','OwnershipTypes','groundFloorVacancyMin','groundFloorVacancyMax','landuseTypes','forSale','forLease','yearBuiltMin','yearBuiltMax','isEngagedOwner'];
 export const PARCEL_FILTERS_CONFIG = [
   { 
-    property: 'landUseType',
+    property: 'land_use',
     filter: 'landuseTypesArray',
     filterType: 'isAny'
   },
   { 
-    property: 'forSale',
+    property: 'latest_ground_floor_vacancy',
+    filter: 'GFVacancyStatusesArray',
+    filterType: 'isAny'
+  },
+  { 
+    property: 'latest_upper_floor_vacancy',
+    filter: 'UFVacancyStatusesArray',
+    filterType: 'isAny'
+  },
+  { 
+    property: 'ownership_type',
+    filter: 'OwnershipTypesArray',
+    filterType: 'isAny'
+  },
+  { 
+    property: 'latest_is_for_sale',
     filter: 'forSale',
     filterType: 'isTrue'
   },
   { 
-    property: 'forLease',
+    property: 'latest_is_engaged_owner',
+    filter: 'isEngagedOwner',
+    filterType: 'isTrue'
+  },
+  { 
+    property: 'latest_is_for_lease',
     filter: 'forLease',
     filterType: 'isTrue'
   },
@@ -116,82 +166,125 @@ export const PARCEL_FILTERS_CONFIG = [
 ];
 export const PARCEL_MAP_CONFIG = [
   {
-    setName: 'forSaleLease',
-    default_color: 'green',
+    setName: 'Available Spaces',
+    default_color: 'lightgray',
     colorMap: [
       {
-        key: 'forLease',
+        key: 'latest_is_for_sale',
         value: true,
-        color: 'red'
+        color: '#FCBE78'
       },
       {
-        key: 'forSale',
+        key: 'latest_is_for_lease',
         value: true,
-        color: 'purple'
+        color: '#58BC70'
       }
     ]
   },
   {
-    setName: 'landUse',
-    default_color: 'blue',
+    setName: 'Land Use',
+    default_color: 'lightgray',
     colorMap: [
       {
-        key: 'landUseType',
-        value: 1,
-        color: 'yellow'
+        key: 'land_use',
+        value: 'Residential',
+        color: '#FFC800'
       },
       {
-        key: 'landUseType',
-        value: 3,
-        color: 'red'
+        key: 'land_use',
+        value: 'Commercial',
+        color: '#B40028'
       },
       {
-        key: 'landUseType',
-        value: 4,
-        color: 'purple'
+        key: 'land_use',
+        value: 'Industrial',
+        color: '#A42E9F'
+      }
+    ]
+  },
+  {
+    setName: 'Ownership Type',
+    default_color: 'lightgray',
+    colorMap: [
+      {
+        key: 'ownership_type',
+        value: 'Partner-controlled',
+        color: '#3B158B'
       },
       {
-        key: 'landUseType',
-        value: 9,
-        color: 'green'
+        key: 'ownership_type',
+        value: 'Privately Owned',
+        color: '#9892BF'
+      },
+      {
+        key: 'ownership_type',
+        value: 'Publicly Owned',
+        color: '#BB5195'
+      }
+    ]
+  },
+  {
+    setName: 'Ground Floor Vacancy',
+    default_color: 'lightgray',
+    colorMap: [
+      {
+        key: 'latest_ground_floor_vacancy',
+        value: "Is Vacant Lot",
+        color: '#0074ff'
+      },
+      {
+        key: 'latest_ground_floor_vacancy',
+        value: "Entirely Vacant",
+        color: '#001f4a'
+      },
+      {
+        key: 'latest_ground_floor_vacancy',
+        value: "Partially Vacant",
+        color: '#808fa4'
+      },
+      {
+        key: 'latest_ground_floor_vacancy',
+        value: "Not Vacant",
+        color: '#bfc7d2'
+      }
+    ]
+  },
+  {
+    setName: 'Upper Level Vacancy',
+    default_color: 'lightgray',
+    colorMap: [
+      {
+        key: 'latest_upper_floor_vacancy',
+        value: 'Entirely Vacant',
+        color: '#a33800'
+      },
+      {
+        key: 'latest_upper_floor_vacancy',
+        value: 'Partially Vacant',
+        color: '#d19b80'
+      },
+      {
+        key: 'latest_upper_floor_vacancy',
+        value: 'Not Vacant',
+        color: '#e8cdbf'
       }
     ]
   }
-  // {
-  //   setName: 'vacancy',
-  //   default_color: 'blue',
-  //   colorMap: [
-  //     {
-  //       key: 'vacancy',
-  //       value: 1,
-  //       color: 'red'
-  //     },
-  //     {
-  //       key: 'vacancy',
-  //       value: 2,
-  //       color: 'blue'
-  //     },
-  //     {
-  //       key: 'vacancy',
-  //       value: 3,
-  //       color: 'purple'
-  //     }
-  //   ]
-  // },
-  // {
-  //   setName: 'ownership',
-  //   default_color: 'blue',
-  //   colorMap: [
-  //     {
-  //       key: 'marked',
-  //       value: true,
-  //       color: 'red'
-  //     },
-  //     {
-  //       key: 'marked',
-  //       value: false,
-  //       color: 'blue'
-  //     }
-  //   ]
-  // }
 ];
+
+export const PARCEL_OWNERSHIP_TYPES = PARCEL_MAP_CONFIG.findBy('setName', 'Ownership Type')
+                                                       .colorMap
+                                                       .mapBy('value');
+
+
+export const PARCEL_TYPES = PARCEL_MAP_CONFIG.findBy('setName', 'Land Use')
+                                             .colorMap
+                                             .mapBy('value');
+
+export const GFVACANCY_STATUSES = PARCEL_MAP_CONFIG.findBy('setName', 'Ground Floor Vacancy')
+                                                   .colorMap
+                                                   .mapBy('value');
+
+export const UFVACANCY_STATUSES = PARCEL_MAP_CONFIG.findBy('setName', 'Upper Level Vacancy')
+                                                   .colorMap
+                                                   .mapBy('value');

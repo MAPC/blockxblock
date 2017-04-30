@@ -52,7 +52,7 @@ export default Ember.Controller.extend({
   assetTypes: FEATURE_TYPES.join('|'),
   assetTypesArray: computed('assetTypes', arrayify('assetTypes', '|')),
   assetTypeOptions: FEATURE_TYPES,
-  is_street_activating: true,
+  is_street_activating: false,
   featureOpen: null,
   employer: null,
   

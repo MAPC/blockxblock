@@ -73,6 +73,19 @@ export default Ember.Component.extend({
     height: 100
   },
 
+  timestamp: Ember.computed('selection', function() {
+    let selection = this.get('selection');
+    return new Date('2015').getTime(); 
+  }),
+  timeMin: Ember.computed('selection', function() {
+    let selection = this.get('selection');
+    return new Date('2011').getTime(); 
+  }),
+  timeMax: Ember.computed('selection', function() {
+    let selection = this.get('selection');
+    return new Date('2017').getTime(); 
+  }),
+
   onrendered: Ember.computed(function(c3) {
     var that = this;
     return function() {
@@ -83,5 +96,11 @@ export default Ember.Component.extend({
       d3.selectAll('.c3-chart-lines')
         .style('display', 'none');
     }
-  })
+  }),
+
+  actions: {
+    update(value) {
+      console.log(new Date(value));
+    }
+  }
 });

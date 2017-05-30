@@ -39,7 +39,7 @@ export default DS.Model.extend({
 
     for(var count=0; count < number; count++) {
       array.push({  status: faker.list.cycle( "open", "closed")(count),  
-                    quarter: faker.date.past() });
+                    quarter: new Date(faker.date.past()).getTime() });
     }
 
     return array;
@@ -48,9 +48,9 @@ export default DS.Model.extend({
     let structured = this.get('fake_open_or_closed')
                 .filter((obj) => { return obj.status == 'open'; })
                 .map((el) => { 
-                  let normalizedMonth = new Date();
-                  normalizedMonth.setFullYear(el.quarter.getFullYear(),el.quarter.getMonth(),1);
-                  return { date: normalizedMonth, type: 'feature' };
+                  // let normalizedMonth = new Date();
+                  // normalizedMonth.setFullYear(el.quarter.getFullYear(),el.quarter.getMonth(),1);
+                  return { date: el.quarter, type: 'feature' };
                 });
 
     return structured;

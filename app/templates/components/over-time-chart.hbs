@@ -9,8 +9,8 @@
             regions=regions
             padding=padding
 }} --}}
-{{range-slider  start=timestamp
-                tooltip=true
+{{range-slider  start=selection
+                tooltips=tooltipsConfig
                 min=timeMin
                 max=timeMax
-                on-update="update"}}
+                on-change=onEnd}}

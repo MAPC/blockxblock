@@ -287,3 +287,12 @@ main {
 .c3-xgrid-line text {
   fill: black;
 }
+
+.noUi-ltr {
+  z-index: 1000;
+  color: black;
+}
+
+.noUi-tooltip { 
+  width: 100px;
+}

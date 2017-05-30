@@ -78,7 +78,7 @@
       {{/main-map}}
       {{over-time-chart 
               selection=fake_open_or_closed 
-              models=currentCity.city.features
+              models=(array currentCity.city.features currentCity.city.investments)
               tooltip=true
               min=timeMin
               max=timeMax

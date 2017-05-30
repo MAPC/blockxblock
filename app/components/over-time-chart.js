@@ -1,8 +1,47 @@
 import Ember from 'ember';
+import moment from 'moment';
+import { nest } from 'd3-collection';
 
 export default Ember.Component.extend({
   dates: null,
-  selection: '2016-01-01',
+  openDates: Ember.computed('models', function() {
+    let models = this.get('models');
+    return models.mapBy('fake_open_or_closed').invoke('filterBy','status', 'open').reduce((a,b)=> { return a.concat(b); }, []);
+  }),
+  openDateStamps: Ember.computed('openDates', function() {
+    let models = this.get('openDates');
+    return models.mapBy('quarter');
+  }),
+  openMonthYears: Ember.computed('openDateStamps', function() {
+    
+    // let grouped = nest().key((d) => { return d.type })
+    //                     .rollup((d) => { return d.length; })
+    //                     .entries(dates)
+    //                     .sortBy((el) => { return el.key; });
+
+    // grouped = grouped.map((el) => { 
+    //   let date = new Date(el.key);
+    //   let obj = { key: `${date.getFullYear()}-${date.getMonth()}-01` };
+    //   let type1 = el.values[0];
+    //   let type2 = el.values[1];
+
+    //   if(type1) {
+    //     obj[type1.key] = type1.value;
+    //   }
+
+    //   if(type2) {
+    //     obj[type2.key] = type2.value;
+    //   }
+      
+    //   return obj;
+    // });
+
+    // return grouped.sortBy((el) => { return new Date(el.key); });
+  }),
+
+  tooltipsConfig: [
+    { to: (num) => { return moment(num).format('MMM Do YYYY'); } }
+  ],
 
   data: Ember.computed('dates', function() {
     let that = this;
@@ -73,17 +112,20 @@ export default Ember.Component.extend({
     height: 100
   },
 
+  // range-slider
   timestamp: Ember.computed('selection', function() {
     let selection = this.get('selection');
     return new Date('2015').getTime(); 
   }),
-  timeMin: Ember.computed('selection', function() {
-    let selection = this.get('selection');
-    return new Date('2011').getTime(); 
+  timeMin: Ember.computed('models', function() {
+    let models = this.get('openDateStamps');
+    window.models = models;
+    return Math.min(...models);
   }),
   timeMax: Ember.computed('selection', function() {
-    let selection = this.get('selection');
-    return new Date('2017').getTime(); 
+    let models = this.get('models');
+    let flattened = models.mapBy('fake_open_or_closed').invoke('mapBy', 'quarter').reduce((a,b)=> { return a.concat(b); }, []);
+    return Math.max(...flattened);
   }),
 
   onrendered: Ember.computed(function(c3) {

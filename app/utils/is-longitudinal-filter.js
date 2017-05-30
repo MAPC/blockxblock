@@ -6,8 +6,6 @@ export default function isLongitudinalFilter(selectedDate, longitudinalField, mo
   let fieldDates = model.get(longitudinalField);
   let sortedDates = fieldDates.sortBy(function(o){ return new Date( o.quarter ) });
   let state = false;
-  let min = sortedDates[0].quarter;
-  let max = sortedDates[sortedDates.length - 1].quarter;
 
   // what is the status of the selectedDate?
   sortedDates.forEach((el, index) => {
@@ -18,7 +16,7 @@ export default function isLongitudinalFilter(selectedDate, longitudinalField, mo
       let parsedSubsequentDate = new Date(selectedDate);
       
       // is the selected date greater than the current element date and less than the subsequent element date? 
-      if ( (new Date(selectedDate) > el.quarter) && (new Date(selectedDate) < new Date(subsequentDate.quarter)) ) {
+      if ( (selectedDate > el.quarter) && (selectedDate < subsequentDate.quarter) ) {
         if (el.status == truthState) {
           state = true;
         }

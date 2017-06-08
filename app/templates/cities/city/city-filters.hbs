@@ -32,11 +32,13 @@
         <div class="ui basic segment">
           <h4 class="ui header">Place Status</h4>
           <div class="ui labels">
-             <a class="ui {{if cc.is_employer 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_employer) (not cc.is_employer)}}>Employer</a> 
+            <a class="ui {{if cc.is_employer 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_employer) (not cc.is_employer)}}>Employer</a> 
              <a class="ui {{if cc.is_street_activating 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_street_activating) (not cc.is_street_activating)}}>Street Activating</a> 
-             <a class="ui {{if cc.is_tdi_asset 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_tdi_asset) (not cc.is_tdi_asset)}}>TDI Asset</a> 
-             <a class="ui {{if cc.is_feature_owner_engaged 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_feature_owner_engaged) (not cc.is_feature_owner_engaged)}}>Owner Engaged</a> 
-             <a class="ui {{if cc.is_collision_point 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_collision_point) (not cc.is_collision_point)}}>Community Hub</a> 
+            <a class="ui {{if cc.is_collision_point 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_collision_point) (not cc.is_collision_point)}}>Community Hub</a> 
+            {{#if session.isAuthenticated}}
+              <a class="ui {{if cc.is_tdi_asset 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_tdi_asset) (not cc.is_tdi_asset)}}>TDI Asset</a> 
+              <a class="ui {{if cc.is_feature_owner_engaged 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_feature_owner_engaged) (not cc.is_feature_owner_engaged)}}>Owner Engaged</a> 
+            {{/if}}
           </div>
         </div>
         <div class="ui basic segment">
@@ -83,11 +85,13 @@
                 checked=(array-contains cc.investmentTypesArray option)
                 onChange=(action 'composeList' option 'investmentTypes' target=cc)}}
             {{/each}}
+            {{#if session.isAuthenticated}}
               {{ui-checkbox 
                 label='TDI Influenced' 
                 class="item"
                 checked=cc.is_tdi_influenced
                 onChange=(action (mut cc.is_tdi_influenced (not cc.is_tdi_influenced)))}}
+            {{/if}}
           </div>
           <h4 class="ui header">
             Investment Statuses

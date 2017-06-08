@@ -52,7 +52,7 @@
                       class="item"
                       checked=(array-contains cc.assetTypesArray option)
                       onChange=(action 'composeList' option 'assetTypes' target=cc)}}
-                      <img src="/images/icons/features/filters/{{option}}.png" class="ui avatar image" /> 
+                      <img src="/images/icons/features/filters/{{dasherize option}}.png" class="ui avatar image" /> 
                       <span>{{option}}</span>
                     {{/ui-checkbox}}
                   </div>

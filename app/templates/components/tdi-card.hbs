@@ -2,7 +2,12 @@
   <div class="image">
     <div class="card-image" style={{style}}></div>
   </div>
-  <div class="content splash-inverted">
-    {{yield}}
+  <div class="extra content splash-inverted">
+    <span class="left floated">
+      {{yield}}
+    </span>
+    <span class="right floated star">
+      <img class="ui mini image" src={{modelContext.iconWatermarkUrl}}/>
+    </span>
   </div>
 {{/link-to}}

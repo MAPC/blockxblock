@@ -1,13 +1,13 @@
 /* dependencies */
+
 @import "ember-searchable-select/style";
 @import "ember-power-select";
-
 @mixin font-face($name) {
-  @font-face {
-    font-family: $name;
-    src:  url("../fonts/#{$name}.eot?") format("eot"),
-    url("../fonts/#{$name}.woff") format("woff");
-  }
+    @font-face {
+        font-family: $name;
+        src: url("../fonts/#{$name}.eot?") format("eot"),
+        url("../fonts/#{$name}.woff") format("woff");
+    }
 }
 
 @include font-face('Dosis-ExtraLight');
@@ -17,8 +17,17 @@
 @include font-face('Dosis-Medium');
 @include font-face('Dosis-Regular');
 @include font-face('Dosis-SemiBold');
-
-div,h1,h2,h3,h4,h5,h6,span,em,li,ul {
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+em,
+li,
+ul {
     font-family: 'Dosis-Regular' !important;
 }
 
@@ -27,263 +36,273 @@ $primary-color: #0A4650;
 $gray: #E1E1E1;
 $red: #B40028;
 $secondary-color: #00AFAA;
-
-html, body {
-  height:100%;
-  margin: 0;
-  padding: 0;
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .ember-application > .ember-view {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 .main-map {
-  height:100%;
-  width: 100%;
-  .leaflet-container {
-    height:100%;
-  }
+    height: 100%;
+    width: 100%;
+    .leaflet-container {
+        height: 100%;
+    }
 }
 
 .statewide-view {
-  height: 500px;
+    height: 500px;
 }
 
 .choropleth-menu {
-  position: absolute;
-  right:0;
-  z-index: 9999;
+    position: absolute;
+    right: 0;
+    z-index: 9999;
 }
 
 .basemap-menu {
-  position: absolute;
-  right:15px;
-  bottom: 15px;
-  z-index: 9999;
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    z-index: 9999;
 }
 
 .sidebar-tab {
-  position: absolute;
-  left:0px;
-  z-index: 500;
-  top:49%;
+    position: absolute;
+    left: 0px;
+    z-index: 500;
+    top: 49%;
 }
 
 .resource-nav-menu {
-  position: absolute;
-  top: 0px;
-  right: 15px;
+    position: absolute;
+    top: 0px;
+    right: 15px;
 }
 
 .hidden {
-  display: none;
-  visibility: inherit;
+    display: none;
+    visibility: inherit;
 }
 
 .hidden-custom {
-  display: none;
-  visibility: inherit;
+    display: none;
+    visibility: inherit;
 }
 
+
 /* nav */
+
 nav {
-  position: absolute;
-  z-index: 9999;
-  width: 100%;
-  // display: flex;
-  // flex-direction: row;
-  // background: pink;
-  // height: 40px;
-  // justify-content: space-around;
-  // align-items: center;
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+    // display: flex;
+    // flex-direction: row;
+    // background: pink;
+    // height: 40px;
+    // justify-content: space-around;
+    // align-items: center;
 }
 
 main {
-  height: 100%;
-  padding-top:63px !important;
-  padding-bottom:0px !important;
+    height: 100%;
+    padding-top: 63px !important;
+    padding-bottom: 0px !important;
 }
 
 .hide-sidebar {
-  display: none;
+    display: none;
 }
 
 .cities {
-  height: 100%;
-  position: relative;
+    height: 100%;
+    position: relative;
 }
 
 .regionX {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 .list-results {
-  height: 100%;
-  overflow: scroll;
-  position: absolute;
+    height: 100%;
+    overflow: scroll;
+    position: absolute;
 }
 
 .map-results {
-  .ui.grid > .column:not(.row), .ui.grid > .row > .column {
-    padding: 0;
-  }
-
-  .ui.grid > .column:not(.row) {
-    padding: 0;
-  }
+    .ui.grid > .column:not(.row),
+    .ui.grid > .row > .column {
+        padding: 0;
+    }
+    .ui.grid > .column:not(.row) {
+        padding: 0;
+    }
 }
 
 .cities-map {
-  height: 83%;
-  width: 100%;
-  margin: 0;
-  position: relative;
-  padding: -1rem;
+    height: 94%;
+    width: 100%;
+    margin: 0;
+    position: relative;
+    padding: -1rem;
 }
 
 .has-pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
+
 
 /* details */
 
 .Searchable-select {
-  min-width: 350px;
+    min-width: 350px;
 }
 
 .detail-full-screen {
-  background-color: white;
-  
+    background-color: white;
 }
 
 .map-popup {
-  position: absolute;
-  z-index: 9999;
-  max-width: 180px;
+    position: absolute;
+    z-index: 9999;
+    max-width: 180px;
 }
 
 .c3-event-rect {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 // .liquid-child { position: relative !important;}
-
 .detail-full-height {
-  z-index: 9999;
-  height: 100%;
-  top: 63px;
-  position: fixed;
-  width: 100%;
-  z-index: 5;
+    z-index: 9999;
+    height: 100%;
+    top: 63px;
+    position: fixed;
+    width: 100%;
+    z-index: 5;
 }
 
 .ui-visibility-sticky {
-  // width: 100%;
-  background-color: white;
+    // width: 100%;
+    background-color: white;
 }
 
-
 .ui.label.legend {
-  background-color: inherit;
+    background-color: inherit;
 }
 
 // Semantic UI overrides
 .ui.inverted.main.menu {
-  background: $primary-color;
+    background: $primary-color;
 }
 
 .ui.header {
-  font-family: 'Dosis-Regular';
+    font-family: 'Dosis-Regular';
 }
 
 .ui.menu.main.inverted {
-  border-radius: 0;
+    border-radius: 0;
 }
 
 .ui.header.splash {
-  color: $primary-color;
+    color: $primary-color;
 }
 
 .ui.header.splash.semi-bold {
-  font-family: 'Dosis-ExtraBold';
+    font-family: 'Dosis-ExtraBold';
 }
 
 .ui.card > .content.splash-inverted {
-  background: $primary-color;
-  color: rgba(255, 255, 255, 0.9);
-  font-family: 'Dosis-SemiBold';
+    background: $primary-color;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Dosis-SemiBold';
 }
 
 .ui.label.filters-label {
-  color: $primary-color;
-  border: 2px solid $primary-color;
-  background-color: white;
+    color: $primary-color;
+    border: 2px solid $primary-color;
+    background-color: white;
 }
 
 .ui.label.filters-label:hover {
-  border: 2px solid $primary-color;
-  background-color: $primary-color;
-  color: white;
+    border: 2px solid $primary-color;
+    background-color: $primary-color;
+    color: white;
 }
 
 .ui.label.tdi-blue {
-  background: $secondary-color;
-  border: 2px solid $primary-color;
+    background: $secondary-color;
+    border: 2px solid $primary-color;
 }
 
 .ui.label.tdi-blue:hover {
-  background-color: $primary-color;
-  border: 2px solid $primary-color;
+    background-color: $primary-color;
+    border: 2px solid $primary-color;
 }
 
 .ui.tdi-blue.divider:not(.vertical):not(.horizontal) {
-  border-top: 2px solid $primary-color;
+    border-top: 2px solid $primary-color;
 }
 
 .tdi-semi-bold.title {
-  font-family: 'Dosis-SemiBold' !important;
+    font-family: 'Dosis-SemiBold' !important;
 }
 
 .ui.accordion .title.tdi-semi-bold:not(.ui) {
-  font-size: 1.429em;
+    font-size: 1.429em;
 }
 
-.Searchable-select__option, .Searchable-select__input {
-  color: black;
+.Searchable-select__option,
+.Searchable-select__input {
+    color: black;
 }
 
 .ember-power-select-trigger-multiple-input {
-  width: 100% !important;
+    width: 100% !important;
 }
 
 .ui.basic.segment.fixed-footer {
-  position: fixed;
-  bottom:0;
-  width: 100%;
-  height:35px;
-  background-color: white;
-  border-top-color: $primary-color;
-  border-top-width: 3px;
-  border-top-style: solid;
-  z-index:9999;
-  padding-top: 0;
-  padding-bottom: 0;
-  .item {
-    color: $primary-color;
-  }
-  .ui.borderless.menu {
-    border-radius: 0;
-    border-width: 0;
-  }
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+    background-color: white;
+    border-top-color: $primary-color;
+    border-top-width: 3px;
+    border-top-style: solid;
+    z-index: 9999;
+    padding-top: 0;
+    padding-bottom: 0;
+    .item {
+        color: $primary-color;
+    }
+    .ui.borderless.menu {
+        border-radius: 0;
+        border-width: 0;
+    }
 }
 
 .c3-grid line {
-  stroke: black;
-  stroke-width: 2px;
+    stroke: black;
+    stroke-width: 2px;
 }
 
 .c3-xgrid-line text {
-  fill: black;
+    fill: black;
+}
+
+.noUi-ltr {
+    z-index: 1000;
+    color: black;
+}
+
+.noUi-tooltip {
+    width: 100px;
 }

@@ -19,6 +19,11 @@ export default DS.Model.extend({
     return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.decamelize()}.png`;
   }),
 
+  iconWatermarkUrl: Ember.computed('source_type', 'investment_type', function() {
+    let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
+    return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.decamelize()}.png`;
+  }),
+
   project: DS.attr('string'),
   is_addressy: DS.attr('boolean', { defaultValue: true }),
   non_addressy_location: DS.attr('string'),
@@ -76,21 +81,24 @@ export default DS.Model.extend({
     let number = 5;
     let array = [];
 
-    for(var count=0; count < number; count++) {
-      array.push({  status: faker.list.cycle( "open", "closed")(count), 
-                    quarter: faker.date.past() });
+    for (var count = 0; count < number; count++) {
+      array.push({
+        status: faker.list.cycle("open", "closed")(count),
+        quarter: faker.date.past()
+      });
     }
 
     return array;
   }),
   datesOpen: Ember.computed('fake_open_or_closed.@each', function() {
     let structured = this.get('fake_open_or_closed')
-                .filter((obj) => { return obj.status == 'open'; })
-                .map((el) => { 
-                  let normalizedMonth = new Date();
-                  normalizedMonth.setFullYear(el.quarter.getFullYear(),el.quarter.getMonth(),1);
-                  return { date: normalizedMonth, type: 'investment' };
-                });
+      .filter((obj) => {
+        return obj.status == 'open'; })
+      .map((el) => {
+        let normalizedMonth = new Date();
+        normalizedMonth.setFullYear(el.quarter.getFullYear(), el.quarter.getMonth(), 1);
+        return { date: normalizedMonth, type: 'investment' };
+      });
 
     return structured;
   }),
@@ -99,39 +107,32 @@ export default DS.Model.extend({
   isSelected: false
 });
 
-export const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources','investments_fake_open_or_closed'];
-export const INVESTMENT_TYPES  = ['Infrastructure','Finance','Assistance','Placemaking'];
-export const INVESTMENT_STATUSES  = ['Proposed','In Progress','Completed'];
-export const INVESTMENT_SOURCES = ['MassDevelopment','Public','Private'];
-export const INVESTMENT_FILTERS_CONFIG = [
-      { 
-        property: 'investment_type',
-        filter: 'investmentTypesArray',
-        filterType: 'isAny'
-      },
-      {
-        property: 'investment_status_latest',
-        filter: 'investmentStatusesArray',
-        filterType: 'isAny'
-      },
-      { 
-        property: 'source_type',
-        filter: 'investmentSourcesArray',
-        filterType: 'isAny'
-      },
-      { 
-        property: 'amount_estimated',
-        filter: ['valueMin', 'valueMax'],
-        filterType: 'isWithin'
-      },
-      {
-        property: 'fake_open_or_closed',
-        filter: 'investments_fake_open_or_closed',
-        filterType: 'isLongitudinal'
-      },
-      {
-        property: 'is_tdi_influenced',
-        filter: 'is_tdi_influenced',
-        filterType: 'isTrue'
-      }
-    ];
+export const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources', 'investments_fake_open_or_closed'];
+export const INVESTMENT_TYPES = ['Infrastructure', 'Finance', 'Assistance', 'Placemaking'];
+export const INVESTMENT_STATUSES = ['Proposed', 'In Progress', 'Completed'];
+export const INVESTMENT_SOURCES = ['MassDevelopment', 'Public', 'Private'];
+export const INVESTMENT_FILTERS_CONFIG = [{
+  property: 'investment_type',
+  filter: 'investmentTypesArray',
+  filterType: 'isAny'
+}, {
+  property: 'investment_status_latest',
+  filter: 'investmentStatusesArray',
+  filterType: 'isAny'
+}, {
+  property: 'source_type',
+  filter: 'investmentSourcesArray',
+  filterType: 'isAny'
+}, {
+  property: 'amount_estimated',
+  filter: ['valueMin', 'valueMax'],
+  filterType: 'isWithin'
+}, {
+  property: 'fake_open_or_closed',
+  filter: 'investments_fake_open_or_closed',
+  filterType: 'isLongitudinal'
+}, {
+  property: 'is_tdi_influenced',
+  filter: 'is_tdi_influenced',
+  filterType: 'isTrue'
+}];

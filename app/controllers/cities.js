@@ -3,7 +3,6 @@ import arrayify from '../utils/arrayify';
 import applyFiltersTo, { getFilter } from '../utils/apply-filter-to';
 import setChoroplethColor from '../utils/set-choropleth-color';
 import { number_format } from 'ember-string-helpers/utils/functions';
-import { nest } from 'd3-collection';
 import monthsBetween from '../utils/months-between';
 import config from '../config/environment';
 import computed from 'ember-computed';
@@ -40,7 +39,7 @@ const SPECIAL_QUERYP_CONFIG = [ { 'activating'                : { type: 'boolean
                                 { 'is_collision_point'        : { type: 'boolean' }} ];
 export default Ember.Controller.extend({
   queryParams: ['showInvestments','showFeatures','showParcels']
-                .concat(Ember.copy(FEATURE_PARAMS).removeObject('fake_open_or_closed'), 
+                .concat(FEATURE_PARAMS, 
                         INVESTMENT_PARAMS, 
                         PARCEL_PARAMS, 
                         SPECIAL_QUERYP_CONFIG),
@@ -52,52 +51,13 @@ export default Ember.Controller.extend({
   assetTypes: FEATURE_TYPES.join('|'),
   assetTypesArray: computed('assetTypes', arrayify('assetTypes', '|')),
   assetTypeOptions: FEATURE_TYPES,
-  is_street_activating: true,
+  is_street_activating: false,
   featureOpen: null,
   employer: null,
-  
-  latestDate: computed('featuresOpenDates.[]', function() {
-    let featuresOpenDates = this.get('featuresOpenDates');
-    console.log(featuresOpenDates);
-    return featuresOpenDates[featuresOpenDates.length-1].key;
-  }),
-
-  setLatestDate: function() {
-    this.set('fake_open_or_closed', this.get('latestDate'));
-  }.on('init'),
 
   fake_open_or_closed: null,
   investments_fake_open_or_closed: null,
-  featuresOpenDates: computed('currentCity.city.features.[]', 'currentCity.city.investments.[]', function() {
-    let dates = Ember.A();
-    this.get('currentCity.city.features').forEach((feature) => { dates.pushObjects(feature.get('datesOpen')); });
-    this.get('currentCity.city.investments').forEach((investment) => { dates.pushObjects(investment.get('datesOpen')); });
 
-    let grouped = nest().key((d) => { return d.date })
-                        .key((d) => { return d.type })
-                        .rollup((d) => { return d.length; })
-                        .entries(dates)
-                        .sortBy((el) => { return el.key; });
-
-    grouped = grouped.map((el) => { 
-      let date = new Date(el.key);
-      let obj = { key: `${date.getFullYear()}-${date.getMonth()}-01` };
-      let type1 = el.values[0];
-      let type2 = el.values[1];
-
-      if(type1) {
-        obj[type1.key] = type1.value;
-      }
-
-      if(type2) {
-        obj[type2.key] = type2.value;
-      }
-      
-      return obj;
-    });
-
-    return grouped.sortBy((el) => { return new Date(el.key); });
-  }),
 
   // investments
   investmentTypes: INVESTMENT_TYPES.join('|'),
@@ -240,6 +200,10 @@ export default Ember.Controller.extend({
     updateDate(date){
       this.set('fake_open_or_closed', new Date(date));
       this.set('investments_fake_open_or_closed', new Date(date));
+    },
+    updateSliderDate(val) {
+      this.set('fake_open_or_closed', val);
+      console.log(new Date(val));
     }
   },
 
@@ -251,3 +215,4 @@ export default Ember.Controller.extend({
     { to: (num) => number_format(num, 0) }
   ]
 });
+

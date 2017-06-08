@@ -11,9 +11,9 @@
                       image=(or card.splash card.iconUrl)
                       height=150}}
             {{#if card.feature_name}}
-              {{card.feature_name}}
+              {{truncate card.feature_name 15}}
             {{else}}
-              ${{number-format card.amount_estimated decimals=0}} - {{card.project}}
+              ${{truncate card.project 15}}
             {{/if}}
           {{/tdi-card}}
         </div>
@@ -32,7 +32,7 @@
                       modelContext=parcel 
                       image=parcel.splash
                       height=100}}
-            {{parcel.address}}
+            {{truncate parcel.address 15}}
           {{/tdi-card}}
         </div>
       {{else}}

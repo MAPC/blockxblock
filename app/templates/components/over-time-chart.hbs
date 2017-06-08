@@ -1,4 +1,4 @@
-{{c3-chart  size=size
+{{!-- {{c3-chart  size=size
             data=data
             axis=axis
             legend=legend
@@ -8,4 +8,9 @@
             onrendered=onrendered
             regions=regions
             padding=padding
-}}
+}} --}}
+{{range-slider  start=selection
+                tooltips=tooltipsConfig
+                min=timeMin
+                max=timeMax
+                on-change=onEnd}}

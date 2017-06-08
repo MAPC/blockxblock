@@ -1,8 +1,56 @@
 import Ember from 'ember';
+import moment from 'moment';
+import { nest } from 'd3-collection';
+
+function flatten(arr) {
+  return arr.reduce((a,b)=> { return a.concat(b); }, []); 
+}
 
 export default Ember.Component.extend({
   dates: null,
-  selection: '2016-01-01',
+  openDates: Ember.computed('models', function() {
+    let models = this.get('models');
+    if (Array.isArray(models)) { 
+      models = flatten(models.invoke('map', (model)=> { return model; }));
+    } 
+    return flatten(models.mapBy('fake_open_or_closed').invoke('filterBy','status', 'open'));
+  }),
+  openDateStamps: Ember.computed('openDates', function() {
+    let models = this.get('openDates');
+    return models.mapBy('quarter');
+  }),
+  openMonthYears: Ember.computed('openDateStamps', function() {
+    let openDates = this.get('openDates');
+
+    // return open
+    // let grouped = nest().key((d) => { return d.type })
+    //                     .rollup((d) => { return d.length; })
+    //                     .entries(dates)
+    //                     .sortBy((el) => { return el.key; });
+
+    // grouped = grouped.map((el) => { 
+    //   let date = new Date(el.key);
+    //   let obj = { key: `${date.getFullYear()}-${date.getMonth()}-01` };
+    //   let type1 = el.values[0];
+    //   let type2 = el.values[1];
+
+    //   if(type1) {
+    //     obj[type1.key] = type1.value;
+    //   }
+
+    //   if(type2) {
+    //     obj[type2.key] = type2.value;
+    //   }
+      
+    //   return obj;
+    // });
+
+    // return grouped.sortBy((el) => { return new Date(el.key); });
+  }),
+
+  tooltipsConfig: [
+    { to: (num) => { return moment(num).format('MMM Do YYYY'); } }
+  ],
 
   data: Ember.computed('dates', function() {
     let that = this;
@@ -73,6 +121,16 @@ export default Ember.Component.extend({
     height: 100
   },
 
+  // range-slider
+  timeMin: Ember.computed('models', function() {
+    let models = this.get('openDateStamps');
+    return Math.min(...models);
+  }),
+  timeMax: Ember.computed('selection', function() {
+    let models = this.get('openDateStamps');
+    return Math.max(...models);
+  }),
+
   onrendered: Ember.computed(function(c3) {
     var that = this;
     return function() {
@@ -83,5 +141,11 @@ export default Ember.Component.extend({
       d3.selectAll('.c3-chart-lines')
         .style('display', 'none');
     }
-  })
+  }),
+
+  actions: {
+    update(value) {
+      console.log(new Date(value));
+    }
+  }
 });

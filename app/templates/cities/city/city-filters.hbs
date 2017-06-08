@@ -79,11 +79,13 @@
           </h4>
           <div class="ui vertical list">
             {{#each cc.investmentTypeOptions as |option|}}
-              {{ui-checkbox 
-                label=option 
+              {{#ui-checkbox 
                 class="item"
                 checked=(array-contains cc.investmentTypesArray option)
                 onChange=(action 'composeList' option 'investmentTypes' target=cc)}}
+                <img src="/images/icons/investments/{{lowercase option}}.png" class="ui avatar image" /> 
+                {{option}}
+              {{/ui-checkbox}}
             {{/each}}
             {{#if session.isAuthenticated}}
               {{ui-checkbox 
@@ -110,11 +112,13 @@
           </h4>
           <div class="ui horizontal list">
             {{#each cc.investmentSourcesOptions as |option|}}
-              {{ui-checkbox 
-                label=option 
+              {{#ui-checkbox 
                 class="item"
                 checked=(array-contains cc.investmentSourcesArray option)
                 onChange=(action 'composeList' option 'investmentSources' target=cc)}}
+                <img src="/images/icons/investments/badge/{{lowercase option}}.png" class="ui avatar image" /> 
+                {{option}}
+              {{/ui-checkbox}}
             {{/each}}
           </div>
           <h4 class="ui header">

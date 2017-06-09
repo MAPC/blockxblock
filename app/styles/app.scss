@@ -231,6 +231,12 @@ main {
     background-color: white;
 }
 
+.ui.label.even-spaced {
+    min-width: 100px;
+    text-align: center;
+    flex-grow: 1;
+}
+
 .ui.label.filters-label:hover {
     border: 2px solid $primary-color;
     background-color: $primary-color;
@@ -305,4 +311,12 @@ main {
 
 .noUi-tooltip {
     width: 100px;
+}
+
+.filter-label-group {
+    display: flex;
+}
+
+.flex-direction-column {
+    flex-direction: column;
 }

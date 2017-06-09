@@ -1,14 +1,14 @@
  <div class="ui container">
   <h1>View Data</h1>
 
-  <div class="ui labels">
-    <a class="ui {{if cc.showFeatures 'inverted tdi-blue' 'filters-label'}} large label" onclick={{action (mut cc.showFeatures) (not cc.showFeatures)}}>
+  <div class="ui labels filter-label-group">
+    <a class="ui {{if cc.showFeatures 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut cc.showFeatures) (not cc.showFeatures)}}>
       Places
     </a>
-    <a class="ui {{if cc.showInvestments 'inverted tdi-blue' 'filters-label'}} large label" onclick={{action (mut cc.showInvestments) (not cc.showInvestments)}}>
+    <a class="ui {{if cc.showInvestments 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut cc.showInvestments) (not cc.showInvestments)}}>
       Investments
     </a>
-    <a class="ui {{if cc.showParcels 'inverted tdi-blue' 'filters-label'}} large label" onclick={{action (mut cc.showParcels) (not cc.showParcels)}}>
+    <a class="ui {{if cc.showParcels 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut cc.showParcels) (not cc.showParcels)}}>
       Parcels
     </a>
   </div>
@@ -31,13 +31,13 @@
       <div class="active content">
         <div class="ui basic segment">
           <h4 class="ui header">Place Status</h4>
-          <div class="ui labels">
-            <a class="ui {{if cc.is_employer 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_employer) (not cc.is_employer)}}>Employer</a> 
-             <a class="ui {{if cc.is_street_activating 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_street_activating) (not cc.is_street_activating)}}>Street Activating</a> 
-            <a class="ui {{if cc.is_collision_point 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_collision_point) (not cc.is_collision_point)}}>Community Hub</a> 
+          <div class="ui filter-label-group labels">
+            <a class="ui {{if cc.is_employer 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut cc.is_employer) (not cc.is_employer)}}>Employer</a> 
+             <a class="ui {{if cc.is_street_activating 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut cc.is_street_activating) (not cc.is_street_activating)}}>Street Activating</a> 
+            <a class="ui {{if cc.is_collision_point 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut cc.is_collision_point) (not cc.is_collision_point)}}>Community Hub</a> 
             {{#if session.isAuthenticated}}
-              <a class="ui {{if cc.is_tdi_asset 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_tdi_asset) (not cc.is_tdi_asset)}}>TDI Asset</a> 
-              <a class="ui {{if cc.is_feature_owner_engaged 'inverted tdi-blue' 'filters-label'}} label" onclick={{action (mut cc.is_feature_owner_engaged) (not cc.is_feature_owner_engaged)}}>Owner Engaged</a> 
+              <a class="ui {{if cc.is_tdi_asset 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut cc.is_tdi_asset) (not cc.is_tdi_asset)}}>TDI Asset</a> 
+              <a class="ui {{if cc.is_feature_owner_engaged 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut cc.is_feature_owner_engaged) (not cc.is_feature_owner_engaged)}}>Owner Engaged</a> 
             {{/if}}
           </div>
         </div>
@@ -147,9 +147,9 @@
         <h4 class="ui header">Symbolize Map</h4>
         <div class="ui equal width grid">
           <div class="column">
-            <div class="ui labels">
+            <div class="ui labels flex-direction-column filter-label-group">
               {{#each cc.parcelChoroplethSets as |colorSet|}}
-                <a class="ui {{if (eq colorSet cc.choroplethLayer) 'inverted tdi-blue' 'filters-label'}} label" {{action 'changeProperty' 'choroplethLayer' colorSet target=cc}}>
+                <a class="ui {{if (eq colorSet cc.choroplethLayer) 'inverted tdi-blue' 'filters-label'}} even-spaced label" {{action 'changeProperty' 'choroplethLayer' colorSet target=cc}}>
                   {{colorSet}}
                 </a> 
               {{/each}}

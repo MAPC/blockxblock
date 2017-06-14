@@ -19,12 +19,16 @@
                 zoom      = zoom 
                 lat       = lat
                 lng       = lng
-                maxZoom   = maxZoom }}
+                maxZoom   = maxZoom}}
   {{#if (eq basemap 'default')}}
-    {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+    {{tile-layer  maxNativeZoom=maxNativeZoom
+                  maxZoom=maxZoom 
+                  url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" }}
   {{/if}}
   {{#if (eq basemap 'satellite')}}
-    {{tile-layer url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'}}
+    {{tile-layer  maxNativeZoom=maxNativeZoom
+                  maxZoom=maxZoom  
+                  url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' }}
   {{/if}}
   {{yield}}
 {{/leaflet-map}}

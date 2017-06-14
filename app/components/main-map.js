@@ -7,9 +7,10 @@ export default Ember.Component.extend({
   lat: Ember.computed.alias('currentCity.latitude'),
   lng: Ember.computed.alias('currentCity.longitude'),
   city: Ember.computed.alias('currentCity.city'),
-  maxZoom: 18,
+  maxZoom: 20,
+  maxNativeZoom: 18,
 
-  basemap: 'default',
+  basemap: 'default', 
 
   actions: {
     updateNewPoint(map) {

@@ -3,7 +3,7 @@
     <div class="left menu" id="left-items">
       <div class="cubes item">
         {{#link-to 'application' class='cities-link'}}
-          <i class="grid layout icon"></i>
+          <i class="content large icon"></i>
         {{/link-to}}
       </div>
       {{#ui-dropdown class="dropdown item" selected=currentCity.city.name}}
@@ -18,8 +18,8 @@
         </div>
       {{/ui-dropdown}}
     </div>
-    <div class="item">
-      MassDevelopment &nbsp;<strong>Block x Block</strong>
+    <div class="header item">
+      <h3>MassDevelopment &nbsp;<strong>Block x Block</strong></h3>
     </div>
     <div class="right menu" id="right-items">
       {{#if (not session.isAuthenticated)}}

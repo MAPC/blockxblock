@@ -320,3 +320,15 @@ main {
 .flex-direction-column {
     flex-direction: column;
 }
+
+.ui.menu {
+  .text {
+    font-size: 1.3em;
+  }
+}
+
+.header.item {
+  strong {
+    font-size: 1.1em;
+  }
+}

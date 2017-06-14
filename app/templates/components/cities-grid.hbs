@@ -1,10 +1,10 @@
-<div class="ui three column stackable grid link cards">
+<div class="ui five column stackable grid link cards">
   {{#each cities as |city|}}
     <div class="column">
       {{#tdi-card route='cities.city.city-filters' 
                   modelContext=city.id 
                   image=city.splash
-                  height=300}}
+                  height=200}}
         <span class="right floated">
           {{#if city.fellows}}
             <i class="user icon"></i>

@@ -132,8 +132,9 @@ export default Ember.Controller.extend({
   parcelChoroplethConfig: PARCEL_MAP_CONFIG,
   parcelChoroplethSets: PARCEL_MAP_CONFIG.mapBy('setName'),
   iconCreateFunction: function(cluster) {
-    // cluster.getChildCount()
-    return L.icon({ iconUrl: `${config.prepend ? config.prepend : '/'}images/icons/investments/cluster.png`, iconSize: [41,41] });
+    let count = cluster.getChildCount();
+    return L.divIcon({className: 'dynamic-cluster',  iconSize: [39,39], html: `<h3 class="ui inverted header">${count}</h3>`});
+    // return L.icon({ iconUrl: `${config.prepend ? config.prepend : '/'}images/icons/investments/cluster.png`, iconSize: [41,41] });
   },
 
   currentFeature: null,

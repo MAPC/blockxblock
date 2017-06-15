@@ -8,6 +8,7 @@ function flatten(arr) {
 
 export default Ember.Component.extend({
   dates: null,
+  classNames: ['over-time-chart'],
   openDates: Ember.computed('models', function() {
     let models = this.get('models');
     if (Array.isArray(models)) { 
@@ -130,6 +131,10 @@ export default Ember.Component.extend({
     let models = this.get('openDateStamps');
     return Math.max(...models);
   }),
+
+  didInsertElement() {
+    this.set('selection', this.get('timeMin'));
+  },
 
   onrendered: Ember.computed(function(c3) {
     var that = this;

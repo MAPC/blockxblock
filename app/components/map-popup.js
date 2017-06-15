@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     onMouseover(event) {
       this.set('hidden', false);
       let mapInstance = this.get('currentCity.mapInstance');
-      let clientClick = mapInstance.latLngToContainerPoint(event.target.getLatLng());
+      let clientClick = mapInstance.latLngToContainerPoint(event.latlng);
       this.set('top', clientClick.y);
       this.set('left', clientClick.x)
       window.point = event;

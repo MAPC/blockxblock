@@ -68,13 +68,20 @@
         {{#if showParcels}}
           {{#each visibleParcels as |parcel|}}
             {{#if parcel.geom}}
-              {{geojson-layer geoJSON=parcel.geojson 
-                              style=parcelsChoroplethMapping 
-                              onClick=(action 'linkTo' 'cities.city.parcels' parcel)
-                              pane='parcels'}}
-              {{#if parcel.isSelected}}
-                {{marker-layer lat=parcel.latitude lng=parcel.longitude opacity=1}}
-              {{/if}}
+              {{#map-popup lat=parcel.latitude lng=parcel.longitude as |popup|}}
+                <strong>{{parcel.ownership_type}}</strong>
+                <img class="ui small image" src={{parcel.splash}}/>
+                <strong>{{parcel.address}}</strong>
+                {{geojson-layer geoJSON=parcel.geojson 
+                                style=parcelsChoroplethMapping 
+                                onClick=(action 'linkTo' 'cities.city.parcels' parcel.id)
+                                onMouseover=(action popup.onMouseover)
+                                onMouseout=(action popup.onMouseout)
+                                pane='parcels'}}
+                {{#if parcel.isSelected}}
+                  {{marker-layer lat=parcel.latitude lng=parcel.longitude opacity=1}}
+                {{/if}}
+              {{/map-popup}}
             {{/if}}
           {{/each}}
         {{/if}}

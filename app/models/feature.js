@@ -20,7 +20,8 @@ export default DS.Model.extend({
   closedate: DS.attr("date"),
   splash: Ember.computed('latitude,longitude', function() {
     let { latitude, longitude } = this.getProperties('latitude', 'longitude');
-    return `https://maps.googleapis.com/maps/api/streetview?size=450x450&location=${latitude},${longitude}&key=AIzaSyCO654zBIabvjSOV4Ys59Pku8pmzM387ps`;
+    let featured_photo = this.get('featured_photo');
+    return featured_photo || `https://maps.googleapis.com/maps/api/streetview?size=450x450&location=${latitude},${longitude}&key=AIzaSyCO654zBIabvjSOV4Ys59Pku8pmzM387ps`;
   }),
   iconUrl: Ember.computed('feature_type', function() {
     let featureType = this.get('feature_type').dasherize().replace('/', '');

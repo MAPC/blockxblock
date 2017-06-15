@@ -204,6 +204,19 @@ export default Ember.Controller.extend({
     updateSliderDate(val) {
       this.set('fake_open_or_closed', val);
       console.log(new Date(val));
+    },
+    export_csv() {
+      let data = this.get('visibleFeatures');
+      let keys = Object.keys(data[0].toJSON()).removeObjects(['city','relatedFeature','open_or_closed']);
+      let values = data.map((model)=> {
+        return Object.values(model.getProperties(...keys)).map(value=> { return value || '' });
+      });
+
+      values.unshift(keys);
+
+      console.log(values);
+
+      this.get('csv').export(values, 'data.csv');
     }
   },
 

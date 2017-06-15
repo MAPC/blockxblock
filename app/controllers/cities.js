@@ -6,6 +6,7 @@ import { number_format } from 'ember-string-helpers/utils/functions';
 import monthsBetween from '../utils/months-between';
 import config from '../config/environment';
 import computed from 'ember-computed';
+import csvFactory from '../utils/csv-factory';
 
 import {  FEATURE_PARAMS, 
           FEATURE_TYPES,
@@ -206,17 +207,14 @@ export default Ember.Controller.extend({
       console.log(new Date(val));
     },
     export_csv() {
-      let data = this.get('visibleFeatures');
-      let keys = Object.keys(data[0].toJSON()).removeObjects(['city','relatedFeature','open_or_closed']);
-      let values = data.map((model)=> {
-        return Object.values(model.getProperties(...keys)).map(value=> { return value || '' });
-      });
+      let features = csvFactory(this.get('visibleFeatures'), ['city','relatedFeature','open_or_closed']);
+      let investments = csvFactory(this.get('visibleInvestments'), ['city','relatedInvestment','investment_status']);
+      console.log(investments);
+      this.get('csv').export(features, {fileName: 'features.csv'});
 
-      values.unshift(keys);
-
-      console.log(values);
-
-      this.get('csv').export(values, 'data.csv');
+      setTimeout(() => {
+        this.get('csv').export(investments, {fileName: 'investments.csv'});
+      }, 3000);
     }
   },
 

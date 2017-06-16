@@ -131,9 +131,11 @@ main {
 }
 
 .list-results {
-    height: 100%;
-    overflow: scroll;
-    position: absolute;
+  height: 100%;
+  overflow: scroll;
+  position: absolute;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .map-results {
@@ -347,4 +349,17 @@ main {
     width:100%;
     z-index:9999;
     bottom:40px;
+}
+
+.edit-mode {
+  background-color: #A0C8BE;
+}
+
+.city-details .liquid-container {
+  padding: 2em !important; 
+}
+
+.city-details .container {
+  padding: 2em !important; 
+  margin: 2em;
 }

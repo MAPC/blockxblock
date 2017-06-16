@@ -1,246 +1,248 @@
-{{#liquid-bind model use="toLeft" class="features" as |currentModel|}}
-  <div class="features">
-  <h2 class="ui header">
-    <img class="ui circular image" src={{model.splash}}/>
-    <div class="content">
-      {{model.feature_name}}
-      <div class="sub header">{{model.feature_type}}</div>
-    </div>
-  </h2>
+<div class="edit-mode">
+  {{#liquid-bind model use="toLeft" class="features" as |currentModel|}}
+    <div class="features">
+    <h2 class="ui header">
+      <img class="ui circular image" src={{model.splash}}/>
+      <div class="content">
+        {{model.feature_name}}
+        <div class="sub header">{{model.feature_type}}</div>
+      </div>
+    </h2>
 
-  {{#edit-resource model=model as |field|}}
-    <form class="ui form">
-      <div class="ui dividing header">
-        Add Place
-      </div>
-      <div class="field">
-        <label>Add feature name</label>
-        {{input type='text' name='name' value=model.feature_name}}
-      </div>
-      <div class="ui dividing header">
-        Location
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          {{ui-checkbox class="toggle" 
-                        label="Is this feature locatable at a single address or small range of addresses?" 
-                        checked=model.is_addressy 
-                        onChange=(action (mut model.is_addressy))}}
-        </div>
-      </div>
-
-      {{#liquid-if model.is_addressy}}
-        <div class="field">
-          <label>Address Number</label>
-          {{input type='text' name='name' value=address_number}}
+    {{#edit-resource model=model as |field|}}
+      <form class="ui form">
+        <div class="ui dividing header">
+          Add Place
         </div>
         <div class="field">
-          <label>Street Name</label>
-          {{input type='text' name='name' value=street_name}}
+          <label>Add feature name</label>
+          {{input type='text' name='name' value=model.feature_name}}
+        </div>
+        <div class="ui dividing header">
+          Location
         </div>
         <div class="field">
-          <label>Street Suffix</label>
-          {{input type='text' name='name' value=street_suffix}}
-        </div>
-      {{else}}
-        <div class="field">
-          <label>Describe the location (street intersection, etc.)</label>
-          {{input type='text' name='name' value=model.non_addressy_location}}
-        </div>
-      {{/liquid-if}}
-      <div class="ui dividing header">
-        Attributes
-      </div>
-      <div class="field">
-        <label>Select the feature type</label>
-        {{#ui-dropdown class="selection" selected=model.feature_type onChange=(action (mut model.feature_type))}}
-          <div class="default text">Select the feature type</div>
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            {{#each field.assetTypes as |type|}}
-              <div class="item" data-value="{{type}}">
-                {{type}}
-              </div>
-            {{/each}}
+          <div class="ui checkbox">
+            {{ui-checkbox class="toggle" 
+                          label="Is this feature locatable at a single address or small range of addresses?" 
+                          checked=model.is_addressy 
+                          onChange=(action (mut model.is_addressy))}}
           </div>
-        {{/ui-dropdown}}
-      </div>
-      {{#if model.feature_type}}
+        </div>
+
+        {{#liquid-if model.is_addressy}}
+          <div class="field">
+            <label>Address Number</label>
+            {{input type='text' name='name' value=address_number}}
+          </div>
+          <div class="field">
+            <label>Street Name</label>
+            {{input type='text' name='name' value=street_name}}
+          </div>
+          <div class="field">
+            <label>Street Suffix</label>
+            {{input type='text' name='name' value=street_suffix}}
+          </div>
+        {{else}}
+          <div class="field">
+            <label>Describe the location (street intersection, etc.)</label>
+            {{input type='text' name='name' value=model.non_addressy_location}}
+          </div>
+        {{/liquid-if}}
+        <div class="ui dividing header">
+          Attributes
+        </div>
         <div class="field">
-          <label>Select the feature sub-type</label>
-          {{#ui-dropdown class="selection" selected=model.subtype onChange=(action (mut model.subtype))}}
-            <div class="default text">Select the feature sub-type</div>
+          <label>Select the feature type</label>
+          {{#ui-dropdown class="selection" selected=model.feature_type onChange=(action (mut model.feature_type))}}
+            <div class="default text">Select the feature type</div>
             <i class="dropdown icon"></i>
             <div class="menu">
-              {{#each (get field.assetSubTypes model.feature_type) as |subtype|}}
-                <div class="item" data-value="{{subtype}}">
-                  {{subtype}}
+              {{#each field.assetTypes as |type|}}
+                <div class="item" data-value="{{type}}">
+                  {{type}}
                 </div>
               {{/each}}
             </div>
           {{/ui-dropdown}}
         </div>
-      {{/if}}
-      <div class="field">
-        <label>Add an open or close date as needed.</label>
-        {{timeline-builder snapshots=model.open_or_closed choices=(array 'open' 'closed')}}
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          {{ui-checkbox class="toggle" 
-                        label="Is this feature an employer?" 
-                        checked=model.employer 
-                        onChange=(action (mut model.employer))}}
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          {{ui-checkbox class="toggle" 
-                        label="Does this feature activate the street nearby?" 
-                        checked=model.activating 
-                        onChange=(action (mut model.activating))}}
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          {{ui-checkbox class="toggle" 
-                        label="Does this feature contribute to the goals of the TDI program?" 
-                        checked=model.is_tdi_asset 
-                        onChange=(action (mut model.is_tdi_asset))}}
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          {{ui-checkbox class="toggle" 
-                        label="Is this feature a community hub for members of the community?" 
-                        checked=model.is_collision_point 
-                        onChange=(action (mut model.is_collision_point))}}
-        </div>
-      </div>
-
-      <div class="ui dividing header">
-        Documents and Links
-      </div>
-      <div class="field">
-        <label>Add an illustrative photo of this feature.</label>
-        {{file-field-progress}}
-      </div>
-
-      <div class="field">
-        <label>Add any related documents. These are publicly visible.</label>
-        {{file-field-progress}}
-      </div>
-
-      <div class="field">
-        <label>Add any related documents. These are not publicly visible.</label>
-        {{file-field-progress}}
-      </div>
-
-      <div class="field">
-        <label>Enter the URL for any related website.</label>
-        {{input type='text' name='name' value=model.related_link_url}}
-      </div>
-
-      <div class="field">
-        <label>Enter a label for this related website.</label>
-        {{input type='text' name='name' value=model.related_link_title}}
-      </div>
-
-      <div class="ui dividing header">
-        Related Places and Investments
-      </div>
-
-      {{select-association 
-          selected=model.investments 
-          modelName='investment' 
-          placeholder="Search for an investment"
-          searchField='project'}}
-
-      <div class="field">
-        {{textarea value=model.relatedInvestmentsDescription placeholder='Describe these relationships a bit'}}
-      </div>
-
-      {{select-association
-          selected=model.relatedFeatures
-          modelName='feature'
-          placeholder="Search for a feature"
-          searchField='feature_name'}}
-
-      <div class="field">
-        {{textarea value=model.relatedFeaturesDescription placeholder='Describe these relationships a bit'}}
-      </div>
-
-      <div class="ui dividing header">
-        Contacts
-      </div>
-
-      <div class="field">
-        <label>Private Contact Name</label>
-        {{input type='text' name='name' value=model.priv_contact_name}}
-      </div>
-
-      {{#liquid-if model.priv_contact_name}} 
-        {{#each (array 'priv_contact_organization' 'priv_contact_role' 'priv_contact_phone' 'priv_contact_email' 'priv_contact_website') as |field|}}
+        {{#if model.feature_type}}
           <div class="field">
-            <label>{{humanize-string (replace-with field 'priv' '')}}</label>
-            {{input type='text' name='name' value=(get model field)}}
-          </div>
-        {{/each}}
-      {{/liquid-if}}
-
-      <div class="field">
-        <label>Public Contact Name</label>
-        {{input type='text' name='name' value=model.pub_contact_1}}
-      </div>
- 
-      {{#liquid-if model.pub_contact_1}} 
-        {{#each (array 'pub_contact_org_1' 'pub_contact_role_1' 'pub_contact_phone_1' 'pub_contact_email_1' 'pub_contact_website_1') as |field|}}
-          <div class="field">
-            <label>{{humanize-string (replace-with (replace-with field 'pub' '') '_1' '')}}</label>
-            {{input type='text' name='name' value=(get model field)}}
-          </div>
-        {{/each}}
-      {{/liquid-if}}
-
-      <div class="field">
-        <label>Public Contact Name (2)</label>
-        {{input type='text' name='name' value=model.pub_contact_2}}
-      </div>
-
-      {{#liquid-if model.pub_contact_2}} 
-        {{#each (array 'pub_contact_org_2' 'pub_contact_role_2' 'pub_contact_phone_2' 'pub_contact_email_2' 'pub_contact_website_2') as |field|}}
-          <div class="field">
-            <label>{{humanize-string (replace-with (replace-with field 'pub' '') '_2' '')}}</label>
-            {{input type='text' name='name' value=(get model field)}}
-          </div>
-        {{/each}}
-      {{/liquid-if}}
-
-      <div class="ui dividing header">
-        How To Get Involved
-      </div>
-
-      <div class="field">
-        <label>Write new "How To Get Involved" text if you wish to override the default text for this feature.</label>
-        {{input type='text' name='name' value=model.cta_text}}
-      </div>
-
-      <div class="field">
-        <label>Select the contact revealed when a user clicks this feature's "How To Get Involved" button.</label>
-        {{#ui-dropdown class="selection" selected=model.cta_contact onChange=(action (mut model.cta_contact))}}
-          <div class="default text" data-value="">Select One</div>
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            {{#each (array 'District Default Contact' 'Public Contact 1' 'Public Contact 2') as |type|}}
-              <div class="item" data-value="{{type}}">
-                {{type}}
+            <label>Select the feature sub-type</label>
+            {{#ui-dropdown class="selection" selected=model.subtype onChange=(action (mut model.subtype))}}
+              <div class="default text">Select the feature sub-type</div>
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                {{#each (get field.assetSubTypes model.feature_type) as |subtype|}}
+                  <div class="item" data-value="{{subtype}}">
+                    {{subtype}}
+                  </div>
+                {{/each}}
               </div>
-            {{/each}}
+            {{/ui-dropdown}}
           </div>
-        {{/ui-dropdown}}
-      </div>
+        {{/if}}
+        <div class="field">
+          <label>Add an open or close date as needed.</label>
+          {{timeline-builder snapshots=model.open_or_closed choices=(array 'open' 'closed')}}
+        </div>
+        <div class="field">
+          <div class="ui checkbox">
+            {{ui-checkbox class="toggle" 
+                          label="Is this feature an employer?" 
+                          checked=model.employer 
+                          onChange=(action (mut model.employer))}}
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui checkbox">
+            {{ui-checkbox class="toggle" 
+                          label="Does this feature activate the street nearby?" 
+                          checked=model.activating 
+                          onChange=(action (mut model.activating))}}
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui checkbox">
+            {{ui-checkbox class="toggle" 
+                          label="Does this feature contribute to the goals of the TDI program?" 
+                          checked=model.is_tdi_asset 
+                          onChange=(action (mut model.is_tdi_asset))}}
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui checkbox">
+            {{ui-checkbox class="toggle" 
+                          label="Is this feature a community hub for members of the community?" 
+                          checked=model.is_collision_point 
+                          onChange=(action (mut model.is_collision_point))}}
+          </div>
+        </div>
 
-    </form>
-  {{/edit-resource}}
+        <div class="ui dividing header">
+          Documents and Links
+        </div>
+        <div class="field">
+          <label>Add an illustrative photo of this feature.</label>
+          {{file-field-progress}}
+        </div>
+
+        <div class="field">
+          <label>Add any related documents. These are publicly visible.</label>
+          {{file-field-progress}}
+        </div>
+
+        <div class="field">
+          <label>Add any related documents. These are not publicly visible.</label>
+          {{file-field-progress}}
+        </div>
+
+        <div class="field">
+          <label>Enter the URL for any related website.</label>
+          {{input type='text' name='name' value=model.related_link_url}}
+        </div>
+
+        <div class="field">
+          <label>Enter a label for this related website.</label>
+          {{input type='text' name='name' value=model.related_link_title}}
+        </div>
+
+        <div class="ui dividing header">
+          Related Places and Investments
+        </div>
+
+        {{select-association 
+            selected=model.investments 
+            modelName='investment' 
+            placeholder="Search for an investment"
+            searchField='project'}}
+
+        <div class="field">
+          {{textarea value=model.relatedInvestmentsDescription placeholder='Describe these relationships a bit'}}
+        </div>
+
+        {{select-association
+            selected=model.relatedFeatures
+            modelName='feature'
+            placeholder="Search for a feature"
+            searchField='feature_name'}}
+
+        <div class="field">
+          {{textarea value=model.relatedFeaturesDescription placeholder='Describe these relationships a bit'}}
+        </div>
+
+        <div class="ui dividing header">
+          Contacts
+        </div>
+
+        <div class="field">
+          <label>Private Contact Name</label>
+          {{input type='text' name='name' value=model.priv_contact_name}}
+        </div>
+
+        {{#liquid-if model.priv_contact_name}} 
+          {{#each (array 'priv_contact_organization' 'priv_contact_role' 'priv_contact_phone' 'priv_contact_email' 'priv_contact_website') as |field|}}
+            <div class="field">
+              <label>{{humanize-string (replace-with field 'priv' '')}}</label>
+              {{input type='text' name='name' value=(get model field)}}
+            </div>
+          {{/each}}
+        {{/liquid-if}}
+
+        <div class="field">
+          <label>Public Contact Name</label>
+          {{input type='text' name='name' value=model.pub_contact_1}}
+        </div>
+   
+        {{#liquid-if model.pub_contact_1}} 
+          {{#each (array 'pub_contact_org_1' 'pub_contact_role_1' 'pub_contact_phone_1' 'pub_contact_email_1' 'pub_contact_website_1') as |field|}}
+            <div class="field">
+              <label>{{humanize-string (replace-with (replace-with field 'pub' '') '_1' '')}}</label>
+              {{input type='text' name='name' value=(get model field)}}
+            </div>
+          {{/each}}
+        {{/liquid-if}}
+
+        <div class="field">
+          <label>Public Contact Name (2)</label>
+          {{input type='text' name='name' value=model.pub_contact_2}}
+        </div>
+
+        {{#liquid-if model.pub_contact_2}} 
+          {{#each (array 'pub_contact_org_2' 'pub_contact_role_2' 'pub_contact_phone_2' 'pub_contact_email_2' 'pub_contact_website_2') as |field|}}
+            <div class="field">
+              <label>{{humanize-string (replace-with (replace-with field 'pub' '') '_2' '')}}</label>
+              {{input type='text' name='name' value=(get model field)}}
+            </div>
+          {{/each}}
+        {{/liquid-if}}
+
+        <div class="ui dividing header">
+          How To Get Involved
+        </div>
+
+        <div class="field">
+          <label>Write new "How To Get Involved" text if you wish to override the default text for this feature.</label>
+          {{input type='text' name='name' value=model.cta_text}}
+        </div>
+
+        <div class="field">
+          <label>Select the contact revealed when a user clicks this feature's "How To Get Involved" button.</label>
+          {{#ui-dropdown class="selection" selected=model.cta_contact onChange=(action (mut model.cta_contact))}}
+            <div class="default text" data-value="">Select One</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              {{#each (array 'District Default Contact' 'Public Contact 1' 'Public Contact 2') as |type|}}
+                <div class="item" data-value="{{type}}">
+                  {{type}}
+                </div>
+              {{/each}}
+            </div>
+          {{/ui-dropdown}}
+        </div>
+
+      </form>
+    {{/edit-resource}}
+  </div>
+  {{/liquid-bind}}
 </div>
-{{/liquid-bind}}

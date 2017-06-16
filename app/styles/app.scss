@@ -39,6 +39,7 @@ $primary-color: #0A4650;
 $gray: #E1E1E1;
 $red: #B40028;
 $secondary-color: #00AFAA;
+$tertiary-color: #A0C8BE;
 html,
 body {
     height: 100%;
@@ -359,7 +360,7 @@ main {
 }
 
 .edit-mode {
-  background-color: #A0C8BE;
+  background-color: $tertiary-color;
 }
 
 .city-details .liquid-container {
@@ -389,3 +390,11 @@ h1.splash.header .content{
     opacity: 1;
 }
 
+.add-data.menu {
+    background-color: $tertiary-color !important;
+}
+
+.ui.menu .ui.dropdown .add-data.menu > .item:hover {
+    background: rgba(0, 0, 0, 0) !important;
+    cursor: default;
+}

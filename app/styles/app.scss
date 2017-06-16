@@ -367,3 +367,18 @@ main {
 h1.splash.header .content{
     font-family: 'Dosis-ExtraBold' !important;
 }
+
+.image {
+    background-color: $primary-color !important;
+    z-index: 2;
+}
+
+.fluid.card .card-image {
+    opacity: 0.5;
+    -webkit-transition: opacity .25s ease;
+}
+
+.fluid.card .card-image:hover {
+    opacity: 1;
+}
+

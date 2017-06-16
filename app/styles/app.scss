@@ -2,6 +2,9 @@
 
 @import "ember-searchable-select/style";
 @import "ember-power-select";
+@import "ember-modal-dialog/ember-modal-structure";
+@import "ember-modal-dialog/ember-modal-appearance";
+
 @mixin font-face($name) {
     @font-face {
         font-family: $name;
@@ -43,6 +46,10 @@ body {
     padding: 0;
 }
 
+.ember-modal-overlay {
+    z-index: 500;
+}
+
 .ember-application > .ember-view {
     height: 100%;
     width: 100%;
@@ -69,14 +76,14 @@ body {
 .basemap-menu {
     position: absolute;
     right: 15px;
-    bottom: 15px;
-    z-index: 9999;
+    bottom: 60px;
+    z-index: 498;
 }
 
 .sidebar-tab {
     position: absolute;
     left: 0px;
-    z-index: 500;
+    z-index: 498;
     top: 49%;
 }
 
@@ -347,7 +354,7 @@ main {
 .over-time-chart {
     position: fixed;
     width:100%;
-    z-index:9999;
+    z-index:499;
     bottom:40px;
 }
 

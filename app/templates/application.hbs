@@ -1,3 +1,29 @@
+{{#if isLoggingIn}}
+  {{#modal-dialog
+      onClose=(action (mut isLoggingIn) false)
+      translucentOverlay=true
+      as |modal|}}
+    <div class="ui segment">
+      <div class="ui fields">
+        <div class="ui input">
+          <label for="username">Username</label>
+          {{input id='username' placeholder='Enter Login' value=username class='login-username'}}
+        </div>
+        <div class="ui input">
+          <label for="password">Password</label>
+          {{input id='password' placeholder='Enter Password' type='password' value=password class='login-password'}}
+        </div>
+      </div>
+
+      <div class="ui primary button login-submit" {{action 'authenticate'}}>Login</div>
+
+      {{#if errorMessage}}
+        <p>{{errorMessage}}</p>
+      {{/if}}
+      <div class="ui secondary button" onclick={{action (mut isLoggingIn) false}}>Close</div>
+    </div>
+  {{/modal-dialog}}
+{{/if}}
 <nav>
   <div class="ui inverted main menu">
     <div class="left menu" id="left-items">
@@ -23,9 +49,9 @@
     </div>
     <div class="right menu" id="right-items">
       {{#if (not session.isAuthenticated)}}
-        <div class="item">
-          {{link-to 'Login' 'login' class='login-link'}}
-        </div>
+        <a class="item" onclick={{action (mut isLoggingIn)}}>
+          Login
+        </a>
       {{else}}
         <div class="item">
           <div class="ui button" {{action 'invalidateSession'}}>Logout</div>

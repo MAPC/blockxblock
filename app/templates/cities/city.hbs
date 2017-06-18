@@ -1,6 +1,9 @@
 {{#ember-wormhole to="left-items"}}
-  <div class="item">
-    {{#ui-dropdown class="dropdown ui button"}}
+  {{#link-to 'cities.city.add-data' class='item'}} 
+    <i class="plus icon"></i>
+    Add Data
+  {{/link-to}}
+{{!--     {{#ui-dropdown class="dropdown ui button"}}
       <i class="plus icon"></i>
       Add Data
       <div class="add-data menu">
@@ -25,8 +28,7 @@
           {{/link-to}}
         </div>
       </div>
-    {{/ui-dropdown}}
-  </div>
+    {{/ui-dropdown}} --}}
 {{/ember-wormhole}}
 
 {{#ember-wormhole to="right-items"}}

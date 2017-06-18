@@ -110,6 +110,7 @@ export default Ember.Controller.extend({
   showInvestments: true,
   showFeatures: true,
   showParcels: false,
+  isExporting: false,
 
   choroplethLayer: 'Available Spaces',
   parcelsChoroplethMapping: computed('visibleParcels', 'choroplethLayer', function() {
@@ -207,15 +208,10 @@ export default Ember.Controller.extend({
       this.set('fake_open_or_closed', val);
       console.log(new Date(val));
     },
-    export_csv() {
-      let features = csvFactory(this.get('visibleFeatures'), ['city','relatedFeature','open_or_closed']);
-      let investments = csvFactory(this.get('visibleInvestments'), ['city','relatedInvestment','investment_status']);
-      console.log(investments);
-      this.get('csv').export(features, {fileName: 'features.csv'});
-
-      setTimeout(() => {
-        this.get('csv').export(investments, {fileName: 'investments.csv'});
-      }, 3000);
+    export_csv(resource, exceptions) {
+      let resources = csvFactory(this.get(resource), exceptions);
+      console.log(resources);
+      this.get('csv').export(resources, {fileName: `${resource}.csv`});
     }
   },
 

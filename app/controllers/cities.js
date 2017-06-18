@@ -135,14 +135,13 @@ export default Ember.Controller.extend({
   iconCreateFunction: function(cluster) {
     let count = cluster.getChildCount();
     return L.divIcon({className: 'dynamic-cluster',  iconSize: [39,39], html: `<h3 class="ui inverted header">${count}</h3>`});
-    // return L.icon({ iconUrl: `${config.prepend ? config.prepend : '/'}images/icons/investments/cluster.png`, iconSize: [41,41] });
   },
 
   currentFeature: null,
   hideSidebar: false,
 
   // applied computed filters
-  visibleFeatures: computed(...FEATURE_PARAMS, 'currentCity.city.features', 
+  visibleFeatures: computed(...FEATURE_PARAMS, 'investmentIcons', 'currentCity.city.features', 
     applyFiltersTo('currentCity.city.features', FEATURE_FILTERS_CONFIG)),
 
   visibleInvestments: computed(...INVESTMENT_PARAMS, 'currentCity.city.investments', 

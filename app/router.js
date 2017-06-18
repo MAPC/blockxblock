@@ -25,6 +25,7 @@ Router.map(function() {
       this.route('new-investment', { path: '/investments/new' });
 
       // for edit, just have a component with an init that creates the map point through the service
+      this.route('add-data', { path: 'add' });
     });
   });
   this.route('login');

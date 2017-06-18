@@ -1,8 +1,32 @@
 {{#ember-wormhole to="fixed-footer"}}
-  <div class="link item" {{action 'export_csv'}}>
+  <div class="link item" onclick={{action (mut isExporting) true}}>
     Export
   </div>
 {{/ember-wormhole}}
+
+{{#if isExporting}}
+  {{#modal-dialog
+      onClose=(action (mut isExporting) false)
+      translucentOverlay=true
+      as |modal|}}
+    <div class="ui segment">
+      <div class="ui dividing header">
+        Export Current Screen
+      </div>
+      <div class="ui button" {{action 'export_csv' 'visibleFeatures' (array 'city' 'relatedFeature' 'open_or_closed')}}>
+        Features
+      </div>
+      <div class="ui button" {{action 'export_csv' 'visibleInvestments' (array 'city' 'relatedInvestment' 'investment_status')}}>
+        Investments
+      </div>
+      <div class="ui button" {{action 'export_csv' 'visibleParcels' (array 'city' 'geom' 'geojson' 'latest_is_engaged_owner' 'latest_is_for_sale' 'latest_is_for_lease' 'latest_is_vacant_lot' 'latest_ground_floor_vacancy' 'latest_upper_floor_vacancy' 'is_engaged_owner' 'is_for_sale' 'is_for_lease' 'is_vacant_lot' 'ground_floor_vacancy' 'upper_floor_vacancy' 'yearBuilt')}}>
+        Parcels
+      </div>
+      <div class="ui secondary button" onclick={{action (mut isExporting) false}}>Close</div>
+    </div>
+  {{/modal-dialog}}
+{{/if}}
+
 <div class="cities ui grid">
   <div class="list-results ui segment six wide column" id="sidebar">
     <div class="city-details">

@@ -1,0 +1,17 @@
+{{#map-popup lat=feature.latitude lng=feature.longitude as |popup|}}
+  <strong>{{feature.feature_type}}</strong>
+  <img class="ui small image" src={{feature.splash}}/>
+  <strong>{{feature.feature_name}}</strong>
+  {{log iconSize}}
+  {{#marker-layer lat=feature.latitude 
+                  lng=feature.longitude 
+                  icon=(div-icon  iconSize=iconSize
+                                  className='related-investments-icon' 
+                                  html=markup
+                        )
+                  onClick=(action linkTo 'cities.city.features' feature)
+                  onMouseover=(action popup.onMouseover)
+                  onMouseout=(action popup.onMouseout)
+                  pane='points'}}
+  {{/marker-layer}}
+{{/map-popup}}

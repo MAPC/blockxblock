@@ -398,3 +398,19 @@ h1.splash.header .content{
     background: rgba(0, 0, 0, 0) !important;
     cursor: default;
 }
+
+.related-investments-icon {
+    .images {
+        background-color: $primary-color;
+        border-radius: 20px;
+        border-width: 0;
+    }
+
+    .ui.images {
+        margin: 0;
+    }
+
+    .ui.images img {
+        margin: 0;
+    }
+}

@@ -67,19 +67,7 @@
           {{#if showFeatures}}
             {{#each visibleFeatures as |feature|}}
               {{#if (and feature.latitude feature.id)}}
-                {{#map-popup lat=feature.latitude lng=feature.longitude as |popup|}}
-                  <strong>{{feature.feature_type}}</strong>
-                  <img class="ui small image" src={{feature.splash}}/>
-                  <strong>{{feature.feature_name}}</strong>
-                  {{#marker-layer lat=feature.latitude 
-                                  lng=feature.longitude 
-                                  icon=(icon iconUrl=feature.iconUrl iconSize=(if feature.isSelected (array 35 35) (array 25 25)))
-                                  onClick=(action 'linkTo' 'cities.city.features' feature)
-                                  onMouseover=(action popup.onMouseover)
-                                  onMouseout=(action popup.onMouseout)
-                                  pane='points'}}
-                  {{/marker-layer}}
-                {{/map-popup}}
+                {{related-investments-icon feature=feature linkTo=(action 'linkTo')}}
               {{/if}}
             {{/each}}
           {{/if}}

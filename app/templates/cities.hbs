@@ -67,28 +67,7 @@
           {{#if showFeatures}}
             {{#each visibleFeatures as |feature|}}
               {{#if (and feature.latitude feature.id)}}
-                {{#map-popup lat=feature.latitude lng=feature.longitude as |popup|}}
-                  <strong>{{feature.feature_type}}</strong>
-                  <img class="ui small image" src={{feature.splash}}/>
-                  <strong>{{feature.feature_name}}</strong>
-                  {{#marker-layer lat=feature.latitude 
-                                  lng=feature.longitude 
-                                  icon=(div-icon className='related-investments-icon' html=(construct-related-investments-markup feature (map-by 'investments' feature)))
-                                  onClick=(action 'linkTo' 'cities.city.features' feature)
-                                  onMouseover=(action popup.onMouseover)
-                                  onMouseout=(action popup.onMouseout)
-                                  pane='points'}}
-                  {{/marker-layer}}
-                  {{#each feature.investments as |investment|}}
-                    {{marker-layer  
-                        lat=investment.latitude 
-                        lng=investment.longitude 
-                        icon=(icon iconUrl=investment.iconUrl iconSize=(if investment.isSelected (array 61 61) (array 41 41)))
-                        onClick=(action 'linkTo' 'cities.city.investments' investment)
-                        onMouseover=(action popup.onMouseover)
-                        onMouseout=(action popup.onMouseout)}}
-                  {{/each}}
-                {{/map-popup}}
+                {{related-investments-icon feature=feature linkTo=(action 'linkTo')}}
               {{/if}}
             {{/each}}
           {{/if}}

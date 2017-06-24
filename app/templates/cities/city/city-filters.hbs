@@ -126,7 +126,7 @@
           </h4>
           <div class="ui basic segment">
             {{range-slider start=(array cc.valueMin cc.valueMax)
-                           range=(hash min=cc.amountsMin max=cc.amountsMax)
+                           range=(hash min=(or cc.amountsMin 0) max=(or cc.amountsMax 1))
                            tooltips=cc.tooltipsConfig
                            connect=true
                            step=1

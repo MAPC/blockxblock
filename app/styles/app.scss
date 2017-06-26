@@ -363,7 +363,7 @@ main {
   background-color: $tertiary-color;
 }
 
-.city-details .liquid-container {
+.city-details .liquid-container:first-child {
   padding: 2em !important; 
 }
 

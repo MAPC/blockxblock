@@ -4,17 +4,141 @@
     <h2 class="ui header">
       <img class="ui circular image" src={{model.splash}}/>
       <div class="content">
-        {{model.feature_name}}
+        {{if model.feature_name model.feature_name 'Add Data'}}
         <div class="sub header">{{model.feature_type}}</div>
       </div>
     </h2>
 
     {{#edit-resource model=model as |field|}}
-      <form class="ui form">
         <div class="ui dividing header">
-          Add Place
+          Add Point
+          <div class="sub header">Please drag the map to locate your point. Please note, you cannot move the point after data has been saved.</div>
+        </div>
+        <div class="ui dividing header">
+          What type of location is your data related to?
+        </div>
+        {{#ui-dropdown  class="fluid selection field" 
+                        selected=model.location_type 
+                        onChange=(action (mut model.location_type))}}
+          <div class="default text">Street Address</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            {{#each (array 'Street Address' 'Describable Location' 'District-wide') as |type|}}
+              <div class="item" data-value="{{type}}">
+                {{type}}
+              </div>
+            {{/each}}
+          </div>
+        {{/ui-dropdown}}
+
+        {{#liquid-if (eq model.location_type 'Street Address')}}
+          <div class="ui dividing header">
+            Address
+          </div>
+          <div class="field">
+            {{input type='text' name='name' value=model.address}}
+          </div>
+        {{/liquid-if}}
+
+        <div class="ui dividing header">
+          Describe the location (street intersection, etc.)
         </div>
         <div class="field">
+          {{input type='text' name='name' value=model.non_addressy_location}}
+        </div>
+
+        <div class="ui dividing header">
+          Is this point in the TDI district?
+        </div>
+        <div class="field">
+          <div class="ui checkbox">
+            {{ui-checkbox class="toggle" 
+                          label=(if model.in_district 'Yes' 'No') 
+                          checked=model.in_district 
+                          onChange=(action (mut model.in_district))}}
+          </div>
+        </div>
+
+        {{#ui-accordion}}
+          <div class="tdi-semi-bold active title">
+            <i class="dropdown icon"></i>
+            Place Information
+          </div>
+          <div class="active content">
+            <div class="ui dividing header">
+              Please add a name for this place.
+            </div>
+            <div class="field">
+              {{input type='text' name='name' value=model.feature_name}}
+            </div>
+
+            <div class="ui dividing header">
+              What type of place is this?
+            </div>
+            <div class="field">
+              {{#ui-dropdown class="selection" selected=model.feature_type onChange=(action (mut model.feature_type))}}
+                <div class="default text">Select the feature type</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                  {{#each field.assetTypes as |type|}}
+                    <div class="item" data-value="{{type}}">
+                      {{type}}
+                    </div>
+                  {{/each}}
+                </div>
+              {{/ui-dropdown}}
+            </div>
+
+            {{#if model.feature_type}}
+              <div class="ui dividing header">
+                Please select a subtype.
+              </div>
+              <div class="field">
+                <label>Select the feature sub-type</label>
+                {{#ui-dropdown class="selection" selected=model.subtype onChange=(action (mut model.subtype))}}
+                  <div class="default text">Select the feature sub-type</div>
+                  <i class="dropdown icon"></i>
+                  <div class="menu">
+                    {{#each (get field.assetSubTypes model.feature_type) as |subtype|}}
+                      <div class="item" data-value="{{subtype}}">
+                        {{subtype}}
+                      </div>
+                    {{/each}}
+                  </div>
+                {{/ui-dropdown}}
+              </div>
+            {{/if}}
+
+            <div class="ui dividing header">
+              Add the operational status.
+            </div>
+            <div class="field">
+              {{timeline-builder snapshots=model.open_or_closed choices=(array 'Proposed' 'In Progress' 'Open' 'Closed')}}
+            </div>
+
+            <div class="ui labeled icon primary fluid button" onclick={{route-action 'submitRoute' model}}>
+              <i class='{{if model.hasDirtyAttributes 'green' 'black'}} {{if model.isSaving 'loading spinner icon' 'save icon'}}'></i>
+              Save
+            </div>
+
+            <div class="ui dividing header">
+              Investment Information
+            </div>
+            {{#each model.investments as |investment|}}
+              {{new-investment-form model=investment}}
+            {{else}}
+              <div class="ui neutral header">
+                No associated investment information. Add more below:
+              </div>
+            {{/each}}
+            <div class="ui fluid primary button" {{action 'associateInvestment' model}}>
+              Add investment information
+            </div>
+          </div>
+        {{/ui-accordion}}
+        {{!-- {{#if currentCity.visiblePlaces}} --}}
+
+{{!--         <div class="field">
           <label>Add feature name</label>
           {{input type='text' name='name' value=model.feature_name}}
         </div>
@@ -253,8 +377,7 @@
             </div>
           {{/ui-dropdown}}
         </div>
-
-      </form>
+ --}}
     {{/edit-resource}}
   </div>
   {{/liquid-bind}}

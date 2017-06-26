@@ -17,7 +17,6 @@ export default Ember.Component.extend({
   currentCity: Ember.inject.service('currentCity'),
   modelName: Ember.computed('model', function() {
     let inflector = new Ember.Inflector(Ember.Inflector.defaultRules);
-    console.log(this.get('model'));
     return inflector.pluralize(this.get('model').constructor.modelName);
   }),
   actions: {

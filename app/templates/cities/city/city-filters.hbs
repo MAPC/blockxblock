@@ -23,7 +23,7 @@
   {{/if}}
 
   {{#ui-accordion}}
-    {{#if cc.showFeatures}}
+    {{#if (and cc.showFeatures cc.visibleFeatures.firstObject)}}
       <div class="tdi-semi-bold active title">
         <i class="dropdown icon"></i>
         Places Filters
@@ -66,7 +66,7 @@
       </div>
     {{/if}}
 
-    {{#if cc.showInvestments}}
+    {{#if (and cc.showInvestments cc.visibleInvestments.firstObject)}}
       <div class="ui tdi-blue divider"></div>
       <div class="tdi-semi-bold active title">
         <i class="dropdown icon"></i>
@@ -126,18 +126,17 @@
           </h4>
           <div class="ui basic segment">
             {{range-slider start=(array cc.valueMin cc.valueMax)
-                           range=(hash min=(or cc.amountsMin 0) max=(or cc.amountsMax 1))
+                           range=(hash min=cc.amountsMin max=cc.amountsMax)
                            tooltips=cc.tooltipsConfig
                            connect=true
                            step=1
-                           on-change=(action "updateRanges" target=cc)
-            }}
+                           on-change=(action "updateRanges" target=cc) }}
           </div>
         </div>
       </div>
     {{/if}}
 
-    {{#if cc.showParcels}}
+    {{#if (and cc.showParcels cc.visibleParcels)}}
       <div class="ui tdi-blue divider"></div>
       <div class="tdi-semi-bold active title">
         <i class="dropdown icon"></i>
@@ -241,7 +240,6 @@
       </div>
     {{/if}}
   {{/ui-accordion}}
-  {{log cc.visibleParcels.length}}
   {{tabbed-results  visibleFeatures     = cc.visibleFeatures 
                     showFeatures        = cc.showFeatures
                     visibleInvestments  = cc.visibleInvestments

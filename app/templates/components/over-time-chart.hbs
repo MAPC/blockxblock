@@ -9,8 +9,11 @@
             regions=regions
             padding=padding
 }} --}}
-{{range-slider  start=selection
-                tooltips=tooltipsConfig
-                min=timeMin
-                max=timeMax
-                on-change=onEnd}}
+{{#if openDates.length}}
+  {{range-slider  start=selection
+                  tooltips=tooltipsConfig
+                  min=timeMin
+                  max=timeMax
+                  tooltip=true
+                  on-change=onEnd}}
+{{/if}}

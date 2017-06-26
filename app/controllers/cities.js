@@ -205,11 +205,9 @@ export default Ember.Controller.extend({
     },
     updateSliderDate(val) {
       this.set('fake_open_or_closed', val);
-      console.log(new Date(val));
     },
     export_csv(resource, exceptions) {
       let resources = csvFactory(this.get(resource), exceptions);
-      console.log(resources);
       this.get('csv').export(resources, {fileName: `${resource}.csv`});
     }
   },

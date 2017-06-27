@@ -79,7 +79,7 @@ module.exports = function(environment) {
           name: "featureType",
           domain: {
             codedValues: [{
-              name: "Business",
+              name: "Office",
               code: 1
             }, {
               name: "Public Transit",
@@ -91,7 +91,7 @@ module.exports = function(environment) {
               name: "Community",
               code: 4
             }, {
-              name: "Government ",
+              name: "Civic Institution ",
               code: 5
             }, {
               name: "Health Care",
@@ -106,13 +106,13 @@ module.exports = function(environment) {
               name: "Temporary",
               code: 9
             }, {
-              name: "Food",
+              name: "Food Sales",
               code: 10
             }, {
               name: "Retail",
               code: 11
             }, {
-              name: "Government",
+              name: "Civic Institution",
               code: 12
             }, {
               name: "Education",

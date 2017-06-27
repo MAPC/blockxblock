@@ -15,14 +15,14 @@ export default Factory.extend({
   splash() {
     return `http://lorempixel.com/500/300/city/${getRandomInt(1,10)}`;
   },
-  assetType(i) { return faker.list.cycle( "Food",
-                                          "Business",
+  assetType(i) { return faker.list.cycle( "Food Sales",
+                                          "Office",
                                           "Retail",
                                           "Community",
                                           "Cultural & Entertainment",
                                           "Health Care",
                                           "Education",
-                                          "Government ",
+                                          "Civic Institution ",
                                           "Temporary",
                                           "Park / Open Space",
                                           "Parking",

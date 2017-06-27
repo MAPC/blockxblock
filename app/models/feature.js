@@ -120,7 +120,7 @@ export default DS.Model.extend({
 
 
 export const FEATURE_PARAMS = ['assetTypes', 'activating', 'featureOpen', 'employer', 'fake_open_or_closed', 'is_employer', 'is_street_activating', 'is_tdi_asset', 'is_feature_owner_engaged', 'is_collision_point'];
-export const FEATURE_TYPES = ['Food', 'Business', 'Retail', 'Community', 'Culture and Entertainment', 'Health Care', 'Education', 'Government', 'Temporary', 'Park or Open Space', 'Parking', 'Public Transit', 'Collision Point', 'Housing'];
+export const FEATURE_TYPES = ['Food Sales', 'Office', 'Retail', 'Community', 'Arts and Culture', 'Health Care', 'Education', 'Civic Institution', 'Temporary', 'Park or Open Space', 'Parking', 'Public Transit', 'Community Hub', 'Housing', 'Mixed-Use Development'];
 export const FEATURE_FILTERS_CONFIG = [{
   property: 'feature_type',
   filter: 'assetTypesArray',
@@ -164,73 +164,112 @@ export const FEATURE_FILTERS_CONFIG = [{
 }];
 
 export const FEATURE_SUBTYPES = {
-  "Food": ["Cafe",
-    "Restaurant",
-    "Fast-Food",
+  "Food Sales": [
+    "Coffee Shop",
+    "Bar",
+    "Specialty Food Sales",
+    "Sit-down Restaurant",
+    "Counter Service Restaurant",
+    "Fast-Food Chain",
     "Grocery Store",
-    "Market"
+    "Farmer's Market",
+    "Restaurant Incubator",
+    "Regular Food Truck Hub"
   ],
-  "Business": ["General Office",
-    "General Industrial",
-    "Bank",
-    "Corporation Headquarters"
+  "Office": [
+    "General Office",
+    "Corporation Headquarters",
+    "Coworking Space"
   ],
-  "Retail": ["Convenience",
-    "Pharmacy",
-    "Household Goods",
-    "Services",
+  "Retail": [
+    "Convenience / Corner Store",
+    "Specialty Retailer",
+    "Department Store",
+    "Discount Retailer",
+    "Resale/Consignment",
+    "Specialty Services",
     "Big Box Store",
-    "Other Retail"
+    "Pharmacy",
+    "Bank",
+    "Indoor Recreation",
+    "Automotive",
+    "General Retail"
   ],
   "Community": ["Non-Profit",
     "Groups or Associations",
     "Church",
     "Coworking Space"
   ],
-  "Cultural & Entertainment": ["Theatre",
-    "Indoor Recreation",
-    "Outdoor Recreation",
-    "Museum",
-    "Art Center / Gallery",
-    "MakerSpace"
+  "Arts and Culture": [
+    "Performance Theatre",
+    "Music Venue",
+    "Movie Theatre",
+    "Museum/Gallery",
+    "Art Center/Production Space",
+    "Community Gathering Space"
   ],
-  "Health Care": ["Care and Treatment Facility",
-    "Medical Office"
+  "Health Care": [
+    "Specialty Health Services",
+    "Medical Office",
+    "Walk-in Clinic",
+    "Hospital"
   ],
-  "Eductation": ["Pre-School or Early Education Center",
+  "Education": [
+    "Pre-School or Early Education Center",
     "Public School",
     "Private School",
     "Vocational School",
-    "College or University"
+    "College or University",
+    "Supplemental Services"
   ],
-  "Government": ["Fire Department",
+  "Civic Institution": [
+    "Fire Department",
     "Library",
     "Police Department",
     "City Government",
     "Social Services",
-    "Other Government Departments and Agencies",
-    "Post Office"
+    "Public Agency",
+    "Community Group",
+    "Post Office",
+    "Court"
   ],
-  "Temporary": ["Pop-Up",
-    "Farmers Market",
-    "Event Location"
+  "Temporary": [
+    "Retail",
+    "Food Sales",
+    "Workspace",
+    "Event Location",
+    "Park/Parklet",
+    "Streetscape Improvements",
+    "Other"
   ],
-  "Park / Open Space": ["Plaza",
+  "Park / Open Space": [
+    "Plaza",
     "Alleyway",
     "Pocket Park",
+    "Park",
     "Trails and Greenways",
-    "Community Garden / Farm"
+    "Community Garden / Farm",
+    "Active Recreation Facility"
   ],
-  "Parking": ["Municipal Lot",
+  "Parking": [
+    "Free Lot",
     "Paid Lot",
     "Paid Structure"
   ],
-  "Public Transit": ["Bus",
-    "Rail"
+  "Public Transit": [
+    "Local/Regional Bus Stop",
+    "Light Rail Station",
+    "High-Speed Rail Station",
+    "Transportation Center"
   ],
-  "Housing": ["Single Family",
+  "Housing": [
+    "Single Family",
     "2-4 units",
+    "2-4 units, subsidized",
     "4-10 units",
-    "10+ units"
+    "4-10 units, subsidized",
+    "10+ units",
+    "10+ units, subsidized",
+    "Assisted Living"
   ]
 }

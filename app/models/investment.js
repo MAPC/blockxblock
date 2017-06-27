@@ -110,7 +110,7 @@ export default DS.Model.extend({
 export const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources', 'investments_fake_open_or_closed'];
 export const INVESTMENT_TYPES = ['Infrastructure', 'Finance', 'Assistance', 'Placemaking'];
 export const INVESTMENT_STATUSES = ['Proposed', 'In Progress', 'Completed'];
-export const INVESTMENT_SOURCES = ['MassDevelopment', 'Public', 'Private'];
+export const INVESTMENT_SOURCES = ['MassDevelopment', 'Public', 'Private', 'TDI'];
 export const INVESTMENT_FILTERS_CONFIG = [{
   property: 'investment_type',
   filter: 'investmentTypesArray',

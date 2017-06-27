@@ -28,12 +28,12 @@
 {{/if}}
 
 <div class="cities ui grid">
-  <div class="list-results ui segment six wide column" id="sidebar">
+  <div class="list-results ui segment five wide column" id="sidebar">
     <div class="city-details">
       {{outlet}}
     </div>
   </div>
-  <div class="map-results {{if (not hideSidebar) 'ten'}}{{if hideSidebar 'sixteen'}} wide column" style="padding: 0 !important; height:100%;">
+  <div class="map-results {{if (not hideSidebar) 'eleven'}}{{if hideSidebar 'sixteen'}} wide column" style="padding: 0 !important; height:100%;">
     <div class="cities-map">
       <i class="large circular white {{if (not hideSidebar) 'left arrow'}} link icon sidebar-tab {{if hideSidebar 'right arrow'}}" onclick={{action 'toggleSidebar'}} style="background-color:white"></i>
 
@@ -43,35 +43,13 @@
           {{image-layer pane='extrusions' imageUrl=city.imageOverlay bounds=city.imageOverlayBBox opacity=0.9}}
         {{/each}}
 
-        {{#marker-cluster-layer iconCreateFunction=iconCreateFunction}}
-          {{#if showInvestments}}
-            {{#each visibleInvestments as |investment|}}
-              {{#if (and investment.latitude investment.id)}}
-                {{#map-popup lat=investment.latitude lng=investment.longitude as |popup|}}
-                  <img class="ui small image" style="max-height:300px;" src={{investment.featured_photo}}/>
-                  <strong>{{investment.project}}</strong>
-                    {{marker-layer  
-                        lat=investment.latitude 
-                        lng=investment.longitude 
-                        icon=(icon iconUrl=investment.iconUrl iconSize=(if investment.isSelected (array 61 61) (array 41 41)))
-                        onClick=(action 'linkTo' 'cities.city.investments' investment)
-                        onMouseover=(action popup.onMouseover)
-                        onMouseout=(action popup.onMouseout)}}
-                {{/map-popup}}
-              {{/if}}
-            {{/each}}
-          {{/if}}
-        {{/marker-cluster-layer}}
-
-        {{!-- {{#marker-cluster-layer}} --}}
-          {{#if showFeatures}}
-            {{#each visibleFeatures as |feature|}}
-              {{#if (and feature.latitude feature.id)}}
-                {{related-investments-icon feature=feature linkTo=(action 'linkTo')}}
-              {{/if}}
-            {{/each}}
-          {{/if}}
-        {{!-- {{/marker-cluster-layer}} --}}
+        {{#if showFeatures}}
+          {{#each visibleFeatures as |feature|}}
+            {{#if (and feature.latitude feature.id)}}
+              {{related-investments-icon feature=feature linkTo=(action 'linkTo')}}
+            {{/if}}
+          {{/each}}
+        {{/if}}
 
         {{#if showParcels}}
           {{#each visibleParcels as |parcel|}}

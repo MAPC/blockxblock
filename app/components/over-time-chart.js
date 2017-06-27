@@ -132,8 +132,27 @@ export default Ember.Component.extend({
     return Math.max(...models);
   }),
 
+  defaultTime: Ember.computed(function() {
+    let now = Date.now();
+    let timeMin = this.get('timeMin');
+    let timeMax = this.get('timeMax');
+
+    if((now > timeMin) && (now < timeMax)) {
+      return now;
+    }
+
+    if(now < timeMin) {
+      return timeMin;
+    }
+
+    if(now > timeMax) {
+      return timeMax;
+    }
+  }),
+
   didInsertElement() {
-    this.set('selection', this.get('timeMin'));
+    
+    this.set('selection', this.get('defaultTime'));
   },
 
   onrendered: Ember.computed(function(c3) {

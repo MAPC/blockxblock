@@ -78,15 +78,21 @@
             Investment Types
           </h4>
           <div class="ui vertical list">
-            {{#each cc.investmentTypeOptions as |option|}}
-              {{#ui-checkbox 
-                class="item"
-                checked=(array-contains cc.investmentTypesArray option)
-                onChange=(action 'composeList' option 'investmentTypes' target=cc)}}
-                <img src="/images/icons/investments/{{lowercase option}}.png" class="ui avatar image" /> 
-                {{option}}
-              {{/ui-checkbox}}
-            {{/each}}
+            <div class="ui equal width grid">
+              {{#each (chunk 2 cc.investmentTypeOptions) as |group|}}
+                <div class="column">
+                  {{#each group as |option|}}
+                    {{#ui-checkbox 
+                      class="item"
+                      checked=(array-contains cc.investmentTypesArray option)
+                      onChange=(action 'composeList' option 'investmentTypes' target=cc)}}
+                      <img src="/images/icons/investments/{{dasherize option}}.png" class="ui avatar image" /> 
+                      {{option}}
+                    {{/ui-checkbox}}
+                  {{/each}}
+                </div>
+              {{/each}}
+            </div>
             {{#if session.isAuthenticated}}
               {{ui-checkbox 
                 label='TDI Influenced' 

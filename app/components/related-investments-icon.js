@@ -13,6 +13,6 @@ export default Ember.Component.extend({
       return `<img src=${icon} />`;
     });
 
-    return `<div class="ui mini images"><img src="${feature.get('iconUrl')}"/>${icons}</div>`;
+    return `<div class="ui mini images"><img src="${feature.get('iconUrl').dasherize()}"/>${icons}</div>`;
   })
 });

@@ -379,9 +379,11 @@ h1.splash.header .content{
     font-family: 'Dosis-ExtraBold' !important;
 }
 
-.image {
-    background-color: $primary-color !important;
-    z-index: 2;
+.card {
+    .image {
+        background-color: $primary-color !important;
+        z-index: 2;
+    }
 }
 
 .fluid.card .card-image {

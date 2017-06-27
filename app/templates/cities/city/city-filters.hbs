@@ -86,7 +86,7 @@
                       class="item"
                       checked=(array-contains cc.investmentTypesArray option)
                       onChange=(action 'composeList' option 'investmentTypes' target=cc)}}
-                      <img src="/images/icons/investments/{{dasherize option}}.png" class="ui avatar image" /> 
+                      <img src="/images/icons/investments/{{dasherize option}}.png" /> 
                       {{option}}
                     {{/ui-checkbox}}
                   {{/each}}
@@ -122,7 +122,7 @@
                 class="item"
                 checked=(array-contains cc.investmentSourcesArray option)
                 onChange=(action 'composeList' option 'investmentSources' target=cc)}}
-                <img src="/images/icons/investments/badge/{{lowercase option}}.png" class="ui avatar image" /> 
+                <img src="/images/icons/investments/badge/{{lowercase option}}.png" /> 
                 {{option}}
               {{/ui-checkbox}}
             {{/each}}

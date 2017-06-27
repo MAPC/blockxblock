@@ -44,9 +44,9 @@
         </div>
       {{/ui-dropdown}}
     </div>
-    <div class="header item">
-      <h3>MassDevelopment &nbsp;<strong>Block x Block</strong></h3>
-    </div>
+    {{#link-to 'application' tagName='div' class='header link item'}} 
+      <h3>TDI &nbsp; Block x Block</h3>
+    {{/link-to}}
     <div class="right menu" id="right-items">
       {{#if (not session.isAuthenticated)}}
         <a class="item" onclick={{action (mut isLoggingIn)}}>

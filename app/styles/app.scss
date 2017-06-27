@@ -364,6 +364,9 @@ main {
 }
 
 .city-details .liquid-container {
+    .liquid-container {
+        padding: 0 !important;
+    }
   padding: 2em !important; 
 }
 

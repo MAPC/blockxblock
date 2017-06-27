@@ -1,218 +1,217 @@
-<div class="investments ui raised segment">
-  {{#edit-resource model=model as |field|}}
-    <form class="ui form">
-      <div class="ui dividing header">
-        Add Investment
-      </div>
-      <div class="field">
-        <label>Add project name</label>
-        {{input type='text' name='name' value=model.project}}
-      </div>
-      <div class="ui dividing header">
-        Attributes
-      </div>
-      <div class="field">
-        <label>Add an investment status as needed.</label>
-        {{timeline-builder snapshots=model.investment_status choices=(array 'Proposed' 'In Progress' 'Completed' 'Failed')}}
-      </div>
-      <div class="field">
-        <label>Which type of investment is this?</label>
-        {{#ui-dropdown class="selection" selected=model.investment_type onChange=(action (mut model.investment_type))}}
-          <div class="default text">Select the investment type</div>
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            {{#each field.investmentTypes as |type|}}
-              <div class="item" data-value="{{type}}">
-                {{type}}
-              </div>
-            {{/each}}
-          </div>
-        {{/ui-dropdown}}
-      </div>
-      <div class="field">
-        <label>Select the source of funding for this project.</label>
-        {{#ui-dropdown class="selection" selected=model.source_type onChange=(action (mut model.source_type))}}
-          <div class="default text">Select the investment soiurce</div>
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            {{#each field.investmentSources as |type|}}
-              <div class="item" data-value="{{type}}">
-                {{type}}
-              </div>
-            {{/each}}
-          </div>
-        {{/ui-dropdown}}
-      </div>
-      {{#liquid-if (eq model.source_type 'MassDevelopment')}}
-        <div class="field">
-          <label>Investment Products</label>
-          {{input type='text' name='name' value=model.product_massdev}}
-        </div>
-      {{/liquid-if}}
-      <div class="field">
-        <div class="ui checkbox">
-          {{ui-checkbox class="toggle" 
-                        label="Is this investment influenced by the TDI program?" 
-                        checked=model.is_tdi_influenced 
-                        onChange=(action (mut model.is_tdi_influenced))}}
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          {{ui-checkbox class="toggle" 
-                        label="Is the investment amount known or can it be estimated?" 
-                        checked=model.is_amount_known 
-                        onChange=(action (mut model.is_amount_known))}}
-        </div>
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          {{ui-checkbox class="toggle" 
-                        label="Is this investment amount estimated?" 
-                        checked=model.is_amount_estimated 
-                        onChange=(action (mut model.is_amount_estimated))}}
-        </div>
-      </div>
-      {{#if model.is_amount_estimated}}
-        <div class="field">
-          <label>Enter an estimated investment amount (numbers only).</label>
-          {{input type='text' name='name' value=model.amount_estimated}}
-        </div>
-      {{else}}
-        <div class="field">
-          <label>Enter the exact investment amount.</label>
-          {{input type='text' name='name' value=model.amount_exact}}
-        </div>
-      {{/if}}
-      <div class="field">
-        <div class="ui checkbox">
-          {{ui-checkbox class="toggle" 
-                        label="Can the investment amount be publicly shared?" 
-                        checked=model.is_amount_public 
-                        onChange=(action (mut model.is_amount_public))}}
-        </div>
-      </div>
-      <div class="ui dividing header">
-        Documents and Links
-      </div>
-      <div class="field">
-        <label>Add an illustrative photo of this feature.</label>
-        {{file-field-progress}}
-      </div>
+{{#edit-resource model=model as |field|}}
+  <div class="ui dividing header">
+    What is the name of the investment?
+  </div>
+  <div class="field">
+    {{input type='text' name='name' value=model.project}}
+  </div>
+  <div class="ui dividing header">
+    Attributes
+  </div>
 
-      <div class="field">
-        <label>Add any related documents. These are publicly visible.</label>
-        {{file-field-progress}}
-      </div>
-
-      <div class="field">
-        <label>Add any related documents. These are not publicly visible.</label>
-        {{file-field-progress}}
-      </div>
-
-      <div class="field">
-        <label>Enter the URL for any related website.</label>
-        {{input type='text' name='name' value=model.related_link_url}}
-      </div>
-
-      <div class="field">
-        <label>Enter a label for this related website.</label>
-        {{input type='text' name='name' value=model.related_link_title}}
-      </div>
-
-      <div class="ui dividing header">
-        Related Places and Investments
-      </div>
-
-      {{select-association 
-          selected=model.features 
-          modelName='feature' 
-          placeholder="Search for a feature"
-          searchField='feature_name'}}
-
-      <div class="field">
-        {{textarea value=model.relatedFeaturesDescription placeholder='Describe these relationships a bit'}}
-      </div>
-
-      {{select-association
-          selected=model.relatedInvestments
-          modelName='investment'
-          placeholder="Search for an investment"
-          searchField='project'}}
-
-      <div class="field">
-        {{textarea value=model.relatedInvestmentsDescription placeholder='Describe these relationships a bit'}}
-      </div>
-
-      <div class="ui dividing header">
-        Contacts
-      </div>
-
-      <div class="field">
-        <label>Private Contact Name</label>
-        {{input type='text' name='name' value=model.priv_contact_name}}
-      </div>
-
-      {{#liquid-if model.priv_contact_name}} 
-        {{#each (array 'priv_contact_organization' 'priv_contact_role' 'priv_contact_phone' 'priv_contact_email' 'priv_contact_website') as |field|}}
-          <div class="field">
-            <label>{{humanize-string (replace-with field 'priv' '')}}</label>
-            {{input type='text' name='name' value=(get model field)}}
+  <div class="field">
+    <div class="ui dividing header">
+      Towards which use was the investment directed?
+    </div>
+    {{#ui-dropdown class="selection" selected=model.investment_type onChange=(action (mut model.investment_type))}}
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each field.investmentTypes as |type|}}
+          <div class="item" data-value="{{type}}">
+            {{type}}
           </div>
         {{/each}}
-      {{/liquid-if}}
-
-      <div class="field">
-        <label>Public Contact Name</label>
-        {{input type='text' name='name' value=model.pub_contact_1}}
       </div>
- 
-      {{#liquid-if model.pub_contact_1}} 
-        {{#each (array 'pub_contact_org_1' 'pub_contact_role_1' 'pub_contact_phone_1' 'pub_contact_email_1' 'pub_contact_website_1') as |field|}}
-          <div class="field">
-            <label>{{humanize-string (replace-with (replace-with field 'pub' '') '_1' '')}}</label>
-            {{input type='text' name='name' value=(get model field)}}
+    {{/ui-dropdown}}
+  </div>
+
+  <div class="field">
+    <div class="ui dividing header">
+      What is the source of this investment type?
+    </div>
+    {{#ui-dropdown class="selection" selected=model.source_type onChange=(action (mut model.source_type))}}
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each field.investmentSources as |type|}}
+          <div class="item" data-value="{{type}}">
+            {{type}}
           </div>
         {{/each}}
-      {{/liquid-if}}
-
-      <div class="field">
-        <label>Public Contact Name (2)</label>
-        {{input type='text' name='name' value=model.pub_contact_2}}
       </div>
+    {{/ui-dropdown}}
+  </div>
 
-      {{#liquid-if model.pub_contact_2}} 
-        {{#each (array 'pub_contact_org_2' 'pub_contact_role_2' 'pub_contact_phone_2' 'pub_contact_email_2' 'pub_contact_website_2') as |field|}}
-          <div class="field">
-            <label>{{humanize-string (replace-with (replace-with field 'pub' '') '_2' '')}}</label>
-            {{input type='text' name='name' value=(get model field)}}
+  <div class="field">
+    {{timeline-builder snapshots=model.investment_status choices=(array 'Proposed' 'In Progress' 'Completed' 'Incomplete')}}
+  </div>
+{{!--     {{#liquid-if (eq model.source_type 'MassDevelopment')}}
+    <div class="field">
+      <label>Investment Products</label>
+      {{input type='text' name='name' value=model.product_massdev}}
+    </div>
+  {{/liquid-if}}
+  <div class="field">
+    <div class="ui checkbox">
+      {{ui-checkbox class="toggle" 
+                    label="Is this investment influenced by the TDI program?" 
+                    checked=model.is_tdi_influenced 
+                    onChange=(action (mut model.is_tdi_influenced))}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="ui checkbox">
+      {{ui-checkbox class="toggle" 
+                    label="Is the investment amount known or can it be estimated?" 
+                    checked=model.is_amount_known 
+                    onChange=(action (mut model.is_amount_known))}}
+    </div>
+  </div>
+  <div class="field">
+    <div class="ui checkbox">
+      {{ui-checkbox class="toggle" 
+                    label="Is this investment amount estimated?" 
+                    checked=model.is_amount_estimated 
+                    onChange=(action (mut model.is_amount_estimated))}}
+    </div>
+  </div>
+  {{#if model.is_amount_estimated}}
+    <div class="field">
+      <label>Enter an estimated investment amount (numbers only).</label>
+      {{input type='text' name='name' value=model.amount_estimated}}
+    </div>
+  {{else}}
+    <div class="field">
+      <label>Enter the exact investment amount.</label>
+      {{input type='text' name='name' value=model.amount_exact}}
+    </div>
+  {{/if}}
+  <div class="field">
+    <div class="ui checkbox">
+      {{ui-checkbox class="toggle" 
+                    label="Can the investment amount be publicly shared?" 
+                    checked=model.is_amount_public 
+                    onChange=(action (mut model.is_amount_public))}}
+    </div>
+  </div>
+  <div class="ui dividing header">
+    Documents and Links
+  </div>
+  <div class="field">
+    <label>Add an illustrative photo of this feature.</label>
+    {{file-field-progress}}
+  </div>
+
+  <div class="field">
+    <label>Add any related documents. These are publicly visible.</label>
+    {{file-field-progress}}
+  </div>
+
+  <div class="field">
+    <label>Add any related documents. These are not publicly visible.</label>
+    {{file-field-progress}}
+  </div>
+
+  <div class="field">
+    <label>Enter the URL for any related website.</label>
+    {{input type='text' name='name' value=model.related_link_url}}
+  </div>
+
+  <div class="field">
+    <label>Enter a label for this related website.</label>
+    {{input type='text' name='name' value=model.related_link_title}}
+  </div>
+
+  <div class="ui dividing header">
+    Related Places and Investments
+  </div>
+
+  {{select-association 
+      selected=model.features 
+      modelName='feature' 
+      placeholder="Search for a feature"
+      searchField='feature_name'}}
+
+  <div class="field">
+    {{textarea value=model.relatedFeaturesDescription placeholder='Describe these relationships a bit'}}
+  </div>
+
+  {{select-association
+      selected=model.relatedInvestments
+      modelName='investment'
+      placeholder="Search for an investment"
+      searchField='project'}}
+
+  <div class="field">
+    {{textarea value=model.relatedInvestmentsDescription placeholder='Describe these relationships a bit'}}
+  </div>
+
+  <div class="ui dividing header">
+    Contacts
+  </div>
+
+  <div class="field">
+    <label>Private Contact Name</label>
+    {{input type='text' name='name' value=model.priv_contact_name}}
+  </div>
+
+  {{#liquid-if model.priv_contact_name}} 
+    {{#each (array 'priv_contact_organization' 'priv_contact_role' 'priv_contact_phone' 'priv_contact_email' 'priv_contact_website') as |field|}}
+      <div class="field">
+        <label>{{humanize-string (replace-with field 'priv' '')}}</label>
+        {{input type='text' name='name' value=(get model field)}}
+      </div>
+    {{/each}}
+  {{/liquid-if}}
+
+  <div class="field">
+    <label>Public Contact Name</label>
+    {{input type='text' name='name' value=model.pub_contact_1}}
+  </div>
+
+  {{#liquid-if model.pub_contact_1}} 
+    {{#each (array 'pub_contact_org_1' 'pub_contact_role_1' 'pub_contact_phone_1' 'pub_contact_email_1' 'pub_contact_website_1') as |field|}}
+      <div class="field">
+        <label>{{humanize-string (replace-with (replace-with field 'pub' '') '_1' '')}}</label>
+        {{input type='text' name='name' value=(get model field)}}
+      </div>
+    {{/each}}
+  {{/liquid-if}}
+
+  <div class="field">
+    <label>Public Contact Name (2)</label>
+    {{input type='text' name='name' value=model.pub_contact_2}}
+  </div>
+
+  {{#liquid-if model.pub_contact_2}} 
+    {{#each (array 'pub_contact_org_2' 'pub_contact_role_2' 'pub_contact_phone_2' 'pub_contact_email_2' 'pub_contact_website_2') as |field|}}
+      <div class="field">
+        <label>{{humanize-string (replace-with (replace-with field 'pub' '') '_2' '')}}</label>
+        {{input type='text' name='name' value=(get model field)}}
+      </div>
+    {{/each}}
+  {{/liquid-if}}
+
+  <div class="ui dividing header">
+    How To Get Involved
+  </div>
+
+  <div class="field">
+    <label>Write new "How To Get Involved" text if you wish to override the default text for this feature.</label>
+    {{input type='text' name='name' value=model.cta_text}}
+  </div>
+
+  <div class="field">
+    <label>Select the contact revealed when a user clicks this feature's "How To Get Involved" button.</label>
+    {{#ui-dropdown class="selection" selected=model.cta_contact onChange=(action (mut model.cta_contact))}}
+      <div class="default text" data-value="">Select One</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each (array 'District Default Contact' 'Public Contact 1' 'Public Contact 2') as |type|}}
+          <div class="item" data-value="{{type}}">
+            {{type}}
           </div>
         {{/each}}
-      {{/liquid-if}}
-
-      <div class="ui dividing header">
-        How To Get Involved
       </div>
-
-      <div class="field">
-        <label>Write new "How To Get Involved" text if you wish to override the default text for this feature.</label>
-        {{input type='text' name='name' value=model.cta_text}}
-      </div>
-
-      <div class="field">
-        <label>Select the contact revealed when a user clicks this feature's "How To Get Involved" button.</label>
-        {{#ui-dropdown class="selection" selected=model.cta_contact onChange=(action (mut model.cta_contact))}}
-          <div class="default text" data-value="">Select One</div>
-          <i class="dropdown icon"></i>
-          <div class="menu">
-            {{#each (array 'District Default Contact' 'Public Contact 1' 'Public Contact 2') as |type|}}
-              <div class="item" data-value="{{type}}">
-                {{type}}
-              </div>
-            {{/each}}
-          </div>
-        {{/ui-dropdown}}
-      </div>
-    </form>
-  {{/edit-resource}}
-</div>
+    {{/ui-dropdown}}
+  </div> --}}
+{{/edit-resource}}

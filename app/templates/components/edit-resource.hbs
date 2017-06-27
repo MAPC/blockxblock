@@ -8,7 +8,6 @@
     <i class='large {{if model.hasDirtyAttributes 'green' 'black'}} circular link {{if model.isSaving 'loading spinner icon' 'save icon'}}' style="background-color: white;"></i>
   </div>
 </div>
-{{#form-for model class="ui form" as |f|}}
-  {{yield (hash form=f assetTypes=assetTypes investmentTypes=investmentTypes assetSubTypes=assetSubTypes investmentSources=investmentSources parcelOwnershipTypes=parcelOwnershipTypes)}}
-{{/form-for}}
-
+<div class="ui form">
+  {{yield (hash assetTypes=assetTypes investmentTypes=investmentTypes assetSubTypes=assetSubTypes investmentSources=investmentSources parcelOwnershipTypes=parcelOwnershipTypes)}}
+</div>

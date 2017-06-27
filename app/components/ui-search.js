@@ -3,7 +3,6 @@ import UISearch from 'semantic-ui-ember/components/ui-search';
 
 export default UISearch.extend({
   // refreshSource: Ember.observer('source', function() {
-  //   console.log('rerender')
   //   this.set('source', this.get('source'));
   //   this.rerender();
   // })

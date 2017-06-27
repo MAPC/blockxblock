@@ -16,6 +16,7 @@ export default DS.Model.extend({
   feature_type: DS.attr("string", { defaultValue: '' }),
   subtype: DS.attr("string"),
   comment: DS.attr("string"),
+  location_type: DS.attr('string', { defaultValue: 'Street Address' }),
   opendate: DS.attr("date"),
   closedate: DS.attr("date"),
   splash: Ember.computed('latitude,longitude', function() {

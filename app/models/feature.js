@@ -120,7 +120,7 @@ export default DS.Model.extend({
 
 
 export const FEATURE_PARAMS = ['assetTypes', 'activating', 'featureOpen', 'employer', 'fake_open_or_closed', 'is_employer', 'is_street_activating', 'is_tdi_asset', 'is_feature_owner_engaged', 'is_collision_point'];
-export const FEATURE_TYPES = ['Food Sales', 'Office', 'Retail', 'Community', 'Arts and Culture', 'Health Care', 'Education', 'Civic Institution', 'Temporary', 'Park or Open Space', 'Parking', 'Public Transit', 'Community Hub', 'Housing', 'Mixed-Use Development'];
+export const FEATURE_TYPES = ['Arts and Culture', 'Civic Institution', 'Community Hub', 'Community', 'Education', 'Food Sales', 'Health Care', 'Housing', 'Mixed-Use Development', 'Office', 'Park or Open Space', 'Parking', 'Public Transit', 'Retail', 'Temporary'];
 export const FEATURE_FILTERS_CONFIG = [{
   property: 'feature_type',
   filter: 'assetTypesArray',

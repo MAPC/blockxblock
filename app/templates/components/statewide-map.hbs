@@ -1,0 +1,15 @@
+{{#leaflet-map  lat               = lat 
+                lng               = lng
+                zoom              = zoom
+                scrollWheelZoom   = false
+                doubleClickZoom   = false
+                dragging          = false
+                class             = 'statewide-view'}}
+  {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
+  {{#each cities as |city|}}
+    {{marker-layer  lat=city.latitude 
+                    lng=city.longitude 
+                    onClick=(transition-to 'cities.city.city-filters' city.id)
+                    icon= (icon iconUrl = (concat 'images/icons/cities/' city.name '.png')) }}
+  {{/each}}
+{{/leaflet-map}}

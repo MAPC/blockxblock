@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
   currentCity: Ember.inject.service(),
   isLoggingIn: false,
   actions: {
-    invalidateSession: function invalidateSession() {
+    invalidateSession() {
       this.get('session').invalidate();
     },
     authenticate() {

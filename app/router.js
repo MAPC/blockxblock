@@ -29,12 +29,6 @@ Router.map(function() {
     });
   });
   this.route('login');
-
-  // admin
-  // this.route('admin', function() {
-  //   this.route('cities-edit', { path: 'cities/:id/edit'})
-  // })
-  this.route('about');
 });
 
 export default Router;

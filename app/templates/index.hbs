@@ -12,26 +12,12 @@
 </div>
 
 <div class="ui container">
-  {{cities-grid cities=(sort-by 'name' model)}}
+  {{cities-grid cities=model}}
 </div>
 
 <br/>
 
-{{#leaflet-map  lat               = 42 
-                lng               = -71.922 
-                zoom              = 9 
-                scrollWheelZoom   = false
-                doubleClickZoom   = false
-                dragging          = false
-                class             = 'statewide-view'}}
-  {{tile-layer url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"}}
-  {{#each model as |city|}}
-    {{marker-layer  lat=city.latitude 
-                    lng=city.longitude 
-                    onClick=(action 'linkTo' 'cities.city.city-filters' city.id)
-                    icon= (icon iconUrl = (concat 'images/icons/cities/' city.name '.png')) }}
-  {{/each}}
-{{/leaflet-map}}
+{{statewide-map cities=model}}
 
 <div class="ui basic center aligned segment" id="about">
   <h1 class="ui splash header">

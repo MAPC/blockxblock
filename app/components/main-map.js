@@ -1,8 +1,26 @@
 import Ember from 'ember';
+import computed from 'ember-computed';
 
 export default Ember.Component.extend({
-  classNames: ['main-map'],
   currentCity: Ember.inject.service(),
+  classNames: ['main-map'],
+  
+  parcelsChoroplethMapping: computed('visibleParcels', 'choroplethLayer', function() {
+    return (feature) => {
+      let color = setChoroplethColor(feature, this.get('choroplethLayer'), PARCEL_MAP_CONFIG),
+          stroke = true,
+          fillOpacity=0.5,
+          strokeOpacity=1,
+          weight=1;
+      return {
+        color,
+        stroke,
+        fillOpacity,
+        strokeOpacity,
+        weight
+      }
+    }
+  }),
   zoom: Ember.computed.alias('currentCity.zoom'),
   lat: Ember.computed.alias('currentCity.latitude'),
   lng: Ember.computed.alias('currentCity.longitude'),

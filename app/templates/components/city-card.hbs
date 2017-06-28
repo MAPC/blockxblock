@@ -1,0 +1,18 @@
+<div class="ui fluid card">
+  <div class="image">
+    <div class="card-image" style="min-height: 200px; background-image: url('{{city.splash}}'); background-size: cover;">
+      <div class="card-image-overlay"></div>
+    </div>
+  </div>
+  <div class="extra content splash-inverted">
+    <span class="right floated">
+      {{#if city.fellows}}
+        <i class="user icon"></i>
+      {{/if}}
+    </span>
+    {{city.name}}
+    <span class="right floated star">
+      <img class="ui mini image" src={{city.iconWatermarkUrl}}/>
+    </span>
+  </div>
+</div>

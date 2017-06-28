@@ -1,0 +1,63 @@
+<nav>
+  <div class="ui inverted main menu">
+    <div class="left menu" id="left-items">
+      <div class="cubes item">
+        {{#link-to 'application' class='cities-link'}}
+          <i class="content large icon"></i>
+        {{/link-to}}
+      </div>
+      {{#ui-dropdown class="dropdown item" selected=currentCity.city.name}}
+        <div class="default text">Select Your District</div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          {{#each model as |city|}}
+            {{#link-to 'cities.city.city-filters' city.id class="item" tagName='a'}}
+              {{city.name}}
+            {{/link-to}}
+          {{/each}}
+        </div>
+      {{/ui-dropdown}}
+    </div>
+    {{#link-to 'application' tagName='div' class='header link item'}} 
+      <h3>TDI &nbsp; Block x Block</h3>
+    {{/link-to}}
+    <div class="right menu" id="right-items">
+      {{#if (not session.isAuthenticated)}}
+        <a class="item" onclick={{action (mut isLoggingIn)}}>
+          Login
+        </a>
+      {{else}}
+        <div class="item">
+          <div class="ui button" {{action invalidateSession}}>Logout</div>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</nav>
+
+{{#if isLoggingIn}}
+  {{#modal-dialog
+      onClose=(action (mut isLoggingIn) false)
+      translucentOverlay=true
+      as |modal|}}
+    <div class="ui segment">
+      <div class="ui fields">
+        <div class="ui input">
+          <label for="username">Username</label>
+          {{input id='username' placeholder='Enter Login' value=username class='login-username'}}
+        </div>
+        <div class="ui input">
+          <label for="password">Password</label>
+          {{input id='password' placeholder='Enter Password' type='password' value=password class='login-password'}}
+        </div>
+      </div>
+
+      <div class="ui primary button login-submit" {{action authenticate}}>Login</div>
+
+      {{#if errorMessage}}
+        <p>{{errorMessage}}</p>
+      {{/if}}
+      <div class="ui secondary button" onclick={{action (mut isLoggingIn) false}}>Close</div>
+    </div>
+  {{/modal-dialog}}
+{{/if}}

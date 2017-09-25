@@ -109,7 +109,6 @@ export default DS.Model.extend({
 
   city: DS.belongsTo("city"),
   isSelected: false,
-  places: DS.hasMany('investment', { inverse: 'investments' }),
 });
 
 export const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources', 'investments_fake_open_or_closed'];

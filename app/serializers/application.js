@@ -7,12 +7,24 @@ export default DS.JSONSerializer.extend({
         if (record.city) {
           record.city = record.city[0].id;
         }
+
+        if (record.investments) {
+          record.investments = record.investments.map(inv=>inv.id);
+        }
+
+        if (record.related_investments) {
+          record.related_investments = record.related_investments.map(inv=>inv.id);
+        }
       });
     }
 
     if(requestType === 'findRecord') {
       if (payload.city) {
         payload.city = payload.city[0].id;
+      }
+
+      if (payload.related_investments) {
+        payload.related_investments = payload.related_investments.map(inv=>inv.id);
       }
 
       if (payload.related_features) {

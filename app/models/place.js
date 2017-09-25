@@ -114,7 +114,7 @@ export default DS.Model.extend({
   relatedFeature: DS.belongsTo('place', { inverse: 'relatedPlaces' }),
   relatedFeaturesDescription: DS.attr('string'),
 
-  investments: DS.hasMany('investment', { inverse: 'relatedPlace' }),
+  investments: DS.hasMany('investment'),
   relatedInvestmentsDescription: DS.attr('string'),
 
   isSelected: false

@@ -9,9 +9,9 @@ export default Ember.Route.extend({
 
     return RSVP.hash({
       city,
-      features: city.get('features'),
-      investments: city.get('investments'),
-      parcels: city.get('parcels')
+      places: this.store.query('place', { city: city.get('name') }),
+      investments: this.store.query('investment', { city: city.get('name'), exclude: 'related_investments,related_places' }),
+      parcels: this.store.query('parcel', { city: city.get('name') }),
     });
   },
   

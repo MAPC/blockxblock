@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import computed from 'ember-computed';
+import setChoroplethColor from '../utils/set-choropleth-color';
+import { PARCEL_MAP_CONFIG } from '../models/parcel';
 
 export default Ember.Component.extend({
   currentCity: Ember.inject.service(),

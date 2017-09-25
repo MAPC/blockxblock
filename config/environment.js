@@ -147,9 +147,9 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
-    // ENV['ember-cli-mirage'] = {
-    //   enabled: false
-    // }
+    ENV['ember-cli-mirage'] = {
+      enabled: false
+    }
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -173,7 +173,7 @@ module.exports = function(environment) {
     ENV.locationType = 'auto';
     // ENV.rootURL = '/cityxcity/';
     ENV['ember-cli-mirage'] = {
-        enabled: true
+        enabled: false
       }
       // ENV.prepend = 'https://allthesignals.github.io/cityxcity/';
       // ENV.rootURL = '/cityxcity/';

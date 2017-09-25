@@ -4,16 +4,19 @@ import { faker } from 'ember-cli-mirage';
 import moment from 'moment';
 import config from '../config/environment';
 
+const { alias } = Ember.computed;
+
 export default DS.Model.extend({
-  feature_name: DS.attr("string"),
+  feature_name: alias('name'),
   name: DS.attr("string"),
   project: DS.attr("string"),
   address: DS.attr("string"),
   contact: DS.attr("string"),
   employer: DS.attr("boolean"),
   activating: DS.attr("boolean"),
-  assetType: DS.attr("string"),
-  feature_type: DS.attr("string", { defaultValue: '' }),
+  type: DS.attr('string'),
+  assetType: alias('type'),
+  feature_type: alias('type'),
   subtype: DS.attr("string"),
   comment: DS.attr("string"),
   location_type: DS.attr('string', { defaultValue: 'Street Address' }),
@@ -107,11 +110,11 @@ export default DS.Model.extend({
 
   city: DS.belongsTo("city"),
 
-  relatedFeatures: DS.hasMany('feature', { inverse: 'relatedFeature' }),
-  relatedFeature: DS.belongsTo('feature', { inverse: 'relatedFeatures' }),
+  relatedPlaces: DS.hasMany('place', { inverse: 'relatedPlace' }),
+  relatedFeature: DS.belongsTo('place', { inverse: 'relatedPlaces' }),
   relatedFeaturesDescription: DS.attr('string'),
 
-  investments: DS.hasMany('investment'),
+  investments: DS.hasMany('investment', { inverse: 'relatedPlace' }),
   relatedInvestmentsDescription: DS.attr('string'),
 
   isSelected: false

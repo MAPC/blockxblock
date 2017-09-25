@@ -10,7 +10,7 @@ import csvFactory from '../utils/csv-factory';
 
 import {  FEATURE_PARAMS, 
           FEATURE_TYPES,
-          FEATURE_FILTERS_CONFIG } from '../models/feature';
+          FEATURE_FILTERS_CONFIG } from '../models/place';
 
 import {  INVESTMENT_PARAMS,
           INVESTMENT_TYPES,
@@ -56,8 +56,8 @@ export default Ember.Controller.extend({
   featureOpen: null,
   employer: null,
 
-  fake_open_or_closed: null,
-  investments_fake_open_or_closed: null,
+  // fake_open_or_closed: null,
+  // investments_fake_open_or_closed: null,
 
 
   // investments
@@ -141,8 +141,8 @@ export default Ember.Controller.extend({
   hideSidebar: false,
 
   // applied computed filters
-  visibleFeatures: computed(...FEATURE_PARAMS, 'investmentIcons', 'currentCity.city.features', 
-    applyFiltersTo('currentCity.city.features', FEATURE_FILTERS_CONFIG)),
+  visibleFeatures: computed(...FEATURE_PARAMS, 'investmentIcons', 'currentCity.city.places', 
+    applyFiltersTo('currentCity.city.places', FEATURE_FILTERS_CONFIG)),
 
   visibleInvestments: computed(...INVESTMENT_PARAMS, 'currentCity.city.investments', 
     applyFiltersTo('currentCity.city.investments', INVESTMENT_FILTERS_CONFIG)),

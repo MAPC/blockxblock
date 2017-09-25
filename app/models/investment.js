@@ -3,6 +3,8 @@ import moment from 'moment';
 import getLatest from '../utils/get-latest';
 import config from '../config/environment';
 
+const { alias } = Ember.computed;
+
 export default DS.Model.extend({
   name: DS.attr("string"),
   address: DS.attr("string"),
@@ -29,7 +31,8 @@ export default DS.Model.extend({
   non_addressy_location: DS.attr('string'),
   source_type: DS.attr('string', { defaultValue: '' }),
   is_tdi_influenced: DS.attr('boolean'),
-  investment_type: DS.attr('string', { defaultValue: '' }),
+  use_type: DS.attr('string', { defaultValue: '' }),
+  investment_type: alias('use_type'),
   product_massdev: DS.attr('string'),
   product_public: DS.attr('string'),
   product_private: DS.attr('string'),
@@ -38,10 +41,10 @@ export default DS.Model.extend({
   is_amount_public: DS.attr('boolean'),
   amount_exact: DS.attr('number'),
   amount_estimated: DS.attr('string'),
-  investment_status: DS.attr('timeline'),
-  investment_status_latest: Ember.computed('investment_status', function() {
-    return getLatest('investment_status', this);
-  }),
+  investment_status: DS.attr('string'),
+  // investment_status_latest: Ember.computed('investment_status', function() {
+  //   return getLatest('investment_status', this);
+  // }),
   is_close_date_approx: DS.attr('boolean'),
   featured_photo: DS.attr('string'),
   pub_docs: DS.attr('string'),
@@ -73,8 +76,9 @@ export default DS.Model.extend({
   pub_contact_website_2: DS.attr('string'),
   product_massdev: DS.attr('string'),
 
-  relatedInvestments: DS.hasMany('investment', { inverse: 'relatedInvestment' }),
-  relatedInvestment: DS.belongsTo('investment', { inverse: 'relatedInvestments' }),
+  related_investments: DS.hasMany('investment', { inverse: 'relatedInvestment' }),
+  relatedInvestments: alias('related_investments'),
+  relatedInvestment: DS.belongsTo('investment', { inverse: 'related_investments' }),
   feature: DS.hasMany('feature'),
 
   fake_open_or_closed: Ember.computed(function() {
@@ -104,35 +108,38 @@ export default DS.Model.extend({
   }),
 
   city: DS.belongsTo("city"),
-  isSelected: false
+  isSelected: false,
+  places: DS.hasMany('investment', { inverse: 'investments' }),
 });
 
 export const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources', 'investments_fake_open_or_closed'];
 export const INVESTMENT_TYPES = ['Infrastructure', 'Finance', 'Planning or Strategy', 'Placemaking', 'Small Business Growth'];
 export const INVESTMENT_STATUSES = ['Proposed', 'In Progress', 'Completed'];
 export const INVESTMENT_SOURCES = ['MassDevelopment', 'Public', 'Private', 'TDI'];
-export const INVESTMENT_FILTERS_CONFIG = [{
+export const INVESTMENT_FILTERS_CONFIG = [
+{
   property: 'investment_type',
   filter: 'investmentTypesArray',
   filterType: 'isAny'
-}, {
-  property: 'investment_status_latest',
+}, 
+{
+  property: 'investment_status',
   filter: 'investmentStatusesArray',
   filterType: 'isAny'
-}, {
+}, 
+{
   property: 'source_type',
   filter: 'investmentSourcesArray',
   filterType: 'isAny'
-}, {
-  property: 'amount_estimated',
-  filter: ['valueMin', 'valueMax'],
-  filterType: 'isWithin'
-}, {
-  property: 'fake_open_or_closed',
-  filter: 'investments_fake_open_or_closed',
-  filterType: 'isLongitudinal'
-}, {
-  property: 'is_tdi_influenced',
-  filter: 'is_tdi_influenced',
-  filterType: 'isTrue'
-}];
+}, 
+// {
+//   property: 'amount_estimated',
+//   filter: ['valueMin', 'valueMax'],
+//   filterType: 'isWithin'
+// }, 
+// {
+//   property: 'is_tdi_influenced',
+//   filter: 'is_tdi_influenced',
+//   filterType: 'isTrue'
+// }
+];

@@ -4,6 +4,6 @@ import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mi
 export default Ember.Route.extend(ApplicationRouteMixin, {
   currentCity: Ember.inject.service(),
   model() {
-    return this.store.findAll('city');
+    return this.store.query('city', { exclude: 'investments,parcels,places' });
   }
 });

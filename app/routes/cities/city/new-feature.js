@@ -1,12 +1,12 @@
 import Ember from 'ember';
-import { FEATURE_TYPES } from '../../../models/feature';
+import { FEATURE_TYPES } from '../../../models/place';
 
 export default Ember.Route.extend({
-  templateName: 'cities/city/edit-feature',
+  templateName: 'cities/city/edit-place',
   currentCity: Ember.inject.service(),
   model(params) {
     let city = this.modelFor('cities.city');
-    return this.store.createRecord('feature', {
+    return this.store.createRecord('place', {
       city: city.city
     });
   },
@@ -35,7 +35,7 @@ export default Ember.Route.extend({
       });
       
       return object.save().then((model)=> {
-        this.transitionTo('cities.city.features', model);
+        this.transitionTo('cities.city.places', model);
       });
     }
   }

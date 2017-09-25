@@ -1,6 +1,6 @@
 export default function(){
   this.transition(
-    this.toRoute('cities.city.features'),
+    this.toRoute('cities.city.places'),
     this.use('fade')
   )
   this.transition(

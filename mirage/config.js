@@ -11,7 +11,7 @@ export default function() {
     return {};
   });
 
-  this.get('cities/:id/features', function({ cities }, { params }) {
+  this.get('cities/:id/places', function({ cities }, { params }) {
     let city = cities.findBy({
       id: params.id
     });
@@ -20,7 +20,7 @@ export default function() {
       return [];
     }
 
-    return city.features;
+    return city.places;
   });
 
   this.get('cities/:id/investments', function({ cities }, { params }) {
@@ -47,23 +47,23 @@ export default function() {
     return city.parcels;
   });
 
-  this.get('features', function({ features }) {
-    let json = this.serialize(features.all());
+  this.get('places', function({ places }) {
+    let json = this.serialize(places.all());
     json.meta = {
-      "cartodb_query": "SELECT * FROM features WHERE type=1;"
+      "cartodb_query": "SELECT * FROM places WHERE type=1;"
     };
     return json;
   });
 
-  this.get('features/:id');
+  this.get('places/:id');
   this.get('investments/:id');
   this.get('parcels/:id');
 
-  this.post('features');
+  this.post('places');
   this.post('investments');
   this.post('parcels');
 
-  this.patch('features/:id');
+  this.patch('places/:id');
   this.patch('investments/:id');
   this.patch('parcels/:id');
 
@@ -87,15 +87,15 @@ export default function() {
 
     return new Mirage.Response(401, {}, { error: 'Invalid username or password' });
   });
-  // this.get('features/:id', (schema, request) => {
-  //   let feature = schema.features.find(request.params.id);
+  // this.get('places/:id', (schema, request) => {
+  //   let feature = schema.places.find(request.params.id);
   //   return feature;
   // });
 
-  // this.get('cities/:id/features', (schema, request) => {
+  // this.get('cities/:id/places', (schema, request) => {
   //   let city = schema.cities.find(request.params.id);
 
-  //   return city.features;
+  //   return city.places;
   // });
   // These comments are here to help you get started. Feel free to delete them.
 

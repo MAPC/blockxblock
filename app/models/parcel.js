@@ -2,16 +2,16 @@ import DS from 'ember-data';
 import Ember from 'ember';
 import { faker } from 'ember-cli-mirage';
 
+const { alias } = Ember.computed;
+
 export default DS.Model.extend({
   name: DS.attr('string'),
   address: DS.attr('string'),
   contact: DS.attr('string'),
   landUseType: DS.attr('string'),
   yearBuilt: DS.attr('date'),
-  // forLease: DS.attr('boolean'),
   vacancy: DS.attr('boolean'),
   marked: DS.attr('boolean'),
-  // forSale: DS.attr('boolean'),
 
   forLease: Ember.computed(function() {
     return faker.random.boolean();
@@ -19,39 +19,8 @@ export default DS.Model.extend({
   forSale: Ember.computed(function() {
     return faker.random.boolean();
   }),
-
-  is_engaged_owner: DS.attr('timeline'),
-  is_for_sale: DS.attr('timeline'),
-  is_for_lease: DS.attr('timeline'),
-  is_vacant_lot: DS.attr('timeline'),
-  ground_floor_vacancy: DS.attr('timeline'),
-  upper_floor_vacancy: DS.attr('timeline'),
-
-  latest_is_engaged_owner: Ember.computed('is_engaged_owner', function() {
-    let timeline = this.get('is_engaged_owner');
-    return timeline[timeline.length-1].status;
-  }),
-  latest_is_for_sale: Ember.computed('is_for_sale', function() {
-    let timeline = this.get('is_for_sale');
-    return timeline[timeline.length-1].status;
-  }),
-  latest_is_for_lease: Ember.computed('is_for_lease', function() {
-    let timeline = this.get('is_for_lease');
-    return timeline[timeline.length-1].status;
-  }),
-  latest_is_vacant_lot: Ember.computed('is_vacant_lot', function() {
-    let timeline = this.get('is_vacant_lot');
-    return timeline[timeline.length-1].status;
-  }),
-  latest_ground_floor_vacancy: Ember.computed('ground_floor_vacancy', function() {
-    let timeline = this.get('ground_floor_vacancy');
-    return timeline[timeline.length-1].status;
-  }),
-  latest_upper_floor_vacancy: Ember.computed('upper_floor_vacancy', function() {
-    let timeline = this.get('upper_floor_vacancy');
-    return timeline[timeline.length-1].status;
-  }),
-
+  is_engaged_owner: alias('engaged_owner'),
+  engaged_owner: DS.attr('boolean'),
   ownership_type: DS.attr('string'),
   land_use: DS.attr('string'),
   zoning: DS.attr('string'),
@@ -108,11 +77,11 @@ export default DS.Model.extend({
                                           .uniq();
 
 
-    let properties = choroplethKeys.concat(computed_properties);
+    let properties = ['land_use'];
 
     geojson.set('properties', this.getProperties(properties));
     geojson.set('type', 'Feature');
-    geojson.set('geometry', JSON.parse(this.get('geom')));
+    geojson.set('geometry', this.get('geom.geometry'));
 
     return geojson;
   }),
@@ -165,22 +134,22 @@ export const PARCEL_FILTERS_CONFIG = [
   }
 ];
 export const PARCEL_MAP_CONFIG = [
-  {
-    setName: 'Available Spaces',
-    default_color: 'lightgray',
-    colorMap: [
-      {
-        key: 'latest_is_for_sale',
-        value: true,
-        color: '#FCBE78'
-      },
-      {
-        key: 'latest_is_for_lease',
-        value: true,
-        color: '#58BC70'
-      }
-    ]
-  },
+  // {
+  //   setName: 'Available Spaces',
+  //   default_color: 'lightgray',
+  //   colorMap: [
+  //     {
+  //       key: 'latest_is_for_sale',
+  //       value: true,
+  //       color: '#FCBE78'
+  //     },
+  //     {
+  //       key: 'latest_is_for_lease',
+  //       value: true,
+  //       color: '#58BC70'
+  //     }
+  //   ]
+  // },
   {
     setName: 'Land Use',
     default_color: 'lightgray',
@@ -202,89 +171,89 @@ export const PARCEL_MAP_CONFIG = [
       }
     ]
   },
-  {
-    setName: 'Ownership Type',
-    default_color: 'lightgray',
-    colorMap: [
-      {
-        key: 'ownership_type',
-        value: 'Partner-controlled',
-        color: '#3B158B'
-      },
-      {
-        key: 'ownership_type',
-        value: 'Privately Owned',
-        color: '#9892BF'
-      },
-      {
-        key: 'ownership_type',
-        value: 'Publicly Owned',
-        color: '#BB5195'
-      }
-    ]
-  },
-  {
-    setName: 'Ground Floor Vacancy',
-    default_color: 'lightgray',
-    colorMap: [
-      {
-        key: 'latest_ground_floor_vacancy',
-        value: "Is Vacant Lot",
-        color: '#0074ff'
-      },
-      {
-        key: 'latest_ground_floor_vacancy',
-        value: "Entirely Vacant",
-        color: '#001f4a'
-      },
-      {
-        key: 'latest_ground_floor_vacancy',
-        value: "Partially Vacant",
-        color: '#808fa4'
-      },
-      {
-        key: 'latest_ground_floor_vacancy',
-        value: "Not Vacant",
-        color: '#bfc7d2'
-      }
-    ]
-  },
-  {
-    setName: 'Upper Level Vacancy',
-    default_color: 'lightgray',
-    colorMap: [
-      {
-        key: 'latest_upper_floor_vacancy',
-        value: 'Entirely Vacant',
-        color: '#a33800'
-      },
-      {
-        key: 'latest_upper_floor_vacancy',
-        value: 'Partially Vacant',
-        color: '#d19b80'
-      },
-      {
-        key: 'latest_upper_floor_vacancy',
-        value: 'Not Vacant',
-        color: '#e8cdbf'
-      }
-    ]
-  }
+  // {
+  //   setName: 'Ownership Type',
+  //   default_color: 'lightgray',
+  //   colorMap: [
+  //     {
+  //       key: 'ownership_type',
+  //       value: 'Partner-controlled',
+  //       color: '#3B158B'
+  //     },
+  //     {
+  //       key: 'ownership_type',
+  //       value: 'Privately Owned',
+  //       color: '#9892BF'
+  //     },
+  //     {
+  //       key: 'ownership_type',
+  //       value: 'Publicly Owned',
+  //       color: '#BB5195'
+  //     }
+  //   ]
+  // },
+  // {
+  //   setName: 'Ground Floor Vacancy',
+  //   default_color: 'lightgray',
+  //   colorMap: [
+  //     {
+  //       key: 'latest_ground_floor_vacancy',
+  //       value: "Is Vacant Lot",
+  //       color: '#0074ff'
+  //     },
+  //     {
+  //       key: 'latest_ground_floor_vacancy',
+  //       value: "Entirely Vacant",
+  //       color: '#001f4a'
+  //     },
+  //     {
+  //       key: 'latest_ground_floor_vacancy',
+  //       value: "Partially Vacant",
+  //       color: '#808fa4'
+  //     },
+  //     {
+  //       key: 'latest_ground_floor_vacancy',
+  //       value: "Not Vacant",
+  //       color: '#bfc7d2'
+  //     }
+  //   ]
+  // },
+  // {
+  //   setName: 'Upper Level Vacancy',
+  //   default_color: 'lightgray',
+  //   colorMap: [
+  //     {
+  //       key: 'latest_upper_floor_vacancy',
+  //       value: 'Entirely Vacant',
+  //       color: '#a33800'
+  //     },
+  //     {
+  //       key: 'latest_upper_floor_vacancy',
+  //       value: 'Partially Vacant',
+  //       color: '#d19b80'
+  //     },
+  //     {
+  //       key: 'latest_upper_floor_vacancy',
+  //       value: 'Not Vacant',
+  //       color: '#e8cdbf'
+  //     }
+  //   ]
+  // }
 ];
 
 export const PARCEL_OWNERSHIP_TYPES = PARCEL_MAP_CONFIG.findBy('setName', 'Ownership Type')
-                                                       .colorMap
-                                                       .mapBy('value');
+                                                       // .colorMap
+                                                       // .mapBy('value');
 
 
 export const PARCEL_TYPES = PARCEL_MAP_CONFIG.findBy('setName', 'Land Use')
-                                             .colorMap
-                                             .mapBy('value');
+                                             // .colorMap
+                                             // .mapBy('value');
 
 export const GFVACANCY_STATUSES = PARCEL_MAP_CONFIG.findBy('setName', 'Ground Floor Vacancy')
-                                                   .colorMap
-                                                   .mapBy('value');
+                                                   // .colorMap
+                                                   // .mapBy('value');
 
 export const UFVACANCY_STATUSES = PARCEL_MAP_CONFIG.findBy('setName', 'Upper Level Vacancy')
-                                                   .colorMap
-                                                   .mapBy('value');
+                                                   // .colorMap
+                                                   // .mapBy('value');

@@ -9,15 +9,17 @@
       {{main-map  model=model
                   showFeatures=showFeatures
                   visibleFeatures=visibleFeatures
+                  showInvestments=showInvestments
+                  visibleInvestments=visibleInvestments
                   showParcels=showParcels
-                  visibleParcels=visibleParcels }}    
+                  visibleParcels=visibleParcels }}  
   </div>
 </div>
-
+{{!-- 
 {{over-time-chart 
         selection=fake_open_or_closed 
         models=(array currentCity.city.features currentCity.city.investments)
         onEnd=(action "updateSliderDate")}}
-
+ --}}
 {{export-data isExporting=isExporting
               export_csv=(action 'export_csv') }}

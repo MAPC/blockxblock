@@ -1,63 +1,69 @@
 import DS from 'ember-data';
 import Ember from 'ember';
-import { faker } from 'ember-cli-mirage';
 
 const { alias } = Ember.computed;
 
 export default DS.Model.extend({
-  name: DS.attr('string'),
-  address: DS.attr('string'),
-  contact: DS.attr('string'),
-  landUseType: DS.attr('string'),
-  yearBuilt: DS.attr('date'),
-  vacancy: DS.attr('boolean'),
-  marked: DS.attr('boolean'),
-
-  forLease: Ember.computed(function() {
-    return faker.random.boolean();
-  }),
-  forSale: Ember.computed(function() {
-    return faker.random.boolean();
-  }),
-  is_engaged_owner: alias('engaged_owner'),
-  engaged_owner: DS.attr('boolean'),
-  ownership_type: DS.attr('string'),
-  land_use: DS.attr('string'),
-  zoning: DS.attr('string'),
+  // new attributes
   parcel_id: DS.attr('string'),
-  own_contact_name: DS.attr('string'),
-  own_contact_role: DS.attr('string'),
-  own_contact_organization: DS.attr('string'),
-  own_contact_phone: DS.attr('string'),
-  own_contact_email: DS.attr('string'),
-  priv_contact_name: DS.attr('string'),
-  priv_contact_organization: DS.attr('string'),
-  priv_contact_role: DS.attr('string'),
-  priv_contact_phone: DS.attr('string'),
-  priv_contact_email: DS.attr('string'),
-  priv_contact_website: DS.attr('string'),
-  priv_notes: DS.attr('string'),
-  pub_notes: DS.attr('string'),
-  cta_text: DS.attr('string'),
-  cta_contact: DS.attr('string'),
-  pub_contact_1: DS.attr('string'),
-  pub_contact_org_1: DS.attr('string'),
-  pub_contact_role_1: DS.attr('string'),
-  pub_contact_phone_1: DS.attr('string'),
-  pub_contact_email_1: DS.attr('string'),
-  pub_contact_website_1: DS.attr('string'),
-  pub_contact_2: DS.attr('string'),
-  pub_contact_org_2: DS.attr('string'),
-  pub_contact_role_2: DS.attr('string'),
-  pub_contact_phone_2: DS.attr('string'),
-  pub_contact_email_2: DS.attr('string'),
-  pub_contact_website_2: DS.attr('string'),
+  street_address: DS.attr('string'),
+  property_for_sale: DS.attr('boolean'),
+  for_sale_change_date: DS.attr('date'),
+  propery_for_lease: DS.attr('boolean'),
+  for_lease_change_date: DS.attr('date'),
+  listing_type: DS.attr('string'),
+  invitation_to_connect: DS.attr('boolean'),
+  invitation_to_connect_text: DS.attr('string'),
+  realestate_contact_name: DS.attr('string'),
+  realestate_contact_role: DS.attr('string'),
+  realestate_contact_organization: DS.attr('string'),
+  realestate_contact_phone: DS.attr('number'),
+  realestate_contact_email: DS.attr('string'),
+  realestate_contact_website: DS.attr('string'),
+  year_built: DS.attr('number'),
+  land_use: DS.attr('string'),
+  ground_floor_vacancy_status: DS.attr('string'),
+  ground_floor_vacancy_change_date: DS.attr('date'),
+  upper_floor_vacancy_status: DS.attr('string'),
+  upper_floor_vacancy_change_date: DS.attr('date'),
+  assessed_value: DS.attr('number'),
+  date_trackchange_value: DS.attr('date'),
+  site_control: DS.attr('string'),
+  control_change_date: DS.attr('date'),
+  engaged_owner: DS.attr('boolean'),
+  date_engagedowner_change: DS.attr('date'),
+  owner_contact_name: DS.attr('string'),
+  owner_contact_role: DS.attr('string'),
+  owner_contact_org: DS.attr('string'),
+  owner_contact_phone: DS.attr('number'),
+  owner_contact_email: DS.attr('string'),
+  owner_contact_website: DS.attr('string'),
+  parcel_notes: DS.attr('string'),
+  media_upload: DS.attr('string'),
+  parcel_link1: DS.attr('string'),
+  parcel_link1_description: DS.attr('string'),
+  parcel_link2: DS.attr('string'),
+  parcel_link2_description: DS.attr('string'),
+  internal_parcel_notes: DS.attr('string'),
+  internal_parcel_media: DS.attr('file'),
+  featured_parcel_photo: DS.attr('string'),
+  message_to_connect: DS.attr('string'),
+  parcel_contact_name: DS.attr('string'),
+  parcel_contact_role: DS.attr('string'),
+  parcel_contact_org: DS.attr('string'),
+  parcel_contact_email: DS.attr('string'),
+  parcel_contact_phone: DS.attr('number'),
+  parcel_contact_website: DS.attr('string'),
+  geom: DS.attr(),
 
+  // aliases
+  is_engaged_owner: alias('engaged_owner'),
+
+  // computeds
   splash: Ember.computed('latitude,longitude', function() {
     let { latitude, longitude } = this.getProperties('latitude','longitude');
     return `https://maps.googleapis.com/maps/api/streetview?size=450x300&location=${latitude},${longitude}&key=AIzaSyCO654zBIabvjSOV4Ys59Pku8pmzM387ps`;
   }),
-  geom: DS.attr(),
   latitude: Ember.computed('geojson', function() {
     let geojson=this.get('geojson');
     return L.geoJSON(geojson).getBounds().getCenter().lat;
@@ -68,18 +74,6 @@ export default DS.Model.extend({
   }),
   geojson: Ember.computed('geom', function() {
     let geojson = Ember.Object.create();
-    let computed_properties = ['forLease', 'forSale', 'vacancy'];
-    let choroplethKeys = PARCEL_MAP_CONFIG.mapBy('colorMap')
-                                          .invoke('mapBy','key')
-                                          .reduce(  function(a, b) {
-                                            return a.concat(b);
-                                          },[])
-                                          .uniq();
-
-
-    let properties = ['land_use'];
-
-    geojson.set('properties', this.getProperties(properties));
     geojson.set('type', 'Feature');
     geojson.set('geometry', this.get('geom.geometry'));
 
@@ -90,7 +84,10 @@ export default DS.Model.extend({
   isSelected: false
 });
 
+// filter params
 export const PARCEL_PARAMS = ['landuseTypes','GFVacancyStatuses','UFVacancyStatuses','OwnershipTypes','groundFloorVacancyMin','groundFloorVacancyMax','landuseTypes','forSale','forLease','yearBuiltMin','yearBuiltMax','isEngagedOwner'];
+
+// dsl for filters
 export const PARCEL_FILTERS_CONFIG = [
   { 
     property: 'land_use',
@@ -133,23 +130,9 @@ export const PARCEL_FILTERS_CONFIG = [
     filterType: 'isWithin'
   }
 ];
+
+// choropleth config
 export const PARCEL_MAP_CONFIG = [
-  // {
-  //   setName: 'Available Spaces',
-  //   default_color: 'lightgray',
-  //   colorMap: [
-  //     {
-  //       key: 'latest_is_for_sale',
-  //       value: true,
-  //       color: '#FCBE78'
-  //     },
-  //     {
-  //       key: 'latest_is_for_lease',
-  //       value: true,
-  //       color: '#58BC70'
-  //     }
-  //   ]
-  // },
   {
     setName: 'Land Use',
     default_color: 'lightgray',
@@ -171,89 +154,16 @@ export const PARCEL_MAP_CONFIG = [
       }
     ]
   },
-  // {
-  //   setName: 'Ownership Type',
-  //   default_color: 'lightgray',
-  //   colorMap: [
-  //     {
-  //       key: 'ownership_type',
-  //       value: 'Partner-controlled',
-  //       color: '#3B158B'
-  //     },
-  //     {
-  //       key: 'ownership_type',
-  //       value: 'Privately Owned',
-  //       color: '#9892BF'
-  //     },
-  //     {
-  //       key: 'ownership_type',
-  //       value: 'Publicly Owned',
-  //       color: '#BB5195'
-  //     }
-  //   ]
-  // },
-  // {
-  //   setName: 'Ground Floor Vacancy',
-  //   default_color: 'lightgray',
-  //   colorMap: [
-  //     {
-  //       key: 'latest_ground_floor_vacancy',
-  //       value: "Is Vacant Lot",
-  //       color: '#0074ff'
-  //     },
-  //     {
-  //       key: 'latest_ground_floor_vacancy',
-  //       value: "Entirely Vacant",
-  //       color: '#001f4a'
-  //     },
-  //     {
-  //       key: 'latest_ground_floor_vacancy',
-  //       value: "Partially Vacant",
-  //       color: '#808fa4'
-  //     },
-  //     {
-  //       key: 'latest_ground_floor_vacancy',
-  //       value: "Not Vacant",
-  //       color: '#bfc7d2'
-  //     }
-  //   ]
-  // },
-  // {
-  //   setName: 'Upper Level Vacancy',
-  //   default_color: 'lightgray',
-  //   colorMap: [
-  //     {
-  //       key: 'latest_upper_floor_vacancy',
-  //       value: 'Entirely Vacant',
-  //       color: '#a33800'
-  //     },
-  //     {
-  //       key: 'latest_upper_floor_vacancy',
-  //       value: 'Partially Vacant',
-  //       color: '#d19b80'
-  //     },
-  //     {
-  //       key: 'latest_upper_floor_vacancy',
-  //       value: 'Not Vacant',
-  //       color: '#e8cdbf'
-  //     }
-  //   ]
-  // }
 ];
 
-export const PARCEL_OWNERSHIP_TYPES = PARCEL_MAP_CONFIG.findBy('setName', 'Ownership Type')
-                                                       // .colorMap
-                                                       // .mapBy('value');
+export const PARCEL_OWNERSHIP_TYPES = 
+  PARCEL_MAP_CONFIG.findBy('setName', 'Ownership Type');
 
+export const PARCEL_TYPES = 
+  PARCEL_MAP_CONFIG.findBy('setName', 'Land Use');
 
-export const PARCEL_TYPES = PARCEL_MAP_CONFIG.findBy('setName', 'Land Use')
-                                             // .colorMap
-                                             // .mapBy('value');
+export const GFVACANCY_STATUSES = 
+  PARCEL_MAP_CONFIG.findBy('setName', 'Ground Floor Vacancy');
 
-export const GFVACANCY_STATUSES = PARCEL_MAP_CONFIG.findBy('setName', 'Ground Floor Vacancy')
-                                                   // .colorMap
-                                                   // .mapBy('value');
-
-export const UFVACANCY_STATUSES = PARCEL_MAP_CONFIG.findBy('setName', 'Upper Level Vacancy')
-                                                   // .colorMap
-                                                   // .mapBy('value');
+export const UFVACANCY_STATUSES = 
+  PARCEL_MAP_CONFIG.findBy('setName', 'Upper Level Vacancy');

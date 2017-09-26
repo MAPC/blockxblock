@@ -4,22 +4,10 @@
       {{outlet}}
     </div>
   </div>
-  <div class="map-results {{if (not hideSidebar) 'eleven'}}{{if hideSidebar 'sixteen'}} wide column" style="padding: 0 !important; height:100%;">
-    <i class="large circular white {{if (not hideSidebar) 'left arrow'}} link icon sidebar-tab {{if hideSidebar 'right arrow'}}" onclick={{action 'toggleSidebar'}} style="background-color:white"></i>
-      {{main-map  model=model
-                  showFeatures=showFeatures
-                  visibleFeatures=visibleFeatures
-                  showInvestments=showInvestments
-                  visibleInvestments=visibleInvestments
-                  showParcels=showParcels
-                  visibleParcels=visibleParcels }}  
+  <div class="map-results eleven wide column">
+    {{main-map}}
   </div>
 </div>
-{{!-- 
-{{over-time-chart 
-        selection=fake_open_or_closed 
-        models=(array currentCity.city.features currentCity.city.investments)
-        onEnd=(action "updateSliderDate")}}
- --}}
+
 {{export-data isExporting=isExporting
               export_csv=(action 'export_csv') }}

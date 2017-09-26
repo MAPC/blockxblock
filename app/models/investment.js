@@ -1,144 +1,100 @@
+import Ember from 'ember';
 import DS from 'ember-data';
-import moment from 'moment';
-import getLatest from '../utils/get-latest';
-import config from '../config/environment';
 
 const { alias } = Ember.computed;
 
 export default DS.Model.extend({
-  name: DS.attr("string"),
-  address: DS.attr("string"),
-  contact: DS.attr("string"),
-  employer: DS.attr("string"),
-  activating: DS.attr("string"),
-  latitude: DS.attr("number"),
-  longitude: DS.attr("number"),
-  value: DS.attr("number"),
-  type: DS.attr("string"),
-
-  iconUrl: Ember.computed('source_type', 'investment_type', function() {
-    let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
-    return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.decamelize()}.png`;
-  }),
-
-  iconWatermarkUrl: Ember.computed('source_type', 'investment_type', function() {
-    let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
-    return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.decamelize()}.png`;
-  }),
-
-  project: DS.attr('string'),
-  is_addressy: DS.attr('boolean', { defaultValue: true }),
-  non_addressy_location: DS.attr('string'),
-  source_type: DS.attr('string', { defaultValue: '' }),
-  is_tdi_influenced: DS.attr('boolean'),
-  use_type: DS.attr('string', { defaultValue: '' }),
-  investment_type: alias('use_type'),
-  product_massdev: DS.attr('string'),
-  product_public: DS.attr('string'),
-  product_private: DS.attr('string'),
-  is_amount_known: DS.attr('boolean'),
-  is_amount_estimated: DS.attr('boolean'),
-  is_amount_public: DS.attr('boolean'),
-  amount_exact: DS.attr('number'),
-  amount_estimated: DS.attr('string'),
+  // new attributes
+  investment_id: DS.attr('string'),
+  investment_descriptor: DS.attr('string'),
+  street_address: DS.attr('string'),
+  location_description: DS.attr('string'),
+  in_district: DS.attr('boolean'),
+  source_type: DS.attr('string'),
+  tdi_product: DS.attr('string'),
+  massdev_product: DS.attr('string'),
+  public_product: DS.attr('string'),
+  private_product: DS.attr('string'),
+  use_type: DS.attr('string'),
+  tdi_influence: DS.attr('boolean'),
   investment_status: DS.attr('string'),
-  // investment_status_latest: Ember.computed('investment_status', function() {
-  //   return getLatest('investment_status', this);
-  // }),
-  is_close_date_approx: DS.attr('boolean'),
-  featured_photo: DS.attr('string'),
-  pub_docs: DS.attr('string'),
-  priv_docs: DS.attr('string'),
-  related_link_title: DS.attr('string'),
-  related_link_url: DS.attr('string'),
-  relation_notes: DS.attr('string'),
-  priv_contact_name: DS.attr('string'),
-  priv_contact_organization: DS.attr('string'),
-  priv_contact_role: DS.attr('string'),
-  priv_contact_phone: DS.attr('string'),
-  priv_contact_email: DS.attr('string'),
-  priv_contact_website: DS.attr('string'),
-  priv_notes: DS.attr('string'),
-  pub_notes: DS.attr('string'),
-  cta_text: DS.attr('string'),
-  cta_contact: DS.attr('string'),
-  pub_contact_1: DS.attr('string'),
-  pub_contact_org_1: DS.attr('string'),
-  pub_contact_role_1: DS.attr('string'),
-  pub_contact_phone_1: DS.attr('string'),
-  pub_contact_email_1: DS.attr('string'),
-  pub_contact_website_1: DS.attr('string'),
-  pub_contact_2: DS.attr('string'),
-  pub_contact_org_2: DS.attr('string'),
-  pub_contact_role_2: DS.attr('string'),
-  pub_contact_phone_2: DS.attr('string'),
-  pub_contact_email_2: DS.attr('string'),
-  pub_contact_website_2: DS.attr('string'),
-  product_massdev: DS.attr('string'),
+  investment_status_start: DS.attr('date'),
+  completion_date_is_exact: DS.attr('boolean'),
+  prior_investment_status: DS.attr('string'),
+  prior_investment_status_start: DS.attr('date'),
+  amount_is_public: DS.attr('boolean'),
+  amount_is_exact: DS.attr('boolean'),
+  exact_amount: DS.attr('number'),
+  estimated_amount: DS.attr('number'),
+  contact_type: DS.attr('string'),
+  inv_contact_name: DS.attr('string'),
+  inv_contact_role: DS.attr('string'),
+  inv_contact_org: DS.attr('string'),
+  inv_contact_phone: DS.attr('string'),
+  inv_contact_email: DS.attr('string'),
+  inv_contact_website: DS.attr('string'),
+  project_name: DS.attr('string'),
+  total_project_amount: DS.attr('number'),
+  notes: DS.attr('string'),
+  file_upload: DS.attr('string'),
+  link_description: DS.attr('string'),
+  link_url: DS.attr('string'),
+  internal_notes: DS.attr('string'),
+  internal_files: DS.attr('string'),
+  splash: DS.attr('string'),
+  i2c_text: DS.attr('string'),
+  pub_name: DS.attr('string'),
+  pub_role: DS.attr('string'),
+  pub_organization: DS.attr('string'),
+  pub_phone: DS.attr('string'),
+  pub_email: DS.attr('string'),
+  pub_website: DS.attr('string'),
 
-  related_investments: DS.hasMany('investment', { inverse: 'relatedInvestment' }),
+  // aliases
+  investment_type: alias('use_type'),
   relatedInvestments: alias('related_investments'),
+
+  // relationships
+  related_investments: DS.hasMany('investment', { inverse: 'relatedInvestment' }),
   relatedInvestment: DS.belongsTo('investment', { inverse: 'related_investments' }),
   feature: DS.hasMany('feature'),
-
-  fake_open_or_closed: Ember.computed(function() {
-    let number = 5;
-    let array = [];
-
-    for (var count = 0; count < number; count++) {
-      array.push({
-        status: faker.list.cycle("open", "closed")(count),
-        quarter: faker.date.past()
-      });
-    }
-
-    return array;
-  }),
-  datesOpen: Ember.computed('fake_open_or_closed.@each', function() {
-    let structured = this.get('fake_open_or_closed')
-      .filter((obj) => {
-        return obj.status == 'open'; })
-      .map((el) => {
-        let normalizedMonth = new Date();
-        normalizedMonth.setFullYear(el.quarter.getFullYear(), el.quarter.getMonth(), 1);
-        return { date: normalizedMonth, type: 'investment' };
-      });
-
-    return structured;
-  }),
-
   city: DS.belongsTo("city"),
+
+  // local session state
   isSelected: false,
 });
 
-export const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources', 'investments_fake_open_or_closed'];
+// form options/categories
 export const INVESTMENT_TYPES = ['Infrastructure', 'Finance', 'Planning or Strategy', 'Placemaking', 'Small Business Growth'];
 export const INVESTMENT_STATUSES = ['Proposed', 'In Progress', 'Completed'];
 export const INVESTMENT_SOURCES = ['MassDevelopment', 'Public', 'Private', 'TDI'];
-export const INVESTMENT_FILTERS_CONFIG = [
-{
-  property: 'investment_type',
-  filter: 'investmentTypesArray',
-  filterType: 'isAny'
-}, 
-{
-  property: 'investment_status',
-  filter: 'investmentStatusesArray',
-  filterType: 'isAny'
-}, 
-{
-  property: 'source_type',
-  filter: 'investmentSourcesArray',
-  filterType: 'isAny'
-}, 
-// {
-//   property: 'amount_estimated',
-//   filter: ['valueMin', 'valueMax'],
-//   filterType: 'isWithin'
-// }, 
-// {
-//   property: 'is_tdi_influenced',
-//   filter: 'is_tdi_influenced',
-//   filterType: 'isTrue'
-// }
+
+// filtering DSL
+export const INVESTMENT_FILTERS_CONFIG = 
+[
+  {
+    property: 'investment_type',
+    filter: 'investmentTypesArray',
+    filterType: 'isAny'
+  }, 
+  {
+    property: 'investment_status',
+    filter: 'investmentStatusesArray',
+    filterType: 'isAny'
+  }, 
+  {
+    property: 'source_type',
+    filter: 'investmentSourcesArray',
+    filterType: 'isAny'
+  }, 
+  {
+    property: 'estimated_amount',
+    filter: ['valueMin', 'valueMax'],
+    filterType: 'isWithin'
+  }, 
+  {
+    property: 'tdi_influence',
+    filter: 'tdi_influence',
+    filterType: 'isTrue'
+  },
 ];

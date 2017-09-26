@@ -8,12 +8,10 @@ import config from '../config/environment';
 import computed from 'ember-computed';
 import csvFactory from '../utils/csv-factory';
 
-import {  FEATURE_PARAMS, 
-          FEATURE_TYPES,
+import {  FEATURE_TYPES,
           FEATURE_FILTERS_CONFIG } from '../models/place';
 
-import {  INVESTMENT_PARAMS,
-          INVESTMENT_TYPES,
+import {  INVESTMENT_TYPES,
           INVESTMENT_STATUSES,
           INVESTMENT_SOURCES,
           INVESTMENT_FILTERS_CONFIG } from '../models/investment';
@@ -38,6 +36,10 @@ const SPECIAL_QUERYP_CONFIG = [ { 'activating'                : { type: 'boolean
                                 { 'is_tdi_influenced'         : { type: 'boolean' }},
                                 { 'is_feature_owner_engaged'  : { type: 'boolean' }},
                                 { 'is_collision_point'        : { type: 'boolean' }} ];
+
+const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources', 'investments_fake_open_or_closed'];
+const FEATURE_PARAMS = ['assetTypes', 'activating', 'featureOpen', 'employer', 'fake_open_or_closed', 'is_employer', 'is_street_activating', 'is_tdi_asset', 'is_feature_owner_engaged', 'is_collision_point'];
+
 export default Ember.Controller.extend({
   queryParams: ['showInvestments','showFeatures','showParcels']
                 .concat(FEATURE_PARAMS, 
@@ -46,8 +48,6 @@ export default Ember.Controller.extend({
                         SPECIAL_QUERYP_CONFIG),
   currentCity: Ember.inject.service(),
 
-
-
   // features
   assetTypes: FEATURE_TYPES.join('|'),
   assetTypesArray: computed('assetTypes', arrayify('assetTypes', '|')),
@@ -55,10 +55,6 @@ export default Ember.Controller.extend({
   is_street_activating: false,
   featureOpen: null,
   employer: null,
-
-  // fake_open_or_closed: null,
-  // investments_fake_open_or_closed: null,
-
 
   // investments
   investmentTypes: INVESTMENT_TYPES.join('|'),
@@ -177,27 +173,6 @@ export default Ember.Controller.extend({
     },
     changeProperty(key, value) {
       this.set(key, value);
-    },
-    toggleSidebar() {
-      let map = this.get('mapInstance');
-      this.toggleProperty('hideSidebar');
-      Ember.run.next(this, () => {
-        $('.list-results')
-          .transition({
-            animation: 'fade right',
-            className: {
-              'hidden': 'hidden-custom'
-            },
-            onStart() {
-              map.invalidateSize();
-            },
-            onComplete() {
-              map.invalidateSize();
-            }
-          });
-        ;
-      });
-
     },
     updateDate(date){
       this.set('fake_open_or_closed', new Date(date));

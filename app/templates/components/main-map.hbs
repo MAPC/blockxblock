@@ -18,7 +18,7 @@
                     url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' }}
     {{/if}}
 
-    {{#each model as |city|}}
+    {{#each currentCity.city as |city|}}
       {{image-layer pane='extrusions' imageUrl=city.imageOverlay bounds=city.imageOverlayBBox opacity=0.9}}
     {{/each}}
 

@@ -1,15 +1,17 @@
 import Ember from 'ember';
+
+
 import computed from 'ember-computed';
-import applyFiltersTo, { getFilter } from '../utils/apply-filter-to';
-import arrayify from '../utils/arrayify';
+import applyFiltersTo, { getFilter } from '../../../utils/apply-filter-to';
+import arrayify from '../../../utils/arrayify';
 
 import {  FEATURE_TYPES,
-          FEATURE_FILTERS_CONFIG } from '../models/place';
+          FEATURE_FILTERS_CONFIG } from '../../../models/place';
 
 import {  INVESTMENT_TYPES,
           INVESTMENT_STATUSES,
           INVESTMENT_SOURCES,
-          INVESTMENT_FILTERS_CONFIG } from '../models/investment';
+          INVESTMENT_FILTERS_CONFIG } from '../../../models/investment';
 
 import {  PARCEL_PARAMS,
           PARCEL_TYPES,
@@ -17,36 +19,16 @@ import {  PARCEL_PARAMS,
           PARCEL_MAP_CONFIG,
           PARCEL_OWNERSHIP_TYPES,
           GFVACANCY_STATUSES,
-          UFVACANCY_STATUSES  } from '../models/parcel';
+          UFVACANCY_STATUSES  } from '../../../models/parcel';
+
+const { alias } = Ember.computed;
 
 const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources', 'investments_fake_open_or_closed'];
 const FEATURE_PARAMS = ['assetTypes', 'activating', 'featureOpen', 'employer', 'fake_open_or_closed', 'is_employer', 'is_street_activating', 'is_tdi_asset', 'is_feature_owner_engaged', 'is_collision_point'];
 
 
-const SOUTHWICK_LATITUDE = 42.1;
-const SOUTHWICK_LONGITUDE = -71.6;
-const DEFAULT_ZOOM = 17;
-
-export default Ember.Service.extend({
-  mapInstance: null,
-  latitude: SOUTHWICK_LATITUDE,
-  longitude: SOUTHWICK_LONGITUDE,
-  zoom: DEFAULT_ZOOM,
-  setCity(city) {
-    this.set('city', city);
-    let latitude = city.get('latitude');
-    let longitude = city.get('longitude');
-    this.setProperties({
-      latitude,
-      longitude
-    });
-  },
-
-  city: '',
-
-  showInvestments: true,
-  showPlaces: true,
-  showParcels: true,
+export default Ember.Controller.extend({
+  queryParams: ['showPlaces','showInvestments','showParcels'],
 
   assetTypes: FEATURE_TYPES.join('|'),
   assetTypesArray: computed('assetTypes', arrayify('assetTypes', '|')),
@@ -65,9 +47,12 @@ export default Ember.Service.extend({
   landuseTypesArray: computed('landuseTypes', arrayify('landuseTypes', '|')),
   landuseTypeOptions: PARCEL_TYPES,
 
+  showInvestments: alias('currentCity.showInvestments'),
+  showPlaces: alias('currentCity.showFeatures'),
+  showParcels: alias('currentCity.showParcels'),
+
   isPlottingPoint: false,
-  newPointLatitude: SOUTHWICK_LATITUDE,
-  newPointLongitude: SOUTHWICK_LONGITUDE,
+
   visibleFeatures: computed(...FEATURE_PARAMS, 'investmentIcons', 'city.places', 
     applyFiltersTo('city.places', FEATURE_FILTERS_CONFIG)),
 
@@ -76,4 +61,8 @@ export default Ember.Service.extend({
 
   visibleParcels: computed(...PARCEL_PARAMS, 'city.parcels', 
     applyFiltersTo('city.parcels', PARCEL_FILTERS_CONFIG)),
+
+  currentCity: Ember.inject.service(),
+  session: Ember.inject.service('session'),
+
 });

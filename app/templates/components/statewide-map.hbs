@@ -9,7 +9,7 @@
   {{#each cities as |city|}}
     {{marker-layer  lat=city.latitude 
                     lng=city.longitude 
-                    onClick=(transition-to 'cities.city.city-filters' city.id)
+                    onClick=(transition-to 'cities.city.show' city.id)
                     icon= (icon iconUrl = (concat 'images/icons/cities/' city.name '.png')) }}
   {{/each}}
 {{/leaflet-map}}

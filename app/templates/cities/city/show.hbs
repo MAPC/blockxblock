@@ -2,18 +2,18 @@
   <h1>View Data</h1>
 
   <div class="ui labels filter-label-group">
-    <a class="ui {{if cc.showFeatures 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut cc.showFeatures) (not cc.showFeatures)}}>
+    <a class="ui {{if showPlaces 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut showPlaces) (not showPlaces)}}>
       Places
     </a>
-    <a class="ui {{if cc.showInvestments 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut cc.showInvestments) (not cc.showInvestments)}}>
+    <a class="ui {{if showInvestments 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut showInvestments) (not showInvestments)}}>
       Investments
     </a>
-    <a class="ui {{if cc.showParcels 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut cc.showParcels) (not cc.showParcels)}}>
+    <a class="ui {{if showParcels 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut showParcels) (not showParcels)}}>
       Parcels
     </a>
   </div>
 
-  {{#if (and (not cc.showFeatures) (not cc.showInvestments) (not cc.showParcels))}}
+  {{#if (and (not showPlaces) (not showInvestments) (not showParcels))}}
     <h5 class="ui disabled header">
       <i class="ui reply rotated right icon"></i>
       <div class="content">

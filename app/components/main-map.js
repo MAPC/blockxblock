@@ -8,13 +8,6 @@ const { alias } = Ember.computed;
 export default Ember.Component.extend({
   currentCity: Ember.inject.service(),
   classNames: ['main-map'],
-  
-  showFeatures: alias('currentCity.showFeatures'),
-  visibleFeatures: alias('currentCity.visibleFeatures'),
-  showInvestments: alias('currentCity.showInvestments'),
-  visibleInvestments: alias('currentCity.visibleInvestments'),
-  showParcels: alias('currentCity.showParcels'),
-  visibleParcels: alias('currentCity.visibleParcels'),
 
   parcelsChoroplethMapping: computed('visibleParcels', 'choroplethLayer', function() {
     // setChoroplethColor(feature, this.get('choroplethLayer'), PARCEL_MAP_CONFIG)

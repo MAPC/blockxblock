@@ -1,10 +1,31 @@
 <div class="cities ui grid">
   <div class="list-results ui segment five wide column" id="sidebar">
     <div class="city-details">
+      {{#ember-wormhole to="left-items"}}
+        {{#link-to 'cities.city.add-data' class='item'}} 
+          <i class="plus icon"></i>
+          Add Data
+        {{/link-to}}
+      {{/ember-wormhole}}
+
+      {{#ember-wormhole to="right-items"}}
+        <div class="item">
+          {{link-to 'Learn More' 'cities.city.index' tagName='div' class='ui inverted green button'}}
+        </div>
+        {{#if (and session.isAuthenticated)}}
+          {{searchable-select content=searchables
+                              sortBy='title'
+                              on-change=(action 'transitionTo')
+                              cache=false
+                              prompt='Search Places / Investments'
+                              class='item'}}
+        {{/if}}
+      {{/ember-wormhole}}
+
       {{outlet}}
     </div>
   </div>
-  <div class="map-results eleven wide column">
+  <div class="map-results eleven wide column" style="padding: 0 !important; height:100%;">
     {{main-map}}
   </div>
 </div>

@@ -22,16 +22,16 @@
       {{image-layer pane='extrusions' imageUrl=city.imageOverlay bounds=city.imageOverlayBBox opacity=0.9}}
     {{/each}}
 
-    {{#if showFeatures}}
-      {{#each visibleFeatures as |feature|}}
+    {{#if currentCity.showPlaces}}
+      {{#each currentCity.visibleFeatures as |feature|}}
         {{#if (and feature.latitude feature.id)}}
           {{related-investments-icon feature=feature linkTo=(transition-to)}}
         {{/if}}
       {{/each}}
     {{/if}}
-
-    {{#if showParcels}}
-      {{#each visibleParcels as |parcel|}}
+{{!-- 
+    {{#if currentCity.showParcels}}
+      {{#each currentCity.visibleParcels as |parcel|}}
         {{#if parcel.geom}}
           {{#map-popup lat=parcel.latitude lng=parcel.longitude as |popup|}}
             <strong>{{parcel.ownership_type}}</strong>
@@ -55,7 +55,7 @@
       {{marker-layer  lat=currentCity.newPointLatitude 
                       lng=currentCity.newPointLongitude
                       icon=(icon iconUrl='/images/add-data-pin.png' iconAnchor=(array 30 76) iconSize=(array 59 76))}}
-    {{/if}}
+    {{/if}} --}}
 
   {{/leaflet-map}}
 

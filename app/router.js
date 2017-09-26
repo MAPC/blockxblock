@@ -9,7 +9,7 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('cities', function() {
     this.route('city', { path: '/:city_id' }, function() {
-      this.route('city-filters', { path: '/show' });
+      this.route('show');
 
       this.route('places', { path: '/places/:place_id' });
       this.route('edit-place', { path: '/places/:place_id/edit'});

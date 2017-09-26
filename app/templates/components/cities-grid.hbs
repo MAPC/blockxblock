@@ -1,7 +1,7 @@
 <div class="ui five column stackable grid link cards">
   {{#each (sort-by 'name' cities) as |city|}}
     <div class="column">
-      {{#link-to 'cities.city.city-filters' city.id}}
+      {{#link-to 'cities.city.show' city.id}}
         {{city-card city=city}}
       {{/link-to}}
     </div>

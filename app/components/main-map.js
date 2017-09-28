@@ -9,10 +9,11 @@ export default Ember.Component.extend({
   currentCity: Ember.inject.service(),
   classNames: ['main-map'],
 
+
+  choroplethLayer: 'Available Spaces',
   parcelsChoroplethMapping: computed('visibleParcels', 'choroplethLayer', function() {
-    // setChoroplethColor(feature, this.get('choroplethLayer'), PARCEL_MAP_CONFIG)
     return (feature) => {
-      let color = 'blue',
+      let color = setChoroplethColor(feature, this.get('choroplethLayer'), PARCEL_MAP_CONFIG),
           stroke = true,
           fillOpacity=0.5,
           strokeOpacity=1,

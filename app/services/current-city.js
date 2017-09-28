@@ -19,8 +19,8 @@ import {  PARCEL_PARAMS,
           GFVACANCY_STATUSES,
           UFVACANCY_STATUSES  } from '../models/parcel';
 
-const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypes', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources', 'investments_fake_open_or_closed'];
-const FEATURE_PARAMS = ['assetTypes', 'activating', 'featureOpen', 'employer', 'fake_open_or_closed', 'is_employer', 'is_street_activating', 'is_tdi_asset', 'is_feature_owner_engaged', 'is_collision_point'];
+const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypesArray.[]', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources', 'investments_fake_open_or_closed'];
+const FEATURE_PARAMS = ['assetTypesArray.[]','activating','isOpen','is_employer','tdi_asset','engaged_owner','community_hub'];
 
 
 const SOUTHWICK_LATITUDE = 42.1;
@@ -44,13 +44,14 @@ export default Ember.Service.extend({
 
   city: '',
 
-  showInvestments: true,
+  showInvestments: false,
   showPlaces: true,
-  showParcels: true,
+  showParcels: false,
 
   assetTypes: FEATURE_TYPES.join('|'),
   assetTypesArray: computed('assetTypes', arrayify('assetTypes', '|')),
   assetTypeOptions: FEATURE_TYPES,
+
   investmentTypes: INVESTMENT_TYPES.join('|'),
   investmentTypesArray: computed('investmentTypes', arrayify('investmentTypes', '|')),
   investmentTypeOptions: INVESTMENT_TYPES,
@@ -68,7 +69,7 @@ export default Ember.Service.extend({
   isPlottingPoint: false,
   newPointLatitude: SOUTHWICK_LATITUDE,
   newPointLongitude: SOUTHWICK_LONGITUDE,
-  visibleFeatures: computed(...FEATURE_PARAMS, 'investmentIcons', 'city.places', 
+  visibleFeatures: computed(...FEATURE_PARAMS, 'city.places', 
     applyFiltersTo('city.places', FEATURE_FILTERS_CONFIG)),
 
   visibleInvestments: computed(...INVESTMENT_PARAMS, 'city.investments', 

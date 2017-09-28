@@ -26,13 +26,13 @@
   </div>
   <div class="ui tab" data-tab="parcels">
     <div class="ui two column grid cards">
-      {{#each (union (filter-by 'latest_is_for_sale' true visibleParcels) (filter-by 'latest_is_for_lease' true visibleParcels)) as |parcel|}}
+      {{#each (union (filter-by 'property_for_sale' true visibleParcels) (filter-by 'property_for_lease' true visibleParcels)) as |parcel|}}
         <div class="column">
           {{#tdi-card route='cities.city.parcels' 
                       modelContext=parcel 
                       image=parcel.splash
                       height=100}}
-            {{truncate parcel.address 15}}
+            {{truncate parcel.street_address 15}}
           {{/tdi-card}}
         </div>
       {{else}}

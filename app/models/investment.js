@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import config from '../config/environment';
 
 const { alias } = Ember.computed;
 
@@ -49,6 +50,17 @@ export default DS.Model.extend({
   pub_phone: DS.attr('string'),
   pub_email: DS.attr('string'),
   pub_website: DS.attr('string'),
+
+  // computeds
+  iconUrl: Ember.computed('source_type', 'investment_type', function() {
+    let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
+    return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.decamelize()}.png`;
+  }),
+
+  iconWatermarkUrl: Ember.computed('source_type', 'investment_type', function() {
+    let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
+    return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.decamelize()}.png`;
+  }),
 
   // aliases
   investment_type: alias('use_type'),

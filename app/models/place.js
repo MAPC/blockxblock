@@ -59,6 +59,9 @@ export default DS.Model.extend({
   feature_type: alias('type'),
 
   // computeds
+  is_employer: Ember.computed('employment', function() {
+    return !!this.get('employment');
+  }),
   iconUrl: Ember.computed('feature_type', function() {
     let featureType = this.get('feature_type').dasherize().replace('/', '');
     return `${config.prepend ? config.prepend : '/'}images/icons/features/${featureType}.png`;
@@ -86,7 +89,7 @@ export default DS.Model.extend({
 });
 
 // form / filter types
-export const FEATURE_TYPES = ['Arts and Culture', 'Civic Institution', 'Community Hub', 'Community', 'Education', 'Food Sales', 'Health Care', 'Housing', 'Mixed-Use Development', 'Office', 'Park or Open Space', 'Parking', 'Public Transit', 'Retail', 'Temporary'];
+export const FEATURE_TYPES = ["Arts and Culture","Civic Institution","Education","Food Sales","Health Care","Industrial","Office","Open Space","Parking","Public Transit","Housing","Retail","Temporary","Mixed-Use Development"];
 export const FEATURE_SUBTYPES = {
   "Food Sales": [
     "Coffee Shop",
@@ -216,27 +219,15 @@ export const FEATURE_FILTERS_CONFIG = [{
   filter: 'is_employer',
   filterType: 'isTrue'
 }, {
-  property: 'is_street_activating',
-  filter: 'is_street_activating',
+  property: 'tdi_asset',
+  filter: 'tdi_asset',
   filterType: 'isTrue'
 }, {
-  property: 'is_tdi_asset',
-  filter: 'is_tdi_asset',
+  property: 'engaged_owner',
+  filter: 'engaged_owner',
   filterType: 'isTrue'
 }, {
-  property: 'is_feature_owner_engaged',
-  filter: 'is_feature_owner_engaged',
+  property: 'community_hub',
+  filter: 'community_hub',
   filterType: 'isTrue'
-}, {
-  property: 'is_collision_point',
-  filter: 'is_collision_point',
-  filterType: 'isTrue'
-}, {
-  property: 'employer',
-  filter: 'employer',
-  filterType: 'isTrue'
-}, {
-  property: 'fake_open_or_closed',
-  filter: 'fake_open_or_closed',
-  filterType: 'isLongitudinal'
 }];

@@ -30,7 +30,7 @@ export default DS.Model.extend({
   splash: alias('splash_image'),
 
   // relationships
-  places: DS.hasMany('place', { async: false }),
+  places: DS.hasMany('place'),
   parcels: DS.hasMany('parcel'),
   investments: DS.hasMany('investment'),
 });

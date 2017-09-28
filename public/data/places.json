@@ -1,0 +1,602 @@
+{
+"place_id":  {
+    "key": "f0",
+    "name": "place_id",
+    "required": false,
+    "slug": "place_id",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "name":
+  {
+    "key": "f1",
+    "name": "name",
+    "required": false,
+    "slug": "name",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "latitude":
+  {
+    "key": "f2",
+    "name": "latitude",
+    "required": false,
+    "slug": "latitude",
+    "fieldType": "data",
+    "inputType": "number"
+  },
+  "longitude":
+  {
+    "key": "f3",
+    "name": "longitude",
+    "required": false,
+    "slug": "longitude",
+    "fieldType": "data",
+    "inputType": "number"
+  },
+  "city":
+  {
+    "key": "f4",
+    "name": "city",
+    "required": false,
+    "slug": "city",
+    "fieldType": "link",
+    "linkedSheet": {
+      "id": "594edfec3b760103005b6f6b"
+    }
+  },
+  "location_type":
+  {
+    "key": "f5",
+    "name": "location_type",
+    "required": false,
+    "slug": "location_type",
+    "fieldType": "data",
+    "inputType": "picklist",
+    "enum": [
+      "Street address",
+      "Describable location",
+      "District-wide"
+    ]
+  },
+  "address":
+  {
+    "key": "f6",
+    "name": "address",
+    "required": false,
+    "slug": "address",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "description":
+  {
+    "key": "f7",
+    "name": "description",
+    "required": false,
+    "slug": "description",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "is_in_district":
+  {
+    "key": "f18",
+    "name": "is_in_district",
+    "required": false,
+    "slug": "is_in_district",
+    "fieldType": "data",
+    "inputType": "boolean"
+  },
+  "type":
+  {
+    "key": "f19",
+    "name": "type",
+    "required": false,
+    "slug": "type",
+    "fieldType": "data",
+    "inputType": "picklist",
+    "enum": [
+      "Arts and Culture",
+      "Civic Institution",
+      "Education",
+      "Food Sales",
+      "Health Care",
+      "Industrial",
+      "Office",
+      "Open Space",
+      "Parking",
+      "Public Transit",
+      "Housing",
+      "Retail",
+      "Temporary",
+      "Mixed-Use Development"
+    ]
+  },
+  "subtype":
+  {
+    "key": "f20",
+    "name": "subtype",
+    "required": false,
+    "slug": "subtype",
+    "fieldType": "data",
+    "inputType": "picklist",
+    "enum": [
+      "[TYPE:Arts and Culture]",
+      "Performance Theatre",
+      "Music Venue",
+      "Movie Theatre",
+      "Museum/Gallery",
+      "Art Center/Production Space",
+      "Community Gathering Space",
+      "[Type:Civic Institution]",
+      "Fire Department",
+      "Library",
+      "Police Department",
+      "City Government",
+      "Social Services",
+      "Public Agency",
+      "Community Group",
+      "Post Office",
+      "Court",
+      "[Type:Education]",
+      "Pre-School or Early Education Center",
+      "Public School",
+      "Private School",
+      "Vocational School",
+      "College or University",
+      "Supplemental Services",
+      "[Type:Food Sales]",
+      "Coffee Shop",
+      "Bar",
+      "Specialty Food Sales",
+      "Sit-down Restaurant",
+      "Counter Service Restaurant",
+      "Fast-Food Chain",
+      "Grocery Store",
+      "Farmer's Market",
+      "Restaurant Incubator",
+      "Regular Food Truck Hub",
+      "[Type:Health Care]",
+      "Specialty Health Services",
+      "Medical Office",
+      "Walk-in Clinic",
+      "Hospital",
+      "[Type:Industrial]",
+      "General Industrial",
+      "Advanced Manufacturing",
+      "Food Manufacturing",
+      "Commercial Kitchen",
+      "Makerspace",
+      "Warehouse/Distribution Center",
+      "Agriculture",
+      "[Type:Office]",
+      "General Office",
+      "Corporation Headquarters",
+      "Coworking Space",
+      "[Type:Open Space]",
+      "Plaza",
+      "Alleyway",
+      "Pocket Park",
+      "Park",
+      "Trails and Greenways",
+      "Community Garden / Farm",
+      "Active Recreation Facility",
+      "[Type:Parking]",
+      "Free Lot",
+      "Paid Lot",
+      "Paid Structure",
+      "[Type:Public Transit]",
+      "Local/Regional Bus Stop",
+      "Light Rail Station",
+      "High-Speed Rail Station",
+      "Transportation Center",
+      "[Type:Housing]",
+      "Single Family",
+      "2-4 units",
+      "2-4 units, subsidized",
+      "4-10 units",
+      "4-10 units, subsidized",
+      "10+ units",
+      "10+ units, subsidized",
+      "Assisted Living",
+      "[Type:Retail]",
+      "Convenience / Corner Store",
+      "Specialty Retailer",
+      "Department Store",
+      "Discount Retailer",
+      "Resale/Consignment",
+      "Specialty Services",
+      "Big Box Store",
+      "Pharmacy",
+      "Bank",
+      "Indoor Recreation",
+      "Automotive",
+      "General Retail",
+      "[Type:Temporary]",
+      "Retail",
+      "Food Sales",
+      "Workspace",
+      "Event Location",
+      "Park/Parklet",
+      "Streetscape Improvements",
+      "Other",
+      "[Type:Mixed-Use Development]",
+      "Mixed-Use Development"
+    ]
+  },
+  "current_status":
+  {
+    "key": "f21",
+    "name": "current_status",
+    "required": false,
+    "slug": "current_status",
+    "fieldType": "data",
+    "inputType": "picklist",
+    "enum": [
+      "Proposed",
+      "In Progress",
+      "Open",
+      "Closed"
+    ]
+  },
+  "current_status_start":
+  {
+    "key": "f22",
+    "name": "current_status_start",
+    "required": false,
+    "slug": "current_status_start",
+    "fieldType": "data",
+    "inputType": "date"
+  },
+  "prior_status":
+  {
+    "key": "f25",
+    "name": "prior_status",
+    "required": false,
+    "slug": "prior_status",
+    "fieldType": "data",
+    "inputType": "picklist",
+    "enum": [
+      "Proposed",
+      "In Progress",
+      "Open",
+      "Closed"
+    ]
+  },
+  "prior_status_start":
+  {
+    "key": "f11",
+    "name": "prior_status_start",
+    "required": false,
+    "slug": "prior_status_start",
+    "fieldType": "data",
+    "inputType": "date"
+  },
+  "employment":
+  {
+    "key": "f23",
+    "name": "employment",
+    "required": false,
+    "slug": "employment",
+    "fieldType": "data",
+    "inputType": "picklist",
+    "enum": [
+      "0",
+      "1-4",
+      "5-9",
+      "10-19",
+      "20-99",
+      "100-499",
+      "500+"
+    ]
+  },
+  "employment_start":
+  {
+    "key": "f24",
+    "name": "employment_start",
+    "required": false,
+    "slug": "employment_start",
+    "fieldType": "data",
+    "inputType": "date"
+  },
+  "activating":
+  {
+    "key": "f14",
+    "name": "activating",
+    "required": false,
+    "slug": "activating",
+    "fieldType": "data",
+    "inputType": "boolean"
+  },
+  "activating_start":
+  {
+    "key": "f15",
+    "name": "activating_start",
+    "required": false,
+    "slug": "activating_start",
+    "fieldType": "data",
+    "inputType": "date"
+  },
+  "community_hub":
+  {
+    "key": "f27",
+    "name": "community_hub",
+    "required": false,
+    "slug": "community_hub",
+    "fieldType": "data",
+    "inputType": "boolean"
+  },
+  "community_hub_start":
+  {
+    "key": "f26",
+    "name": "community_hub_start",
+    "required": false,
+    "slug": "community_hub_start",
+    "fieldType": "data",
+    "inputType": "date"
+  },
+  "tdi_asset":
+  {
+    "key": "f29",
+    "name": "tdi_asset",
+    "required": false,
+    "slug": "tdi_asset",
+    "fieldType": "data",
+    "inputType": "boolean"
+  },
+  "tdi_asset_start":
+  {
+    "key": "f28",
+    "name": "tdi_asset_start",
+    "required": false,
+    "slug": "tdi_asset_start",
+    "fieldType": "data",
+    "inputType": "date"
+  },
+  "engaged_owner":
+  {
+    "key": "f30",
+    "name": "engaged_owner",
+    "required": false,
+    "slug": "engaged_owner",
+    "fieldType": "data",
+    "inputType": "boolean"
+  },
+  "engaged_owner_start":
+  {
+    "key": "f31",
+    "name": "engaged_owner_start",
+    "required": false,
+    "slug": "engaged_owner_start",
+    "fieldType": "data",
+    "inputType": "date"
+  },
+  "owner_name":
+  {
+    "key": "f32",
+    "name": "owner_name",
+    "required": false,
+    "slug": "owner_name",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "owner_title":
+  {
+    "key": "f33",
+    "name": "owner_title",
+    "required": false,
+    "slug": "owner_title",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "owner_org":
+  {
+    "key": "f34",
+    "name": "owner_org",
+    "required": false,
+    "slug": "owner_org",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "owner_phone":
+  {
+    "key": "f35",
+    "name": "owner_phone",
+    "required": false,
+    "slug": "owner_phone",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "owner_email":
+  {
+    "key": "f36",
+    "name": "owner_email",
+    "required": false,
+    "slug": "owner_email",
+    "fieldType": "data",
+    "inputType": "email"
+  },
+  "owner_website":
+  {
+    "key": "f37",
+    "name": "owner_website",
+    "required": false,
+    "slug": "owner_website",
+    "fieldType": "data",
+    "inputType": "website"
+  },
+  "notes":
+  {
+    "key": "f38",
+    "name": "notes",
+    "required": false,
+    "slug": "notes",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "file_upload":
+  {
+    "key": "f39",
+    "name": "file_upload",
+    "required": false,
+    "slug": "file_upload",
+    "fieldType": "data",
+    "inputType": "file"
+  },
+  "link_description":
+  {
+    "key": "f40",
+    "name": "link_description",
+    "required": false,
+    "slug": "link_description",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "link_url":
+  {
+    "key": "f41",
+    "name": "link_url",
+    "required": false,
+    "slug": "link_url",
+    "fieldType": "data",
+    "inputType": "website"
+  },
+  "internal_notes":
+  {
+    "key": "f42",
+    "name": "internal_notes",
+    "required": false,
+    "slug": "internal_notes",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "internal_files":
+  {
+    "key": "f43",
+    "name": "internal_files",
+    "required": false,
+    "slug": "internal_files",
+    "fieldType": "data",
+    "inputType": "file"
+  },
+  "splash":
+  {
+    "key": "f44",
+    "name": "splash",
+    "required": false,
+    "slug": "splash",
+    "fieldType": "data",
+    "inputType": "image"
+  },
+  "i2c_text":
+  {
+    "key": "f45",
+    "name": "i2c_text",
+    "required": false,
+    "slug": "i2c_text",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "pub_name":
+  {
+    "key": "f47",
+    "name": "pub_name",
+    "required": false,
+    "slug": "pub_name",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "pub_role":
+  {
+    "key": "f48",
+    "name": "pub_role",
+    "required": false,
+    "slug": "pub_role",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "pub_organization":
+  {
+    "key": "f50",
+    "name": "pub_organization",
+    "required": false,
+    "slug": "pub_organization",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "pub_phone":
+  {
+    "key": "f57",
+    "name": "pub_phone",
+    "required": false,
+    "slug": "pub_phone",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "pub_email":
+  {
+    "key": "f51",
+    "name": "pub_email",
+    "required": false,
+    "slug": "pub_email",
+    "fieldType": "data",
+    "inputType": "email"
+  },
+  "pub_website":
+  {
+    "key": "f52",
+    "name": "pub_website",
+    "required": false,
+    "slug": "pub_website",
+    "fieldType": "data",
+    "inputType": "website"
+  },
+  "related_places":
+  {
+    "key": "f53",
+    "name": "related_places",
+    "required": false,
+    "slug": "related_places",
+    "fieldType": "data",
+    "inputType": "generic"
+  },
+  "related_places_text":
+  {
+    "key": "f54",
+    "name": "related_places_text",
+    "required": false,
+    "slug": "related_places_text",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "related_investments":
+  {
+    "key": "f55",
+    "name": "related_investments",
+    "required": false,
+    "slug": "related_investments",
+    "fieldType": "link",
+    "linkedSheet": {
+      "id": "594edff03b760103005b6f6d"
+    }
+  },
+  "related_investments_text":
+  {
+    "key": "f56",
+    "name": "related_investments_text",
+    "required": false,
+    "slug": "related_investments_text",
+    "fieldType": "data",
+    "inputType": "text"
+  },
+  "investments":
+  {
+    "key": "f58",
+    "name": "",
+    "required": false,
+    "slug": "investments",
+    "fieldType": "link",
+    "linkedSheet": {
+      "id": "594edff03b760103005b6f6d"
+    }
+  }
+}

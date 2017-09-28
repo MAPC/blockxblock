@@ -9,7 +9,7 @@ export default DS.Model.extend({
   street_address: DS.attr('string'),
   property_for_sale: DS.attr('boolean'),
   for_sale_change_date: DS.attr('date'),
-  propery_for_lease: DS.attr('boolean'),
+  property_for_lease: DS.attr('boolean'),
   for_lease_change_date: DS.attr('date'),
   listing_type: DS.attr('string'),
   invitation_to_connect: DS.attr('boolean'),
@@ -66,16 +66,19 @@ export default DS.Model.extend({
   }),
   latitude: Ember.computed('geojson', function() {
     let geojson=this.get('geojson');
-    return L.geoJSON(geojson).getBounds().getCenter().lat;
+    if (geojson.geometry) return L.geoJSON(geojson).getBounds().getCenter().lat;
+    return this.get('city.latitude');
   }),
   longitude: Ember.computed('geojson', function() {
     let geojson=this.get('geojson');
-    return L.geoJSON(geojson).getBounds().getCenter().lng;
+    if (geojson.geometry) return L.geoJSON(geojson).getBounds().getCenter().lng;
+    return this.get('city.latitude');
   }),
   geojson: Ember.computed('geom', function() {
     let geojson = Ember.Object.create();
     geojson.set('type', 'Feature');
     geojson.set('geometry', this.get('geom.geometry'));
+    geojson.set('properties', this.getProperties('property_for_sale', 'property_for_lease'))
 
     return geojson;
   }),
@@ -94,41 +97,41 @@ export const PARCEL_FILTERS_CONFIG = [
     filter: 'landuseTypesArray',
     filterType: 'isAny'
   },
-  { 
-    property: 'latest_ground_floor_vacancy',
-    filter: 'GFVacancyStatusesArray',
-    filterType: 'isAny'
-  },
-  { 
-    property: 'latest_upper_floor_vacancy',
-    filter: 'UFVacancyStatusesArray',
-    filterType: 'isAny'
-  },
-  { 
-    property: 'ownership_type',
-    filter: 'OwnershipTypesArray',
-    filterType: 'isAny'
-  },
-  { 
-    property: 'latest_is_for_sale',
-    filter: 'forSale',
-    filterType: 'isTrue'
-  },
-  { 
-    property: 'latest_is_engaged_owner',
-    filter: 'isEngagedOwner',
-    filterType: 'isTrue'
-  },
-  { 
-    property: 'latest_is_for_lease',
-    filter: 'forLease',
-    filterType: 'isTrue'
-  },
-  { 
-    property: 'yearBuilt',
-    filter: ['yearBuiltMin', 'yearBuiltMax'],
-    filterType: 'isWithin'
-  }
+  // { 
+  //   property: 'latest_ground_floor_vacancy',
+  //   filter: 'GFVacancyStatusesArray',
+  //   filterType: 'isAny'
+  // },
+  // { 
+  //   property: 'latest_upper_floor_vacancy',
+  //   filter: 'UFVacancyStatusesArray',
+  //   filterType: 'isAny'
+  // },
+  // { 
+  //   property: 'ownership_type',
+  //   filter: 'OwnershipTypesArray',
+  //   filterType: 'isAny'
+  // },
+  // { 
+  //   property: 'latest_is_for_sale',
+  //   filter: 'forSale',
+  //   filterType: 'isTrue'
+  // },
+  // { 
+  //   property: 'latest_is_engaged_owner',
+  //   filter: 'isEngagedOwner',
+  //   filterType: 'isTrue'
+  // },
+  // { 
+  //   property: 'latest_is_for_lease',
+  //   filter: 'forLease',
+  //   filterType: 'isTrue'
+  // },
+  // { 
+  //   property: 'yearBuilt',
+  //   filter: ['yearBuiltMin', 'yearBuiltMax'],
+  //   filterType: 'isWithin'
+  // }
 ];
 
 // choropleth config
@@ -151,6 +154,22 @@ export const PARCEL_MAP_CONFIG = [
         key: 'land_use',
         value: 'Industrial',
         color: '#A42E9F'
+      }
+    ]
+  },
+  {
+    setName: 'Available Spaces',
+    default_color: 'lightgray',
+    colorMap: [
+      {
+        key: 'property_for_sale',
+        value: true,
+        color: '#FCBE78'
+      },
+      {
+        key: 'property_for_lease',
+        value: true,
+        color: '#58BC70'
       }
     ]
   },

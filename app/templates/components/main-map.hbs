@@ -18,8 +18,8 @@
                     url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' }}
     {{/if}}
 
-    {{#each currentCity.city as |city|}}
-      {{image-layer pane='extrusions' imageUrl=city.imageOverlay bounds=city.imageOverlayBBox opacity=0.9}}
+    {{#each model as |city|}}
+      {{image-layer imageUrl=city.imageOverlay bounds=city.imageOverlayBBox opacity=0.9}}
     {{/each}}
 
     {{#if currentCity.showPlaces}}
@@ -29,10 +29,10 @@
         {{/if}}
       {{/each}}
     {{/if}}
-{{!-- 
+
     {{#if currentCity.showParcels}}
       {{#each currentCity.visibleParcels as |parcel|}}
-        {{#if parcel.geom}}
+        {{#if parcel.geojson}}
           {{#map-popup lat=parcel.latitude lng=parcel.longitude as |popup|}}
             <strong>{{parcel.ownership_type}}</strong>
             <img class="ui small image" src={{parcel.splash}}/>
@@ -41,8 +41,7 @@
                             style=parcelsChoroplethMapping 
                             onClick=(transition-to 'cities.city.parcels' parcel.id)
                             onMouseover=(action popup.onMouseover)
-                            onMouseout=(action popup.onMouseout)
-                            pane='parcels'}}
+                            onMouseout=(action popup.onMouseout)}}
             {{#if parcel.isSelected}}
               {{marker-layer lat=parcel.latitude lng=parcel.longitude opacity=1}}
             {{/if}}
@@ -55,7 +54,7 @@
       {{marker-layer  lat=currentCity.newPointLatitude 
                       lng=currentCity.newPointLongitude
                       icon=(icon iconUrl='/images/add-data-pin.png' iconAnchor=(array 30 76) iconSize=(array 59 76))}}
-    {{/if}} --}}
+    {{/if}}
 
   {{/leaflet-map}}
 

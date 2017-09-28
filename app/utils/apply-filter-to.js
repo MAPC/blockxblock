@@ -4,7 +4,7 @@ import isWithinFilter from '../utils/is-within-filter';
 import isLongitudinalFilter from '../utils/is-longitudinal-filter';
 
 export default function applyFilterTo(enumerable, config) {
-  return {
+  if (enumerable) return {
     get() { return getFilter(this, enumerable, config) }
   };
 }
@@ -12,7 +12,7 @@ export default function applyFilterTo(enumerable, config) {
 export function getFilter(context, enumerable, config) {
   let models = context.get(enumerable);
 
-      config.forEach((propertyConfig) => {
+      if (models) config.forEach((propertyConfig) => {
         let filter;
         let filterType = propertyConfig.filterType;
 

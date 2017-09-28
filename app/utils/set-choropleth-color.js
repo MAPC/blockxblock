@@ -1,5 +1,5 @@
 export default function setChoroplethColor(feature, choroplethLayer, CONFIG) {
-  console.log(feature.properties);
+  console.log(feature);
   let color;
   CONFIG.forEach((config) => {
     if(config.setName == choroplethLayer) {

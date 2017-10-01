@@ -18,11 +18,7 @@ export default DS.Model.extend({
   private_product: DS.attr('string'),
   use_type: DS.attr('string'),
   tdi_influence: DS.attr('boolean'),
-  investment_status: DS.attr('string'),
-  investment_status_start: DS.attr('date'),
-  completion_date_is_exact: DS.attr('boolean'),
-  prior_investment_status: DS.attr('string'),
-  prior_investment_status_start: DS.attr('date'),
+  investment_status: DS.attr('timeline'),
   amount_is_public: DS.attr('boolean'),
   amount_is_exact: DS.attr('boolean'),
   exact_amount: DS.attr('number'),
@@ -52,6 +48,9 @@ export default DS.Model.extend({
   pub_website: DS.attr('string'),
 
   // computeds
+  investment_status_latest: Ember.computed('investment_status', function() {
+    return this.get('investment_status.firstObject.value');
+  }),
   iconUrl: Ember.computed('source_type', 'investment_type', function() {
     let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
     return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.decamelize()}.png`;
@@ -90,7 +89,7 @@ export const INVESTMENT_FILTERS_CONFIG =
     filterType: 'isAny'
   }, 
   {
-    property: 'investment_status',
+    property: 'investment_status_latest',
     filter: 'investmentStatusesArray',
     filterType: 'isAny'
   }, 

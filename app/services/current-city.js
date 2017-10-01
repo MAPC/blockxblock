@@ -44,6 +44,21 @@ export default Ember.Service.extend({
 
   city: '',
 
+  parcelChoroplethSets: PARCEL_MAP_CONFIG.mapBy('setName'),
+  parcelChoroplethConfig: PARCEL_MAP_CONFIG,
+  choroplethLayer: 'Land Use',
+  landuseTypesArray: computed('landuseTypes', arrayify('landuseTypes', '|')),
+  landuseTypes: '',
+  landuseTypeOptions: PARCEL_TYPES,
+
+  GFVacancyStatuses: '',
+  GFVacancyStatusesArray: computed('GFVacancyStatuses', arrayify('GFVacancyStatuses', '|')),
+  GFVacancyStatusesOptions: GFVACANCY_STATUSES,
+
+  UFVacancyStatuses: '',
+  UFVacancyStatusesArray: computed('UFVacancyStatuses', arrayify('UFVacancyStatuses', '|')),
+  UFVacancyStatusesOptions: UFVACANCY_STATUSES,
+
   showInvestments: false,
   showPlaces: true,
   showParcels: false,
@@ -62,9 +77,6 @@ export default Ember.Service.extend({
   investmentSources: INVESTMENT_SOURCES.join('|'),
   investmentSourcesArray: computed('investmentSources', arrayify('investmentSources', '|')),
   investmentSourcesOptions: INVESTMENT_SOURCES,
-  landuseTypes: '',
-  landuseTypesArray: computed('landuseTypes', arrayify('landuseTypes', '|')),
-  landuseTypeOptions: PARCEL_TYPES,
 
   isPlottingPoint: false,
   newPointLatitude: SOUTHWICK_LATITUDE,

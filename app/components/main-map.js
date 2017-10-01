@@ -11,9 +11,9 @@ export default Ember.Component.extend({
 
 
   choroplethLayer: 'Available Spaces',
-  parcelsChoroplethMapping: computed('visibleParcels', 'choroplethLayer', function() {
+  parcelsChoroplethMapping: computed('visibleParcels', 'currentCity.choroplethLayer', function() {
     return (feature) => {
-      let color = setChoroplethColor(feature, this.get('choroplethLayer'), PARCEL_MAP_CONFIG),
+      let color = setChoroplethColor(feature, this.get('currentCity.choroplethLayer'), PARCEL_MAP_CONFIG),
           stroke = true,
           fillOpacity=0.5,
           strokeOpacity=1,

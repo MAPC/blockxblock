@@ -7,10 +7,8 @@ export default DS.Model.extend({
   // new attributes
   parcel_id: DS.attr('string'),
   street_address: DS.attr('string'),
-  property_for_sale: DS.attr('boolean'),
-  for_sale_change_date: DS.attr('date'),
-  property_for_lease: DS.attr('boolean'),
-  for_lease_change_date: DS.attr('date'),
+  property_for_sale: DS.attr('timeline'),
+  property_for_lease: DS.attr('timeline'),
   listing_type: DS.attr('string'),
   invitation_to_connect: DS.attr('boolean'),
   invitation_to_connect_text: DS.attr('string'),
@@ -22,16 +20,11 @@ export default DS.Model.extend({
   realestate_contact_website: DS.attr('string'),
   year_built: DS.attr('number'),
   land_use: DS.attr('string'),
-  ground_floor_vacancy_status: DS.attr('string'),
-  ground_floor_vacancy_change_date: DS.attr('date'),
-  upper_floor_vacancy_status: DS.attr('string'),
-  upper_floor_vacancy_change_date: DS.attr('date'),
-  assessed_value: DS.attr('number'),
-  date_trackchange_value: DS.attr('date'),
-  site_control: DS.attr('string'),
-  control_change_date: DS.attr('date'),
-  engaged_owner: DS.attr('boolean'),
-  date_engagedowner_change: DS.attr('date'),
+  ground_floor_vacancy_status: DS.attr('timeline'),
+  upper_floor_vacancy_status: DS.attr('timeline'),
+  assessed_value: DS.attr('timeline'),
+  site_control: DS.attr('timeline'),
+  engaged_owner: DS.attr('timeline'),
   owner_contact_name: DS.attr('string'),
   owner_contact_role: DS.attr('string'),
   owner_contact_org: DS.attr('string'),
@@ -64,6 +57,12 @@ export default DS.Model.extend({
     let { latitude, longitude } = this.getProperties('latitude','longitude');
     return `https://maps.googleapis.com/maps/api/streetview?size=450x300&location=${latitude},${longitude}&key=AIzaSyCO654zBIabvjSOV4Ys59Pku8pmzM387ps`;
   }),
+  property_for_sale_latest: Ember.computed('property_for_sale', function() {
+    return this.get('property_for_sale.lastObject.value');
+  }),
+  property_for_lease_latest: Ember.computed('property_for_lease', function() {
+    return this.get('property_for_lease.lastObject.value');
+  }),
   latitude: Ember.computed('geojson', function() {
     let geojson=this.get('geojson');
     if (geojson.geometry) return L.geoJSON(geojson).getBounds().getCenter().lat;
@@ -78,7 +77,7 @@ export default DS.Model.extend({
     let geojson = Ember.Object.create();
     geojson.set('type', 'Feature');
     geojson.set('geometry', this.get('geom.geometry'));
-    geojson.set('properties', this.getProperties('property_for_sale', 'property_for_lease'))
+    geojson.set('properties', this.getProperties('land_use', 'property_for_sale_latest', 'property_for_lease_latest'))
 
     return geojson;
   }),
@@ -112,21 +111,21 @@ export const PARCEL_FILTERS_CONFIG = [
   //   filter: 'OwnershipTypesArray',
   //   filterType: 'isAny'
   // },
-  // { 
-  //   property: 'latest_is_for_sale',
-  //   filter: 'forSale',
-  //   filterType: 'isTrue'
-  // },
+  { 
+    property: 'property_for_sale_latest',
+    filter: 'forSale',
+    filterType: 'isTrue'
+  },
   // { 
   //   property: 'latest_is_engaged_owner',
   //   filter: 'isEngagedOwner',
   //   filterType: 'isTrue'
   // },
-  // { 
-  //   property: 'latest_is_for_lease',
-  //   filter: 'forLease',
-  //   filterType: 'isTrue'
-  // },
+  { 
+    property: 'property_for_lease_latest',
+    filter: 'forLease',
+    filterType: 'isTrue'
+  },
   // { 
   //   property: 'yearBuilt',
   //   filter: ['yearBuiltMin', 'yearBuiltMax'],
@@ -162,12 +161,12 @@ export const PARCEL_MAP_CONFIG = [
     default_color: 'lightgray',
     colorMap: [
       {
-        key: 'property_for_sale',
+        key: 'property_for_sale_latest',
         value: true,
         color: '#FCBE78'
       },
       {
-        key: 'property_for_lease',
+        key: 'property_for_lease_latest',
         value: true,
         color: '#58BC70'
       }

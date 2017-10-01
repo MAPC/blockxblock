@@ -8,8 +8,7 @@ export default DS.Model.extend({
   city_name: DS.attr('string'),
   district_name: DS.attr('string'),
   program_start_date: DS.attr('date'),
-  fellow_status: DS.attr('boolean'),
-  fellow_status_start: DS.attr('date'),
+  fellow_status: DS.attr(),
   splash_image: DS.attr('string'),
   i2c_text: DS.attr('string'),
   district_contact_name: DS.attr('string'),
@@ -21,7 +20,8 @@ export default DS.Model.extend({
   latitude: DS.attr('number'),
   longitude: DS.attr('number'),
   imageoverlay: DS.attr('string'),
-  imageoverlaybbox: DS.attr('timeline'),
+  imageoverlaybbox: DS.attr('jsonstring'),
+  live: DS.attr('boolean'),
 
   // aliases for name changes
   name: alias('city_name'),

@@ -1,9 +1,13 @@
-<div class="ui five column stackable grid link cards">
+<div class="ui five column stackable grid cards">
   {{#each (sort-by 'name' cities) as |city|}}
     <div class="column">
-      {{#link-to 'cities.city.show' city.id}}
+      {{#if city.live}}
+        {{#link-to 'cities.city.show' city.id}}
+          {{city-card city=city class='link'}}
+        {{/link-to}}
+      {{else}}
         {{city-card city=city}}
-      {{/link-to}}
+      {{/if}}
     </div>
   {{/each}}
 </div>

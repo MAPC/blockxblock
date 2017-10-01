@@ -1,4 +1,7 @@
 import Ember from 'ember';
+import { number_format } from 'ember-string-helpers/utils/functions';
+
+const { computed } = Ember;
 
 export default Ember.Controller.extend({
   queryParams: ['currentCity.showPlaces',
@@ -7,6 +10,15 @@ export default Ember.Controller.extend({
 
   currentCity: Ember.inject.service(),
   session: Ember.inject.service('session'),
+
+  tooltipsConfig: [
+    { to: (num) => number_format(num, 0) },
+    { to: (num) => number_format(num, 0) }
+  ],
+
+  investmentsValues: computed.mapBy('currentCity.city.investments', 'estimated_amount'),
+  maxInvestments: computed.max('investmentsValues', 'currentCity.city.investments'),
+  minInvestments: computed.min('investmentsValues', 'currentCity.city.investments'),
 
   actions: {
     composeList(option, optionsList) {
@@ -19,8 +31,8 @@ export default Ember.Controller.extend({
       this.set(optionsList, list.join('|'));
     },
     updateRanges(test) {
-      this.set('valueMin', test[0]);
-      this.set('valueMax', test[1]);
+      this.set('currentCity.valueMin', test[0]);
+      this.set('currentCity.valueMax', test[1]);
     },
     openModal(name, feature) {
       $('.ui.' + name + '.modal').modal('show');

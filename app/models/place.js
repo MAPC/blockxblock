@@ -16,19 +16,13 @@ export default DS.Model.extend({
   is_in_district: DS.attr('boolean'),
   type: DS.attr('string'),
   subtype: DS.attr('string'),
-  current_status: DS.attr('string'),
-  current_status_start: DS.attr('date'),
-  prior_status: DS.attr('string'),
-  prior_status_start: DS.attr('date'),
-  employment: DS.attr('string'),
-  employment_start: DS.attr('date'),
-  activating: DS.attr('boolean'),
-  activating_start: DS.attr('date'),
-  community_hub: DS.attr('boolean'),
-  community_hub_start: DS.attr('date'),
-  tdi_asset: DS.attr('boolean'),
+  status: DS.attr('timeline'),
+  employment: DS.attr('timeline'),
+  activating: DS.attr('timeline'),
+  community_hub: DS.attr('timeline'),
+  tdi_asset: DS.attr('timeline'),
   tdi_asset_start: DS.attr('date'),
-  engaged_owner: DS.attr('boolean'),
+  engaged_owner: DS.attr('timeline'),
   engaged_owner_start: DS.attr('date'),
   owner_name: DS.attr('string'),
   owner_title: DS.attr('string'),
@@ -60,7 +54,13 @@ export default DS.Model.extend({
 
   // computeds
   is_employer: Ember.computed('employment', function() {
-    return !!this.get('employment');
+    return !!this.get('employment.firstObject');
+  }),
+  is_activating: Ember.computed('employment', function() {
+    return this.get('activating.firstObject.value') == 'true';
+  }),
+  is_community_hub: Ember.computed('community_hub', function() {
+    return this.get('community_hub.firstObject.value') == 'true';
   }),
   iconUrl: Ember.computed('feature_type', function() {
     let featureType = this.get('feature_type').dasherize().replace('/', '');
@@ -207,7 +207,7 @@ export const FEATURE_FILTERS_CONFIG = [{
   filter: 'assetTypesArray',
   filterType: 'isAny'
 }, {
-  property: 'activating',
+  property: 'is_activating',
   filter: 'activating',
   filterType: 'isTrue'
 }, {
@@ -227,7 +227,7 @@ export const FEATURE_FILTERS_CONFIG = [{
   filter: 'engaged_owner',
   filterType: 'isTrue'
 }, {
-  property: 'community_hub',
+  property: 'is_community_hub',
   filter: 'community_hub',
   filterType: 'isTrue'
 }];

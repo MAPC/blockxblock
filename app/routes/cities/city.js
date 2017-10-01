@@ -9,9 +9,27 @@ export default Ember.Route.extend({
 
     return RSVP.hash({
       city,
-      places: this.store.query('place', { city: city.get('name') }),
-      investments: this.store.query('investment', { city: city.get('name'), exclude: 'related_investments,related_places' }),
-      parcels: this.store.query('parcel', { city: city.get('name') }),
+      places: this.store.query(
+          'place', 
+          { 
+            city: city.get('name'),
+            include: 'latitude,longitude,type,subtype,description,city,investments,employment,activating,community_hub'
+          }
+        ),
+      investments: this.store.query(
+          'investment', 
+          { 
+            city: city.get('name'), 
+            include: 'id,record_url,investment_id,source_type,place_id,city,use_type,investment_status,estimated_amount'
+          }
+        ),
+      parcels: this.store.query(
+        'parcel', 
+        { 
+          city: city.get('name'),
+          include: 'parcel_id,street_address,year_built,land_use,city,property_for_lease,property_for_sale'
+        }
+      ),
     });
   },
   

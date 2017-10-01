@@ -2,18 +2,23 @@ import DS from 'ember-data';
 
 export default DS.Transform.extend({
   deserialize(serialized) {
-    if(serialized) {
-      return JSON.parse(serialized);  
-    } else {
-      return [];
-    }
+
+    // parse
+    serialized.forEach(snapshot => {
+      if (snapshot.value === 'true' || snapshot.value === 'false') {
+        snapshot.value = (snapshot.value === 'true');
+      }
+    });
+
+    return serialized.sort((snapshot1, snapshot2) => {
+      const { a } = snapshot1;
+      const { b } = snapshot2;
+
+      return b - a;
+    });
   },
 
   serialize(deserialized) {
-    if(deserialized) {
-      return JSON.stringify(deserialized);  
-    } else {
-      return '[]';
-    }
+    return deserialized;
   }
 });

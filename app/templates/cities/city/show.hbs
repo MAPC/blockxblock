@@ -131,12 +131,12 @@
             Investment Value
           </h4> --}}
           <div class="ui basic segment">
-{{!--             {{range-slider start=(array valueMin valueMax)
-                           range=(hash min=amountsMin max=amountsMax)
+            {{range-slider start=(array 0 maxInvestments)
+                           range=(hash min=0 max=maxInvestments)
                            tooltips=tooltipsConfig
                            connect=true
                            step=1
-                           on-change=(action "updateRanges") }} --}}
+                           on-change=(action "updateRanges") }}
           </div>
         </div>
       </div>
@@ -154,14 +154,14 @@
           <div class="column">
             <div class="ui labels flex-direction-column filter-label-group">
               {{#each currentCity.parcelChoroplethSets as |colorSet|}}
-                <a class="ui {{if (eq colorSet choroplethLayer) 'inverted tdi-blue' 'filters-label'}} even-spaced label" {{action 'changeProperty' 'choroplethLayer' colorSet}}>
+                <a class="ui {{if (eq colorSet currentCity.choroplethLayer) 'inverted tdi-blue' 'filters-label'}} even-spaced label" {{action 'changeProperty' 'currentCity.choroplethLayer' colorSet}}>
                   {{colorSet}}
                 </a> 
               {{/each}}
             </div>
           </div>
           <div class="column" style="background-color: #E1F5F5;">
-            {{#with (find-by 'setName' choroplethLayer parcelChoroplethConfig) as |set|}}
+            {{#with (find-by 'setName' currentCity.choroplethLayer currentCity.parcelChoroplethConfig) as |set|}}
               Key - {{set.setName}}
               {{#if set}}
                 <div class="ui labels">
@@ -176,18 +176,18 @@
             {{/with}}
           </div>
         </div>
-        <div class="ui equal width grid">
+{{!--         <div class="ui equal width grid">
           <div class="column">
             <h4 class="ui header">
               Land Use Type
             </h4>
             <div class="ui vertical list">
-              {{#each landuseTypeOptions as |option|}}
+              {{#each currentCity.landuseTypeOptions as |option|}}
                 {{ui-checkbox 
                   label=option
                   class="item"
-                  checked=(array-contains landuseTypesArray option)
-                  onChange=(action 'composeList' option 'landuseTypes')}}
+                  checked=(array-contains currentCity.landuseTypesArray option)
+                  onChange=(action 'composeList' option 'currentCity.landuseTypes')}}
               {{/each}}
             </div>
             <h4 class="ui header">
@@ -242,7 +242,7 @@
               {{/each}}
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
     {{/if}}
   {{/ui-accordion}}

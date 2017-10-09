@@ -1,12 +1,14 @@
 import Ember from 'ember';
 
+const POPUP_OFFSET = 10;
+
 export default Ember.Component.extend({
   classNames: ['ui', 'segment', 'map-popup'],
   classNameBindings: ['hidden'],
   attributeBindings: ['style'],
-  style: Ember.computed('left','right', function() {
-    let left = this.get('left');
-    let top = this.get('top');
+  style: Ember.computed('left', 'right', function() {
+    let left = this.get('left') + POPUP_OFFSET;
+    let top = this.get('top') + POPUP_OFFSET;
     return Ember.String.htmlSafe(`left: ${left}px; top: ${top}px`);
   }),
   hidden: true,

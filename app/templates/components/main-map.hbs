@@ -1,63 +1,64 @@
 <div class="cities-map">
+  {{#if (and currentCity.latitude currentCity.longitude currentCity.zoom)}}
+    {{#leaflet-map  onMove    = (action 'updateNewPoint'  ) 
+                    onMoveend = (action 'currentMapState' ) 
+                    onLoad    = (action 'initMap'         ) 
+                    zoom      = currentCity.zoom 
+                    lat       = currentCity.latitude
+                    lng       = currentCity.longitude
+                    maxZoom   = maxZoom}}
+      {{#if (eq basemap 'default')}}
+        {{tile-layer  maxNativeZoom=maxNativeZoom
+                      maxZoom=maxZoom 
+                      url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" }}
+      {{/if}}
+      {{#if (eq basemap 'satellite')}}
+        {{tile-layer  maxNativeZoom=maxNativeZoom
+                      maxZoom=maxZoom  
+                      url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' }}
+      {{/if}}
 
-  {{#leaflet-map  onMove    = (action 'updateNewPoint'  ) 
-                  onMoveend = (action 'currentMapState' ) 
-                  onLoad    = (action 'initMap'         ) 
-                  zoom      = zoom 
-                  lat       = lat
-                  lng       = lng
-                  maxZoom   = maxZoom}}
-    {{#if (eq basemap 'default')}}
-      {{tile-layer  maxNativeZoom=maxNativeZoom
-                    maxZoom=maxZoom 
-                    url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" }}
-    {{/if}}
-    {{#if (eq basemap 'satellite')}}
-      {{tile-layer  maxNativeZoom=maxNativeZoom
-                    maxZoom=maxZoom  
-                    url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}' }}
-    {{/if}}
-
-    {{#each model as |city|}}
-      {{image-layer imageUrl=city.imageOverlay bounds=city.imageOverlayBBox opacity=0.9}}
-    {{/each}}
-
-    {{#if currentCity.showPlaces}}
-      {{#each currentCity.visibleFeatures as |feature|}}
-        {{#if (and feature.latitude feature.id)}}
-          {{related-investments-icon feature=feature linkTo=(transition-to)}}
-        {{/if}}
+      {{#each model as |city|}}
+        {{image-layer imageUrl=city.imageOverlay bounds=city.imageOverlayBBox opacity=0.9}}
       {{/each}}
-    {{/if}}
 
-    {{#if currentCity.showParcels}}
-      {{#each currentCity.visibleParcels as |parcel|}}
-        {{#if parcel.geojson}}
-          {{#map-popup lat=parcel.latitude lng=parcel.longitude as |popup|}}
-            <strong>{{parcel.ownership_type}}</strong>
-            <img class="ui small image" src={{parcel.splash}}/>
-            <strong>{{parcel.address}}</strong>
-            {{geojson-layer geoJSON=parcel.geojson 
-                            style=parcelsChoroplethMapping 
-                            onClick=(transition-to 'cities.city.parcels' parcel.id)
-                            onMouseover=(action popup.onMouseover)
-                            onMouseout=(action popup.onMouseout)}}
-            {{#if parcel.isSelected}}
-              {{marker-layer lat=parcel.latitude lng=parcel.longitude opacity=1}}
-            {{/if}}
-          {{/map-popup}}
-        {{/if}}
-      {{/each}}
-    {{/if}}
+      {{#if currentCity.showPlaces}}
+        {{#each currentCity.visibleFeatures as |feature|}}
+          {{#if (and feature.latitude feature.id)}}
+            {{related-investments-icon feature=feature linkTo=(transition-to 'cities.city.places' feature.id)}}
+          {{/if}}
+        {{/each}}
+      {{/if}}
 
-    {{#if currentCity.isPlottingPoint}}
-      {{marker-layer  lat=currentCity.newPointLatitude 
-                      lng=currentCity.newPointLongitude
-                      icon=(icon iconUrl='/images/add-data-pin.png' iconAnchor=(array 30 76) iconSize=(array 59 76))}}
-    {{/if}}
+      {{#if currentCity.showParcels}}
+        {{#each currentCity.visibleParcels as |parcel|}}
+          {{#if parcel.geojson}}
+            {{#map-popup lat=parcel.latitude lng=parcel.longitude as |popup|}}
+              <strong>{{parcel.ownership_type}}</strong>
+              <img class="ui small image" src={{parcel.splash}}/>
+              <strong>{{parcel.address}}</strong>
+              {{geojson-layer geoJSON=parcel.geojson 
+                              style=parcelsChoroplethMapping 
+                              onClick=(transition-to 'cities.city.parcels' parcel.id)
+                              onMouseover=(action popup.onMouseover)
+                              onMouseout=(action popup.onMouseout)}}
+              {{#if parcel.isSelected}}
+                {{marker-layer lat=parcel.latitude lng=parcel.longitude opacity=1}}
+              {{/if}}
+            {{/map-popup}}
+          {{/if}}
+        {{/each}}
+      {{/if}}
 
-  {{/leaflet-map}}
+      {{#if currentCity.isPlottingPoint}}
+        {{marker-layer  lat=currentCity.newPointLatitude 
+                        lng=currentCity.newPointLongitude
+                        icon=(icon iconUrl='/images/add-data-pin.png' iconAnchor=(array 30 76) iconSize=(array 59 76))}}
+      {{/if}}
 
+    {{/leaflet-map}}
+  {{/if}}
+  
   {{basemap-menu  x=layerPointx
                   y=layerPointy
                   z=layerPointz

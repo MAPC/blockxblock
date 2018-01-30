@@ -78,7 +78,6 @@
     "ember-transition-helper": "0.0.6",
     "ember-truth-helpers": "1.3.0",
     "ember-uploader": "1.2.3",
-    "ember-welcome-page": "^1.0.3",
     "ember-wormhole": "0.5.1",
     "eslint-plugin-ember-suave": "^1.0.0",
     "liquid-fire": "0.27.3",

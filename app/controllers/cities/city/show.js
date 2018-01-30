@@ -9,7 +9,6 @@ export default Ember.Controller.extend({
     'currentCity.showParcels'],
 
   currentCity: Ember.inject.service(),
-  session: Ember.inject.service('session'),
 
   tooltipsConfig: [
     { to: (num) => number_format(num, 0) },

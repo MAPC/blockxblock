@@ -29,9 +29,9 @@ const DEFAULT_ZOOM = 17;
 
 export default Ember.Service.extend({
   mapInstance: null,
-  latitude: null,
-  longitude: null,
-  zoom: null,
+  latitude: SOUTHWICK_LATITUDE,
+  longitude: SOUTHWICK_LONGITUDE,
+  zoom: DEFAULT_ZOOM,
   setCity(city) {
     this.set('city', city);
     let latitude = city.get('latitude');

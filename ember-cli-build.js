@@ -1,26 +1,12 @@
-/*jshint node:true*/
-/* global require, module */
-var EmberApp = require('ember-cli/lib/broccoli/ember-app');
-var config = require('./config/environment')(process.env.EMBER_ENV || 'development');
+/* eslint-env node */
+'use strict';
+
+const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
-    fingerprint: {
-      prepend: config.prepend,
-      enabled: false,
-      exclude: [
-        'images/layers-2x.png',
-        'images/layers.png',
-        'images/marker-icon-2x.png',
-        'images/marker-icon.png',
-        'images/marker-shadow.png',
-        'images/icons',
-        'images/icons/*'
-      ]
-    }
+  let app = new EmberApp(defaults, {
+    // Add options here
   });
-
-  // app.import('bower_components/d3/d3.js');
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

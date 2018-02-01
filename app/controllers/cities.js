@@ -26,7 +26,7 @@ export default Ember.Controller.extend({
   actions: {
     composeList(option, optionsList) {
       let list = this.get(optionsList).split('|');
-      if(list.isAny('', option)) {
+      if(list.includes(option)) {
         list.removeObject(option);
       } else {
         list.pushObject(option);

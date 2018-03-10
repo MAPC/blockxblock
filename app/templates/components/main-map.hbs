@@ -1,4 +1,4 @@
-<div class="cities-map">
+{{#if model}}
   {{#if (and currentCity.latitude currentCity.longitude currentCity.zoom)}}
     {{#leaflet-map  onMove    = (action 'updateNewPoint'  ) 
                     onMoveend = (action 'currentMapState' ) 
@@ -63,4 +63,4 @@
                   y=layerPointy
                   z=layerPointz
                   basemap=basemap}}
-</div>
+{{/if}}

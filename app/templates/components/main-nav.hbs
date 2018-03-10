@@ -1,0 +1,25 @@
+<div class="ui inverted main menu">
+  <div class="left menu" id="left-items">
+    <div class="cubes item">
+      {{#link-to 'application' class='cities-link'}}
+        <i class="content large icon"></i>
+      {{/link-to}}
+    </div>
+    {{#ui-dropdown class="dropdown item" selected=currentCity.city.name}}
+      <div class="default text">Select Your District</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        {{#each (filter-by 'live' true model) as |city|}}
+          {{#link-to 'cities.city.show' city.id class="item" tagName='a'}}
+            {{city.name}}
+          {{/link-to}}
+        {{/each}}
+      </div>
+    {{/ui-dropdown}}
+  </div>
+  {{#link-to 'application' tagName='div' class='header link item'}} 
+    <h3>TDI &nbsp; Block x Block</h3>
+  {{/link-to}}
+  <div class="right menu" id="right-items">
+  </div>
+</div>

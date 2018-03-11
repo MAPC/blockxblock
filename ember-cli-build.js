@@ -6,7 +6,8 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     fingerprint: {
-      prepend: 'https://allthesignals.github.io/cityxcity/'
+      exclude: ['images/'],
+      prepend: 'https://allthesignals.github.io/cityxcity/',
     },
   });
 

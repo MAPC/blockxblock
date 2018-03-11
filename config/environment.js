@@ -175,7 +175,7 @@ module.exports = function(environment) {
     ENV['ember-cli-mirage'] = {
       enabled: false
     }
-    // ENV.prepend = 'https://allthesignals.github.io/cityxcity/';
+    ENV.prepend = 'https://allthesignals.github.io/cityxcity/';
   }
 
   return ENV;

@@ -55,7 +55,7 @@
                       class="item"
                       checked=(array-contains currentCity.assetTypesArray option)
                       onChange=(action 'composeList' option 'currentCity.assetTypes')}}
-                      <img src="/images/icons/features/filters/{{dasherize option}}.png" class="ui avatar image" /> 
+                      <img src="images/icons/features/filters/{{dasherize option}}.png" class="ui avatar image" /> 
                       <span>{{option}}</span>
                     {{/ui-checkbox}}
                   </div>
@@ -87,7 +87,7 @@
                       class="item"
                       checked=(array-contains currentCity.investmentTypesArray option)
                       onChange=(action 'composeList' option 'currentCity.investmentTypes')}}
-                      <img src="/images/icons/investments/{{dasherize option}}.png" /> 
+                      <img src="images/icons/investments/{{dasherize option}}.png" /> 
                       {{option}}
                     {{/ui-checkbox}}
                   {{/each}}
@@ -123,7 +123,7 @@
                 class="item"
                 checked=(array-contains currentCity.investmentSourcesArray option)
                 onChange=(action 'composeList' option 'currentCity.investmentSources')}}
-                <img src="/images/icons/investments/badge/{{lowercase option}}.png" /> 
+                <img src="images/icons/investments/badge/{{lowercase option}}.png" /> 
                 {{option}}
               {{/ui-checkbox}}
             {{/each}}

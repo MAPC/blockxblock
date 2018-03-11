@@ -36,9 +36,11 @@ export default Ember.Service.extend({
     this.set('city', city);
     let latitude = city.get('latitude');
     let longitude = city.get('longitude');
-    this.setProperties({
-      latitude,
-      longitude
+    Ember.run.next(this, () => {
+      this.setProperties({
+        latitude,
+        longitude
+      });
     });
   },
 

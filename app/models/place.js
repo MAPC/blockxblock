@@ -6,7 +6,7 @@ const { alias } = Ember.computed;
 
 export default DS.Model.extend({
   // new attributes
-  place_id: DS.attr('string'),
+  // place_id: DS.attr('string'), // this is throwing ember off 
   name: DS.attr('string'),
   latitude: DS.attr('number'),
   longitude: DS.attr('number'),

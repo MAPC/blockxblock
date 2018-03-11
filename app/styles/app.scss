@@ -202,9 +202,61 @@ h1.splash.header .content{
 }
 
 // index page
-
 .statewide-view {
     height: 640px;
+}
+
+// filters
+
+.ui.label.legend {
+    background-color: inherit;
+}
+
+.ui.label.filters-label {
+    color: $primary-color;
+    border: 2px solid $primary-color;
+    background-color: white;
+}
+
+.ui.label.even-spaced {
+    min-width: 100px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.ui.label.filters-label:hover {
+    border: 2px solid $primary-color;
+    background-color: $primary-color;
+    color: white;
+}
+
+.ui.label.tdi-blue {
+    background: $secondary-color;
+    border: 2px solid $primary-color;
+}
+
+.ui.label.tdi-blue:hover {
+    background-color: $primary-color;
+    border: 2px solid $primary-color;
+}
+
+.ui.tdi-blue.divider:not(.vertical):not(.horizontal) {
+    border-top: 2px solid $primary-color;
+}
+
+.tdi-semi-bold.title {
+    font-family: 'Dosis-SemiBold' !important;
+}
+
+.ui.accordion .title.tdi-semi-bold:not(.ui) {
+    font-size: 1.429em;
+}
+
+// resources / places show
+.resource-nav-menu {
+    position: absolute;
+    top: 0px;
+    right: 15px;
 }
 
 // .ember-modal-overlay {
@@ -222,12 +274,6 @@ h1.splash.header .content{
 //     left: 0px;
 //     z-index: 498;
 //     top: 49%;
-// }
-
-// .resource-nav-menu {
-//     position: absolute;
-//     top: 0px;
-//     right: 15px;
 // }
 
 // .hidden-custom {
@@ -283,50 +329,6 @@ h1.splash.header .content{
 // .ui-visibility-sticky {
 //     // width: 100%;
 //     background-color: white;
-// }
-
-// .ui.label.legend {
-//     background-color: inherit;
-// }
-
-// .ui.label.filters-label {
-//     color: $primary-color;
-//     border: 2px solid $primary-color;
-//     background-color: white;
-// }
-
-// .ui.label.even-spaced {
-//     min-width: 100px;
-//     text-align: center;
-//     flex-grow: 1;
-// }
-
-// .ui.label.filters-label:hover {
-//     border: 2px solid $primary-color;
-//     background-color: $primary-color;
-//     color: white;
-// }
-
-// .ui.label.tdi-blue {
-//     background: $secondary-color;
-//     border: 2px solid $primary-color;
-// }
-
-// .ui.label.tdi-blue:hover {
-//     background-color: $primary-color;
-//     border: 2px solid $primary-color;
-// }
-
-// .ui.tdi-blue.divider:not(.vertical):not(.horizontal) {
-//     border-top: 2px solid $primary-color;
-// }
-
-// .tdi-semi-bold.title {
-//     font-family: 'Dosis-SemiBold' !important;
-// }
-
-// .ui.accordion .title.tdi-semi-bold:not(.ui) {
-//     font-size: 1.429em;
 // }
 
 // .Searchable-select__option,
@@ -434,6 +436,8 @@ h1.splash.header .content{
 // .noUi-handle {
 //     background-color: teal;
 // }
+
+// loading
 
 .spinner {
   margin: 100px auto;

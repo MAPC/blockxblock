@@ -7,14 +7,13 @@ export default Ember.Mixin.create({
     let model = this.modelFor(this.routeName);
     let latitude = model.get('latitude');
     let longitude = model.get('longitude');
-    let zoom = 25;
 
     model.set('isSelected', true);
-
-    currentCity.setProperties({
-      latitude,
-      longitude,
-      zoom
+    Ember.run.next(this, () => {
+      currentCity.setProperties({
+        latitude,
+        longitude,
+      });
     });
   },
   actions: {

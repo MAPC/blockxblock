@@ -9,7 +9,6 @@ export default Ember.Component.extend({
   currentCity: Ember.inject.service(),
   classNames: ['main-map'],
 
-
   choroplethLayer: 'Available Spaces',
   parcelsChoroplethMapping: computed('visibleParcels', 'currentCity.choroplethLayer', function() {
     return (feature) => {

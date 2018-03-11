@@ -1,49 +1,47 @@
-<div class="ui basic segment">
-  <div class="ui pointing secondary tabular menu">
-    <a class="item active" data-tab="features">Places and Investments</a>
-    <a class="item" data-tab="parcels">Available Spaces</a>
-  </div>
-  <div class="ui tab active" data-tab="features">
-    <div class="ui two column grid">
-      {{#each (union (sort-by 'name' visibleFeatures) visibleInvestments) as |card|}}
-        <div class="column">
-          {{#tdi-card modelContext=card 
-                      image=(or card.splash card.iconUrl)
-                      height=150}}
-            {{#if card.name}}
-              {{truncate card.name 15}}
+<div class="ui pointing secondary tabular menu">
+  <a class="item active" data-tab="features">Places and Investments</a>
+  <a class="item" data-tab="parcels">Available Spaces</a>
+</div>
+<div class="ui tab active" data-tab="features">
+  <div class="ui two column grid">
+    {{#each (union (sort-by 'name' visibleFeatures) visibleInvestments) as |card|}}
+      <div class="column">
+        {{#tdi-card modelContext=card 
+                    image=(or card.splash card.iconUrl)
+                    height=150}}
+          {{#if card.name}}
+            {{truncate card.name 15}}
+          {{else}}
+            {{#if card.estimated_amount}}
+              ${{card.estimated_amount}}
             {{else}}
-              {{#if card.estimated_amount}}
-                ${{card.estimated_amount}}
-              {{else}}
-                {{card.investment_descriptor}}
-              {{/if}}
+              {{card.investment_descriptor}}
             {{/if}}
-          {{/tdi-card}}
-        </div>
-      {{else}}
-        <h3 style="margin: 0 auto; color: rgba(0,0,0,0.44);">
-          No Results
-        </h3>
-      {{/each}}
-    </div>
+          {{/if}}
+        {{/tdi-card}}
+      </div>
+    {{else}}
+      <h3 style="margin: 0 auto; color: rgba(0,0,0,0.44);">
+        No Results
+      </h3>
+    {{/each}}
   </div>
-  <div class="ui tab" data-tab="parcels">
-    <div class="ui two column grid cards">
-      {{#each (union (filter-by 'property_for_sale_latest' true visibleParcels) (filter-by 'property_for_lease_latest' true visibleParcels)) as |parcel|}}
-        <div class="column">
-          {{#tdi-card route='cities.city.parcels' 
-                      modelContext=parcel 
-                      image=parcel.splash
-                      height=100}}
-            {{truncate parcel.street_address 15}}
-          {{/tdi-card}}
-        </div>
-      {{else}}
-        <h3 style="margin: 0 auto; color: rgba(0,0,0,0.44);">
-          No Results
-        </h3>
-      {{/each}}
-    </div>
+</div>
+<div class="ui tab" data-tab="parcels">
+  <div class="ui two column grid cards">
+    {{#each (union (filter-by 'property_for_sale_latest' true visibleParcels) (filter-by 'property_for_lease_latest' true visibleParcels)) as |parcel|}}
+      <div class="column">
+        {{#tdi-card route='cities.city.parcels' 
+                    modelContext=parcel 
+                    image=parcel.splash
+                    height=100}}
+          {{truncate parcel.street_address 15}}
+        {{/tdi-card}}
+      </div>
+    {{else}}
+      <h3 style="margin: 0 auto; color: rgba(0,0,0,0.44);">
+        No Results
+      </h3>
+    {{/each}}
   </div>
 </div>

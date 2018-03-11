@@ -5,7 +5,7 @@ const { alias } = Ember.computed;
 
 export default DS.Model.extend({
   // new attributes
-  parcel_id: DS.attr('string'),
+  // parcel_id: DS.attr('string'),
   street_address: DS.attr('string'),
   property_for_sale: DS.attr('timeline'),
   property_for_lease: DS.attr('timeline'),
@@ -38,7 +38,7 @@ export default DS.Model.extend({
   parcel_link2: DS.attr('string'),
   parcel_link2_description: DS.attr('string'),
   internal_parcel_notes: DS.attr('string'),
-  internal_parcel_media: DS.attr('file'),
+  // internal_parcel_media: DS.attr('file'), // need a transform for this
   featured_parcel_photo: DS.attr('string'),
   message_to_connect: DS.attr('string'),
   parcel_contact_name: DS.attr('string'),

@@ -1,6 +1,7 @@
 {
   "name": "cityxcity",
   "dependencies": {
-    "semantic-ui": "^2.2.14"
+    "semantic-ui": "^2.2.14",
+    "nouislider": "^11.0.3"
   }
 }

@@ -1,3 +1,4 @@
+{{log currentCity.latitude currentCity.longitude}}
 {{#if model}}
   {{#if (and currentCity.latitude currentCity.longitude currentCity.zoom)}}
     {{#leaflet-map  onMove    = (action 'updateNewPoint'  ) 

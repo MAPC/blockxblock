@@ -2430,6 +2430,13 @@ ember-cli-get-dependency-depth@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-get-dependency-depth/-/ember-cli-get-dependency-depth-1.0.0.tgz#e0afecf82a2d52f00f28ab468295281aec368d11"
 
+ember-cli-github-pages@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-github-pages/-/ember-cli-github-pages-0.2.0.tgz#2789d178936d8a1350ebbb1a300ab90760a111da"
+  dependencies:
+    ember-cli-version-checker "^2.1.0"
+    rsvp "^4.7.0"
+
 ember-cli-htmlbars-inline-precompile@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars-inline-precompile/-/ember-cli-htmlbars-inline-precompile-1.0.2.tgz#5b544f664d5d9911f08cd979c5f70d8cb0ca2add"
@@ -6258,6 +6265,10 @@ rsvp@^3.0.14, rsvp@^3.0.16, rsvp@^3.0.17, rsvp@^3.0.18, rsvp@^3.0.21, rsvp@^3.0.
 rsvp@^4.6.1:
   version "4.8.1"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.1.tgz#168addb3963222de37ee351b70e3876bdb2ac285"
+
+rsvp@^4.7.0:
+  version "4.8.2"
+  resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.2.tgz#9d5647108735784eb13418cdddb56f75b919d722"
 
 rsvp@~3.0.6:
   version "3.0.21"

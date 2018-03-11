@@ -170,6 +170,8 @@ module.exports = function(environment) {
 
 
   if (environment === 'production') {
+    ENV.locationType = 'hash';
+    ENV.rootURL = '/cityxcity/';
     ENV.locationType = 'auto';
     // ENV.rootURL = '/cityxcity/';
     ENV['ember-cli-mirage'] = {

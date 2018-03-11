@@ -10,6 +10,6 @@
     {{marker-layer  lat=city.latitude 
                     lng=city.longitude 
                     onClick=(if city.live (transition-to 'cities.city.show' city.id))
-                    icon= (icon iconUrl = (concat 'images/icons/cities/' city.name '.png')) }}
+                    icon= (icon iconUrl = (concat 'images/icons/cities/' (lowercase city.name) '.png')) }}
   {{/each}}
 {{/leaflet-map}}

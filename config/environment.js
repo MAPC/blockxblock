@@ -173,12 +173,10 @@ module.exports = function(environment) {
     ENV.locationType = 'hash';
     ENV.rootURL = '/cityxcity/';
     ENV.locationType = 'auto';
-    // ENV.rootURL = '/cityxcity/';
     ENV['ember-cli-mirage'] = {
-        enabled: false
-      }
-      // ENV.prepend = 'https://allthesignals.github.io/cityxcity/';
-      // ENV.rootURL = '/cityxcity/';
+      enabled: false
+    }
+    // ENV.prepend = 'https://allthesignals.github.io/cityxcity/';
   }
 
   return ENV;

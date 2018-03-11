@@ -1,9 +1,14 @@
-<div class="column-structure sidebar">
-  {{outlet}}
-</div>
-<div class="column-structure">
-  {{main-map model=model}}
-</div>
+<main class="row content">
+  <div class="column-structure sidebar">
+    {{outlet}}
+  </div>
+  <div class="column-structure">
+    {{main-map model=model}}
+  </div>
 
-{{export-data isExporting=isExporting
-              export_csv=(action 'export_csv') }}
+  {{export-data isExporting=isExporting
+                export_csv=(action 'export_csv') }}
+</main>
+<div class="row footer">
+  {{footer-nav}}
+</div>

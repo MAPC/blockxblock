@@ -13,14 +13,14 @@ export default Ember.Route.extend({
           'place', 
           { 
             city: city.get('name'),
-            include: 'latitude,longitude,type,subtype,description,city,investments,employment,activating,community_hub'
+            include: 'latitude,longitude,type,subtype,description,city,investments,employment,activating,community_hub,name'
           }
         ),
       investments: this.store.query(
           'investment', 
           { 
             city: city.get('name'), 
-            include: 'id,record_url,investment_id,source_type,place_id,city,use_type,investment_status,estimated_amount'
+            include: 'id,record_url,investment_id,source_type,place_id,city,use_type,investment_status,estimated_amount,investment_descriptor'
           }
         ),
       parcels: this.store.query(

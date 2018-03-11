@@ -1,257 +1,255 @@
- <div class="ui container">
-  <h1>View Data</h1>
+<h1>View Data</h1>
 
-  <div class="ui labels filter-label-group">
-    <a class="ui {{if currentCity.showPlaces 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut currentCity.showPlaces) (not currentCity.showPlaces)}}>
-      Places
-    </a>
-    <a class="ui {{if currentCity.showInvestments 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut currentCity.showInvestments) (not currentCity.showInvestments)}}>
-      Investments
-    </a>
-    <a class="ui {{if currentCity.showParcels 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut currentCity.showParcels) (not currentCity.showParcels)}}>
-      Parcels
-    </a>
-  </div>
+{{!-- <div class="ui labels filter-label-group">
+  <a class="ui {{if currentCity.showPlaces 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut currentCity.showPlaces) (not currentCity.showPlaces)}}>
+    Places
+  </a>
+  <a class="ui {{if currentCity.showInvestments 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut currentCity.showInvestments) (not currentCity.showInvestments)}}>
+    Investments
+  </a>
+  <a class="ui {{if currentCity.showParcels 'inverted tdi-blue' 'filters-label'}} even-spaced large label" onclick={{action (mut currentCity.showParcels) (not currentCity.showParcels)}}>
+    Parcels
+  </a>
+</div>
 
-  {{#if (and (not currentCity.showPlaces) (not currentCity.showInvestments) (not currentCity.showParcels))}}
-    <h5 class="ui disabled header">
-      <i class="ui reply rotated right icon"></i>
-      <div class="content">
-        Select a Filter Above
+{{#if (and (not currentCity.showPlaces) (not currentCity.showInvestments) (not currentCity.showParcels))}}
+  <h5 class="ui disabled header">
+    <i class="ui reply rotated right icon"></i>
+    <div class="content">
+      Select a Filter Above
+    </div>
+  </h5>
+{{/if}}
+
+{{#ui-accordion}}
+  {{#if currentCity.showPlaces}}
+    <div class="tdi-semi-bold active title">
+      <i class="dropdown icon"></i>
+      Places Filters
+    </div>
+    <div class="active content">
+      <div class="ui basic segment">
+        <h4 class="ui header">Place Status</h4>
+        <div class="ui filter-label-group labels">
+          <a class="ui {{if currentCity.is_employer 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.is_employer) (not currentCity.is_employer)}}>Employer</a> 
+           <a class="ui {{if currentCity.activating 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.activating) (not currentCity.activating)}}>Street Activating</a> 
+          <a class="ui {{if currentCity.community_hub 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.community_hub) (not currentCity.community_hub)}}>Community Hub</a> 
+          {{#if session.isAuthenticated}}
+            <a class="ui {{if currentCity.tdi_asset 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.tdi_asset) (not currentCity.tdi_asset)}}>TDI Asset</a> 
+            <a class="ui {{if currentCity.engaged_owner 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.engaged_owner) (not engaged_owner)}}>Owner Engaged</a> 
+          {{/if}}
+        </div>
       </div>
-    </h5>
+      <div class="ui basic segment">
+        <h4 class="ui header">
+          Place Types
+        </h4>
+        <div class="ui equal width grid">
+          {{#each (chunk 8 currentCity.assetTypeOptions) as |group|}}
+            <div class="column">
+              {{#each group as |option|}}
+                <div class="ui vertical list">
+                  {{#ui-checkbox 
+                    class="item"
+                    checked=(array-contains currentCity.assetTypesArray option)
+                    onChange=(action 'composeList' option 'currentCity.assetTypes')}}
+                    <img src="/images/icons/features/filters/{{dasherize option}}.png" class="ui avatar image" /> 
+                    <span>{{option}}</span>
+                  {{/ui-checkbox}}
+                </div>
+              {{/each}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
   {{/if}}
 
-  {{#ui-accordion}}
-    {{#if currentCity.showPlaces}}
-      <div class="tdi-semi-bold active title">
-        <i class="dropdown icon"></i>
-        Places Filters
-      </div>
-      <div class="active content">
-        <div class="ui basic segment">
-          <h4 class="ui header">Place Status</h4>
-          <div class="ui filter-label-group labels">
-            <a class="ui {{if currentCity.is_employer 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.is_employer) (not currentCity.is_employer)}}>Employer</a> 
-             <a class="ui {{if currentCity.activating 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.activating) (not currentCity.activating)}}>Street Activating</a> 
-            <a class="ui {{if currentCity.community_hub 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.community_hub) (not currentCity.community_hub)}}>Community Hub</a> 
-            {{#if session.isAuthenticated}}
-              <a class="ui {{if currentCity.tdi_asset 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.tdi_asset) (not currentCity.tdi_asset)}}>TDI Asset</a> 
-              <a class="ui {{if currentCity.engaged_owner 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.engaged_owner) (not engaged_owner)}}>Owner Engaged</a> 
-            {{/if}}
-          </div>
-        </div>
-        <div class="ui basic segment">
-          <h4 class="ui header">
-            Place Types
-          </h4>
+  {{#if currentCity.showInvestments}}
+    <div class="ui tdi-blue divider"></div>
+    <div class="tdi-semi-bold active title">
+      <i class="dropdown icon"></i>
+      Investments Filters
+    </div>
+    <div class="active content">
+      <div class="ui basic segment">
+        <h4 class="ui header">
+          Investment Types
+        </h4>
+        <div class="ui vertical list">
           <div class="ui equal width grid">
-            {{#each (chunk 8 currentCity.assetTypeOptions) as |group|}}
+            {{#each (chunk 2 currentCity.investmentTypeOptions) as |group|}}
               <div class="column">
                 {{#each group as |option|}}
-                  <div class="ui vertical list">
-                    {{#ui-checkbox 
-                      class="item"
-                      checked=(array-contains currentCity.assetTypesArray option)
-                      onChange=(action 'composeList' option 'currentCity.assetTypes')}}
-                      <img src="/images/icons/features/filters/{{dasherize option}}.png" class="ui avatar image" /> 
-                      <span>{{option}}</span>
-                    {{/ui-checkbox}}
-                  </div>
+                  {{#ui-checkbox 
+                    class="item"
+                    checked=(array-contains currentCity.investmentTypesArray option)
+                    onChange=(action 'composeList' option 'currentCity.investmentTypes')}}
+                    <img src="/images/icons/investments/{{dasherize option}}.png" /> 
+                    {{option}}
+                  {{/ui-checkbox}}
                 {{/each}}
               </div>
             {{/each}}
           </div>
+          {{#if session.isAuthenticated}}
+            {{ui-checkbox 
+              label='TDI Influenced' 
+              class="item"
+              checked=currentCity.is_tdi_influenced
+              onChange=(action (mut currentCity.is_tdi_influenced (not currentCity.is_tdi_influenced)))}}
+          {{/if}}
+        </div>
+        <h4 class="ui header">
+          Investment Statuses
+        </h4>
+        <div class="ui horizontal list">
+          {{#each currentCity.investmentStatusesOptions as |option|}}
+            {{ui-checkbox 
+              label=option 
+              class="item"
+              checked=(array-contains currentCity.investmentStatusesArray option)
+              onChange=(action 'composeList' option 'currentCity.investmentStatuses')}}
+          {{/each}}
+        </div>
+        <h4 class="ui header">
+          Investment Source
+        </h4>
+        <div class="ui horizontal list">
+          {{#each currentCity.investmentSourcesOptions as |option|}}
+            {{#ui-checkbox 
+              class="item"
+              checked=(array-contains currentCity.investmentSourcesArray option)
+              onChange=(action 'composeList' option 'currentCity.investmentSources')}}
+              <img src="/images/icons/investments/badge/{{lowercase option}}.png" /> 
+              {{option}}
+            {{/ui-checkbox}}
+          {{/each}}
+        </div>
+        <h4 class="ui header">
+          Investment Value
+        </h4>
+        <div class="ui basic segment">
+          {{range-slider start=(array 0 maxInvestments)
+                         range=(hash min=0 max=maxInvestments)
+                         tooltips=tooltipsConfig
+                         connect=true
+                         step=1
+                         on-change=(action "updateRanges") }}
         </div>
       </div>
-    {{/if}}
+    </div>
+  {{/if}}
 
-    {{#if currentCity.showInvestments}}
-      <div class="ui tdi-blue divider"></div>
-      <div class="tdi-semi-bold active title">
-        <i class="dropdown icon"></i>
-        Investments Filters
+  {{#if currentCity.showParcels}}
+    <div class="ui tdi-blue divider"></div>
+    <div class="tdi-semi-bold active title">
+      <i class="dropdown icon"></i>
+      Parcels Filters
+    </div>
+    <div class="active content">
+      <h4 class="ui header">Symbolize Map</h4>
+      <div class="ui equal width grid">
+        <div class="column">
+          <div class="ui labels flex-direction-column filter-label-group">
+            {{#each currentCity.parcelChoroplethSets as |colorSet|}}
+              <a class="ui {{if (eq colorSet currentCity.choroplethLayer) 'inverted tdi-blue' 'filters-label'}} even-spaced label" {{action 'changeProperty' 'currentCity.choroplethLayer' colorSet}}>
+                {{colorSet}}
+              </a> 
+            {{/each}}
+          </div>
+        </div>
+        <div class="column" style="background-color: #E1F5F5;">
+          {{#with (find-by 'setName' currentCity.choroplethLayer currentCity.parcelChoroplethConfig) as |set|}}
+            Key - {{set.setName}}
+            {{#if set}}
+              <div class="ui labels">
+                {{#each set.colorMap as |item|}}
+                  <div class="ui large label legend">
+                    <i class="square icon" style="color: {{item.color}}"></i>
+                    {{if (eq (attribute-type item.value) 'boolean') (humanize-string item.key) item.value}}
+                  </div>
+                {{/each}}
+              </div>
+            {{/if}}
+          {{/with}}
+        </div>
       </div>
-      <div class="active content">
-        <div class="ui basic segment">
+      <div class="ui equal width grid">
+        <div class="column">
           <h4 class="ui header">
-            Investment Types
+            Land Use Type
           </h4>
           <div class="ui vertical list">
-            <div class="ui equal width grid">
-              {{#each (chunk 2 currentCity.investmentTypeOptions) as |group|}}
-                <div class="column">
-                  {{#each group as |option|}}
-                    {{#ui-checkbox 
-                      class="item"
-                      checked=(array-contains currentCity.investmentTypesArray option)
-                      onChange=(action 'composeList' option 'currentCity.investmentTypes')}}
-                      <img src="/images/icons/investments/{{dasherize option}}.png" /> 
-                      {{option}}
-                    {{/ui-checkbox}}
-                  {{/each}}
-                </div>
-              {{/each}}
-            </div>
-            {{#if session.isAuthenticated}}
+            {{#each currentCity.landuseTypeOptions as |option|}}
               {{ui-checkbox 
-                label='TDI Influenced' 
+                label=option
                 class="item"
-                checked=currentCity.is_tdi_influenced
-                onChange=(action (mut currentCity.is_tdi_influenced (not currentCity.is_tdi_influenced)))}}
-            {{/if}}
-          </div>
-          <h4 class="ui header">
-            Investment Statuses
-          </h4>
-          <div class="ui horizontal list">
-            {{#each currentCity.investmentStatusesOptions as |option|}}
-              {{ui-checkbox 
-                label=option 
-                class="item"
-                checked=(array-contains currentCity.investmentStatusesArray option)
-                onChange=(action 'composeList' option 'currentCity.investmentStatuses')}}
+                checked=(array-contains currentCity.landuseTypesArray option)
+                onChange=(action 'composeList' option 'currentCity.landuseTypes')}}
             {{/each}}
           </div>
           <h4 class="ui header">
-            Investment Source
+            Tenure Status
           </h4>
-          <div class="ui horizontal list">
-            {{#each currentCity.investmentSourcesOptions as |option|}}
-              {{#ui-checkbox 
+          <div class="ui vertical list">
+            {{ui-checkbox label="For Lease" class="item" checked=forLease onChange=(action (mut forLease))}}
+            {{ui-checkbox label="For Sale" class="item" checked=forSale onChange=(action (mut forSale))}}
+          </div>
+          <h4 class="ui header">
+            Engaged Owner
+          </h4>
+          <div class="ui vertical list">
+            {{ui-checkbox label="Engaged" class="item" checked=isEngagedOwner onChange=(action (mut isEngagedOwner))}}
+          </div>
+        </div>
+        <div class="column">
+          <h4 class="ui header">
+            Ownership Statuses
+          </h4>
+          <div class="ui vertical list">
+            {{#each OwnershipTypesOptions as |option|}}
+              {{ui-checkbox 
+                label=option
                 class="item"
-                checked=(array-contains currentCity.investmentSourcesArray option)
-                onChange=(action 'composeList' option 'currentCity.investmentSources')}}
-                <img src="/images/icons/investments/badge/{{lowercase option}}.png" /> 
-                {{option}}
-              {{/ui-checkbox}}
+                checked=(array-contains OwnershipTypesArray option)
+                onChange=(action 'composeList' option 'OwnershipTypes')}}
             {{/each}}
           </div>
           <h4 class="ui header">
-            Investment Value
+            Ground Floor Vacancy
           </h4>
-          <div class="ui basic segment">
-            {{range-slider start=(array 0 maxInvestments)
-                           range=(hash min=0 max=maxInvestments)
-                           tooltips=tooltipsConfig
-                           connect=true
-                           step=1
-                           on-change=(action "updateRanges") }}
+          <div class="ui vertical list">
+            {{#each GFVacancyStatusesOptions as |option|}}
+              {{ui-checkbox 
+                label=option
+                class="item"
+                checked=(array-contains GFVacancyStatusesArray option)
+                onChange=(action 'composeList' option 'GFVacancyStatuses')}}
+            {{/each}}
+          </div>
+          <h4 class="ui header">
+            Upper Level Vacancy
+          </h4>
+          <div class="ui vertical list">
+            {{#each UFVacancyStatusesOptions as |option|}}
+              {{ui-checkbox 
+                label=option
+                class="item"
+                checked=(array-contains UFVacancyStatusesArray option)
+                onChange=(action 'composeList' option 'UFVacancyStatuses')}}
+            {{/each}}
           </div>
         </div>
       </div>
-    {{/if}}
+    </div>
+  {{/if}}
+{{/ui-accordion}} --}}
 
-    {{#if currentCity.showParcels}}
-      <div class="ui tdi-blue divider"></div>
-      <div class="tdi-semi-bold active title">
-        <i class="dropdown icon"></i>
-        Parcels Filters
-      </div>
-      <div class="active content">
-        <h4 class="ui header">Symbolize Map</h4>
-        <div class="ui equal width grid">
-          <div class="column">
-            <div class="ui labels flex-direction-column filter-label-group">
-              {{#each currentCity.parcelChoroplethSets as |colorSet|}}
-                <a class="ui {{if (eq colorSet currentCity.choroplethLayer) 'inverted tdi-blue' 'filters-label'}} even-spaced label" {{action 'changeProperty' 'currentCity.choroplethLayer' colorSet}}>
-                  {{colorSet}}
-                </a> 
-              {{/each}}
-            </div>
-          </div>
-          <div class="column" style="background-color: #E1F5F5;">
-            {{#with (find-by 'setName' currentCity.choroplethLayer currentCity.parcelChoroplethConfig) as |set|}}
-              Key - {{set.setName}}
-              {{#if set}}
-                <div class="ui labels">
-                  {{#each set.colorMap as |item|}}
-                    <div class="ui large label legend">
-                      <i class="square icon" style="color: {{item.color}}"></i>
-                      {{if (eq (attribute-type item.value) 'boolean') (humanize-string item.key) item.value}}
-                    </div>
-                  {{/each}}
-                </div>
-              {{/if}}
-            {{/with}}
-          </div>
-        </div>
-        <div class="ui equal width grid">
-          <div class="column">
-            <h4 class="ui header">
-              Land Use Type
-            </h4>
-            <div class="ui vertical list">
-              {{#each currentCity.landuseTypeOptions as |option|}}
-                {{ui-checkbox 
-                  label=option
-                  class="item"
-                  checked=(array-contains currentCity.landuseTypesArray option)
-                  onChange=(action 'composeList' option 'currentCity.landuseTypes')}}
-              {{/each}}
-            </div>
-            <h4 class="ui header">
-              Tenure Status
-            </h4>
-            <div class="ui vertical list">
-              {{ui-checkbox label="For Lease" class="item" checked=forLease onChange=(action (mut forLease))}}
-              {{ui-checkbox label="For Sale" class="item" checked=forSale onChange=(action (mut forSale))}}
-            </div>
-            <h4 class="ui header">
-              Engaged Owner
-            </h4>
-            <div class="ui vertical list">
-              {{ui-checkbox label="Engaged" class="item" checked=isEngagedOwner onChange=(action (mut isEngagedOwner))}}
-            </div>
-          </div>
-          <div class="column">
-            <h4 class="ui header">
-              Ownership Statuses
-            </h4>
-            <div class="ui vertical list">
-              {{#each OwnershipTypesOptions as |option|}}
-                {{ui-checkbox 
-                  label=option
-                  class="item"
-                  checked=(array-contains OwnershipTypesArray option)
-                  onChange=(action 'composeList' option 'OwnershipTypes')}}
-              {{/each}}
-            </div>
-            <h4 class="ui header">
-              Ground Floor Vacancy
-            </h4>
-            <div class="ui vertical list">
-              {{#each GFVacancyStatusesOptions as |option|}}
-                {{ui-checkbox 
-                  label=option
-                  class="item"
-                  checked=(array-contains GFVacancyStatusesArray option)
-                  onChange=(action 'composeList' option 'GFVacancyStatuses')}}
-              {{/each}}
-            </div>
-            <h4 class="ui header">
-              Upper Level Vacancy
-            </h4>
-            <div class="ui vertical list">
-              {{#each UFVacancyStatusesOptions as |option|}}
-                {{ui-checkbox 
-                  label=option
-                  class="item"
-                  checked=(array-contains UFVacancyStatusesArray option)
-                  onChange=(action 'composeList' option 'UFVacancyStatuses')}}
-              {{/each}}
-            </div>
-          </div>
-        </div>
-      </div>
-    {{/if}}
-  {{/ui-accordion}}
-
-  {{tabbed-results  visibleFeatures     = currentCity.visibleFeatures 
-                    showPlaces        = currentCity.showPlaces
-                    visibleInvestments  = currentCity.visibleInvestments
-                    showInvestments     = currentCity.showInvestments 
-                    maxInvestments      = currentCity.maxInvestments   
-                    visibleParcels      = currentCity.visibleParcels
-                    showParcels         = currentCity.showParcels}}
-</div>
+{{tabbed-results  visibleFeatures     = currentCity.visibleFeatures 
+                  showPlaces          = currentCity.showPlaces
+                  visibleInvestments  = currentCity.visibleInvestments
+                  showInvestments     = currentCity.showInvestments 
+                  maxInvestments      = currentCity.maxInvestments   
+                  visibleParcels      = currentCity.visibleParcels
+                  showParcels         = currentCity.showParcels}}

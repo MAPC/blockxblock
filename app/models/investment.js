@@ -53,12 +53,12 @@ export default DS.Model.extend({
   }),
   iconUrl: Ember.computed('source_type', 'investment_type', function() {
     let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
-    return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.decamelize()}.png`;
+    return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.dasherize()}.png`;
   }),
 
   iconWatermarkUrl: Ember.computed('source_type', 'investment_type', function() {
     let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
-    return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.decamelize()}.png`;
+    return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.dasherize()}.png`;
   }),
 
   // aliases

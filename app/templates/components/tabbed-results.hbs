@@ -1,19 +1,23 @@
-<div class="tabbed-results">
+<div class="ui basic segment">
   <div class="ui pointing secondary tabular menu">
     <a class="item active" data-tab="features">Places and Investments</a>
     <a class="item" data-tab="parcels">Available Spaces</a>
   </div>
   <div class="ui tab active" data-tab="features">
-    <div class="ui two column stackable grid cards">
-      {{#each (sort-by "name" (shuffle (union visibleFeatures visibleInvestments))) as |card|}}
+    <div class="ui two column grid">
+      {{#each (union (sort-by 'name' visibleFeatures) visibleInvestments) as |card|}}
         <div class="column">
           {{#tdi-card modelContext=card 
                       image=(or card.splash card.iconUrl)
                       height=150}}
-            {{#if card.feature_name}}
-              {{truncate card.feature_name 15}}
+            {{#if card.name}}
+              {{truncate card.name 15}}
             {{else}}
-              ${{truncate card.project 15}}
+              {{#if card.estimated_amount}}
+                ${{card.estimated_amount}}
+              {{else}}
+                {{card.investment_descriptor}}
+              {{/if}}
             {{/if}}
           {{/tdi-card}}
         </div>

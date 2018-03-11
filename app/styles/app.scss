@@ -376,14 +376,14 @@ h1.splash.header .content{
 
 
 
-// .dynamic-cluster {
-//   width: 39px;
-//   height: 39px;
-//   background-image: url('/images/icons/investments/cluster.png');
-//   padding-top: 6px;
-//   text-align: center;
-//   color: white;
-// }
+.dynamic-cluster {
+  width: 39px;
+  height: 39px;
+  background-image: url('/images/icons/investments/cluster.png');
+  padding-top: 6px;
+  text-align: center;
+  color: white;
+}
 
 // .over-time-chart {
 //     position: fixed;
@@ -417,21 +417,21 @@ h1.splash.header .content{
 //     cursor: default;
 // }
 
-// .related-investments-icon {
-//     .images {
-//         background-color: $primary-color;
-//         border-radius: 20px;
-//         border-width: 0;
-//     }
+.related-investments-icon {
+  .images {
+    background-color: $primary-color;
+    border-radius: 20px;
+    border-width: 0;
+  }
 
-//     .ui.images {
-//         margin: 0;
-//     }
+  .ui.images {
+    margin: 0;
+  }
 
-//     .ui.images img {
-//         margin: 0;
-//     }
-// }
+  .ui.images img {
+    margin: 0;
+  }
+}
 
 // .noUi-handle {
 //     background-color: teal;

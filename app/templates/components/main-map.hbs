@@ -1,4 +1,3 @@
-{{log currentCity.latitude currentCity.longitude}}
 {{#if model}}
   {{#if (and currentCity.latitude currentCity.longitude currentCity.zoom)}}
     {{#leaflet-map  onMove    = (action 'updateNewPoint'  ) 
@@ -26,7 +25,11 @@
       {{#if currentCity.showPlaces}}
         {{#each currentCity.visibleFeatures as |feature|}}
           {{#if (and feature.latitude feature.id)}}
-            {{related-investments-icon feature=feature linkTo=(transition-to 'cities.city.places' feature.id)}}
+            {{related-investments-icon 
+              feature=feature 
+              showInvestments=currentCity.showInvestments
+              linkTo=(transition-to 'cities.city.places' feature.id)
+            }}
           {{/if}}
         {{/each}}
       {{/if}}

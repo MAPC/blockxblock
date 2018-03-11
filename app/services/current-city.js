@@ -61,7 +61,7 @@ export default Ember.Service.extend({
   UFVacancyStatusesArray: computed('UFVacancyStatuses', arrayify('UFVacancyStatuses', '|')),
   UFVacancyStatusesOptions: UFVACANCY_STATUSES,
 
-  showInvestments: false,
+  showInvestments: true,
   showPlaces: true,
   showParcels: false,
 

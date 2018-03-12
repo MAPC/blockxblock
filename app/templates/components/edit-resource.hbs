@@ -10,3 +10,4 @@
   {{yield (hash form=f assetTypes=assetTypes investmentTypes=investmentTypes)}}
 {{/form-for}}
 {{select-association chosenChildren=model.investments modelName='investment'}}
+{{select-association chosenChildren=model.features modelName='feature'}}

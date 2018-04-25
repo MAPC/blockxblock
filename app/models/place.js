@@ -6,7 +6,7 @@ const { alias } = Ember.computed;
 
 export default DS.Model.extend({
   // new attributes
-  // place_id: DS.attr('string'), // this is throwing ember off 
+  // place_id: DS.attr('string'), // this is throwing ember off
   name: DS.attr('string'),
   latitude: DS.attr('number'),
   longitude: DS.attr('number'),
@@ -54,7 +54,8 @@ export default DS.Model.extend({
 
   // computeds
   is_employer: Ember.computed('employment', function() {
-    return !!this.get('employment.firstObject');
+    console.log("DSDSCEFEDFEWF",this.get('employment.firstObject'));
+    return this.get('employment.firstObject.value');
   }),
   is_activating: Ember.computed('employment', function() {
     return this.get('activating.firstObject.value') == 'true';
@@ -62,6 +63,21 @@ export default DS.Model.extend({
   is_community_hub: Ember.computed('community_hub', function() {
     return this.get('community_hub.firstObject.value') == 'true';
   }),
+  open_on: Ember.computed('status', function() {
+    if (this.get('status.firstObject.value') == 'Open'){
+      return this.get('status.firstObject.date');
+    } else if (this.get('status.secondObject.value') == 'Open'){
+      return this.get('status.secondObject.date');
+    }
+  }),
+  close_on: Ember.computed('status', function() {
+    if (this.get('status.firstObject.value') == 'Closed'){
+      return this.get('status.firstObject.date');
+    } else if (this.get('status.secondObject.value') == 'Closed'){
+      return this.get('status.secondObject.date');
+    }
+  }),
+  // this.get('city.latitude')
   iconUrl: Ember.computed('feature_type', function() {
     let featureType = this.get('feature_type').dasherize().replace('/', '');
     return `${config.prepend ? config.prepend : '/'}images/icons/features/${featureType}.png`;

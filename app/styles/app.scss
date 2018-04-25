@@ -251,6 +251,15 @@ h1.splash.header .content{
     font-size: 1.429em;
 }
 
+.place-detail {
+  text-transform: uppercase;
+  bottom: 0px;
+}
+
+.seg {
+  padding-bottom: 0px !important;
+}
+
 // resources / places show
 .resource-nav-menu {
     position: absolute;
@@ -399,11 +408,11 @@ h1.splash.header .content{
 //     .liquid-container {
 //         padding: 0 !important;
 //     }
-//   padding: 2em !important; 
+//   padding: 2em !important;
 // }
 
 // .city-details .container {
-//   padding: 2em !important; 
+//   padding: 2em !important;
 //   margin: 2em;
 // }
 
@@ -451,7 +460,7 @@ h1.splash.header .content{
   height: 100%;
   width: 6px;
   display: inline-block;
-  
+
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
@@ -477,15 +486,15 @@ h1.splash.header .content{
 }
 
 @-webkit-keyframes sk-stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
   20% { -webkit-transform: scaleY(1.0) }
 }
 
 @keyframes sk-stretchdelay {
-  0%, 40%, 100% { 
+  0%, 40%, 100% {
     transform: scaleY(0.4);
     -webkit-transform: scaleY(0.4);
-  }  20% { 
+  }  20% {
     transform: scaleY(1.0);
     -webkit-transform: scaleY(1.0);
   }

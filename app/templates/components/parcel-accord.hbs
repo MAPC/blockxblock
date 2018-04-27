@@ -6,6 +6,7 @@
 
         <h3>Attributes <i class="dropdown icon"></i></h3>
       </div>
+
       <div class="active content">
         <div class="ui vertical segment">
           {{#if streetAddress}}
@@ -21,7 +22,47 @@
 
             </div>
             {{/if}}
+            {{#if useType}}
+            <div class="ui text vertical segment seg">
+              <p><strong>Use Type</strong></p>
+              <span class="place-detail">{{useType}}</span>
+
+            </div>
+            {{/if}}
+
+
+            {{#if yearBuilt}}
+            <div class="ui text vertical segment seg">
+              <p><strong>Year Built</strong></p>
+              <span class="place-detail">{{yearBuilt}}</span>
+
+            </div>
+            {{/if}}
+
+
+
+            {{#if gFloorVacancy}}
+            <div class="ui text vertical segment seg">
+              <p><strong>Ground Floor/Vacancy Status</strong></p>
+              <span class="place-detail">{{gFloorVacancy}}</span>
+
+            </div>
+            {{/if}}
+
+
+
+            {{#if assessedValue}}
+            <div class="ui text vertical segment seg">
+              <p><strong>Assessed Value</strong></p>
+              <span class="place-detail">{{assessedValue}}</span>
+
+            </div>
+            {{/if}}
         </div>
       </div>
+
+
+
+
     </div>
 </div>

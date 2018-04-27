@@ -65,6 +65,11 @@ export default DS.Model.extend({
     let { estimated_amount, exact_amount } = this.getProperties('estimated_amount','exact_amount')
   }),
 
+  useType: Ember.computed('use_type',function(){
+    let use_type = this.get('use_type');
+    return use_type;
+  }),
+
   // aliases
   investment_type: alias('use_type'),
   relatedInvestments: alias('related_investments'),

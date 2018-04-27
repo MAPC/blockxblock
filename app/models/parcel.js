@@ -53,6 +53,18 @@ export default DS.Model.extend({
   is_engaged_owner: alias('engaged_owner'),
 
   // computeds
+  assessed_value_d: Ember.computed('assessed_value', function(){
+    let assessed_value_d = this.get('assessed_value.firstObject.value');
+    return assessed_value_d;
+
+
+  }),
+  ground_floor_vacancy: Ember.computed('ground_floor_vacancy_status', function(){
+    let ground_floor_vacancy_status = this.get('ground_floor_vacancy_status.firstObject.value');
+    return ground_floor_vacancy_status;
+
+
+  }),
   splash: Ember.computed('latitude,longitude', function() {
     let { latitude, longitude } = this.getProperties('latitude','longitude');
     return `https://maps.googleapis.com/maps/api/streetview?size=450x300&location=${latitude},${longitude}&key=AIzaSyCO654zBIabvjSOV4Ys59Pku8pmzM387ps`;
@@ -91,42 +103,42 @@ export const PARCEL_PARAMS = ['landuseTypes','GFVacancyStatuses','UFVacancyStatu
 
 // dsl for filters
 export const PARCEL_FILTERS_CONFIG = [
-  { 
+  {
     property: 'land_use',
     filter: 'landuseTypesArray',
     filterType: 'isAny'
   },
-  // { 
+  // {
   //   property: 'latest_ground_floor_vacancy',
   //   filter: 'GFVacancyStatusesArray',
   //   filterType: 'isAny'
   // },
-  // { 
+  // {
   //   property: 'latest_upper_floor_vacancy',
   //   filter: 'UFVacancyStatusesArray',
   //   filterType: 'isAny'
   // },
-  // { 
+  // {
   //   property: 'ownership_type',
   //   filter: 'OwnershipTypesArray',
   //   filterType: 'isAny'
   // },
-  { 
+  {
     property: 'property_for_sale_latest',
     filter: 'forSale',
     filterType: 'isTrue'
   },
-  // { 
+  // {
   //   property: 'latest_is_engaged_owner',
   //   filter: 'isEngagedOwner',
   //   filterType: 'isTrue'
   // },
-  { 
+  {
     property: 'property_for_lease_latest',
     filter: 'forLease',
     filterType: 'isTrue'
   },
-  // { 
+  // {
   //   property: 'yearBuilt',
   //   filter: ['yearBuiltMin', 'yearBuiltMax'],
   //   filterType: 'isWithin'
@@ -174,14 +186,14 @@ export const PARCEL_MAP_CONFIG = [
   },
 ];
 
-export const PARCEL_OWNERSHIP_TYPES = 
+export const PARCEL_OWNERSHIP_TYPES =
   PARCEL_MAP_CONFIG.findBy('setName', 'Ownership Type');
 
-export const PARCEL_TYPES = 
+export const PARCEL_TYPES =
   PARCEL_MAP_CONFIG.findBy('setName', 'Land Use');
 
-export const GFVACANCY_STATUSES = 
+export const GFVACANCY_STATUSES =
   PARCEL_MAP_CONFIG.findBy('setName', 'Ground Floor Vacancy');
 
-export const UFVACANCY_STATUSES = 
+export const UFVACANCY_STATUSES =
   PARCEL_MAP_CONFIG.findBy('setName', 'Upper Level Vacancy');

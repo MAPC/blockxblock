@@ -54,7 +54,7 @@ export default DS.Model.extend({
 
   // computeds
   is_employer: Ember.computed('employment', function() {
-    console.log("DSDSCEFEDFEWF",this.get('employment.firstObject'));
+    // console.log("DSDSCEFEDFEWF",this.get('employment.firstObject'));
     return this.get('employment.firstObject.value');
   }),
   is_activating: Ember.computed('activating', function() {
@@ -116,6 +116,19 @@ export default DS.Model.extend({
   iconWatermarkUrl: Ember.computed('feature_type', function() {
     let featureType = this.get('feature_type').dasherize().replace('/', '');
     return `${config.prepend ? config.prepend : '/'}images/icons/features/filters/${featureType}.png`;
+  }),
+  investmentAmount: Ember.computed('investments.[]', function(){
+    let investments_rel = this.get('investments').mapBy('estimated_amount');
+    let amount_t = 0;
+    investments_rel.forEach(function(ea){
+      if (ea){
+        amount_t = amount_t + ea
+      }
+
+
+    })
+    console.log("SDSDFSDFSSFDSCSDCSDD", investments_rel,amount_t)
+    return amount_t;
   }),
   splash: Ember.computed('latitude,longitude', function() {
     let { latitude, longitude } = this.getProperties('latitude', 'longitude');

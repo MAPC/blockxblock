@@ -61,6 +61,10 @@ export default DS.Model.extend({
     return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.dasherize()}.png`;
   }),
 
+  investmentAmountEst: Ember.computed('estimated_amount','exact_amount',function(){
+    let { estimated_amount, exact_amount } = this.getProperties('estimated_amount','exact_amount')
+  }),
+
   // aliases
   investment_type: alias('use_type'),
   relatedInvestments: alias('related_investments'),
@@ -81,28 +85,28 @@ export const INVESTMENT_STATUSES = ['Proposed', 'In Progress', 'Completed'];
 export const INVESTMENT_SOURCES = ['MassDevelopment', 'Public', 'Private', 'TDI'];
 
 // filtering DSL
-export const INVESTMENT_FILTERS_CONFIG = 
+export const INVESTMENT_FILTERS_CONFIG =
 [
   {
     property: 'investment_type',
     filter: 'investmentTypesArray',
     filterType: 'isAny'
-  }, 
+  },
   {
     property: 'investment_status_latest',
     filter: 'investmentStatusesArray',
     filterType: 'isAny'
-  }, 
+  },
   {
     property: 'source_type',
     filter: 'investmentSourcesArray',
     filterType: 'isAny'
-  }, 
+  },
   {
     property: 'estimated_amount',
     filter: ['valueMin', 'valueMax'],
     filterType: 'isWithin'
-  }, 
+  },
   {
     property: 'tdi_influence',
     filter: 'tdi_influence',

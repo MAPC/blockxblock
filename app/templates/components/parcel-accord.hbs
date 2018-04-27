@@ -1,0 +1,27 @@
+
+<div class="ui vertical segment">
+
+  <div class="ui accordion">
+      <div class="active title">
+
+        <h3>Attributes <i class="dropdown icon"></i></h3>
+      </div>
+      <div class="active content">
+        <div class="ui vertical segment">
+          {{#if streetAddress}}
+            <div class="ui text vertical segment seg">
+              <p><strong>Address</strong></p>
+              <span class="place-detail">{{streetAddress}}</span>
+            </div>
+            {{/if}}
+            {{#if landUse}}
+            <div class="ui text vertical segment seg">
+              <p><strong>Land Use</strong></p>
+              <span class="place-detail">{{landUse}}</span>
+
+            </div>
+            {{/if}}
+        </div>
+      </div>
+    </div>
+</div>

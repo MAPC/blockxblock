@@ -1,3 +1,4 @@
+<div class="place-view">
 <div class="ui basic segment">
   <h2 class="ui header">
     <img class="ui circular image" style="min-height: 60px;" src={{model.splash}}/>
@@ -44,6 +45,18 @@
                  close_on             = model.close_on
                  amountInvestments    = totalInvestments
                  is_employer          = model.is_employer
+                 isActivating         = model.is_activating
+                 isContributing       = model.is_tdiasset
+                 isEngaged            = model.is_engaged
+                 engagedFrom          = model.engaged_from
+                 moreInfoLinkUrl   = model.more_info_link_url
+                 moreInfoLinkDesc = model.more_info_link_desc
+                 contactName      = model.owner_name
+                 contactTitle     = model.owner_title
+                 notes           = model.notes
+                 ownerPhone      = model.owner_phone
+                 ownerEmail      = model.owner_email
+                 relDocument     = model.file_upload
                  model                 = model}}
 
   <h3>Related</h3>
@@ -58,4 +71,5 @@
     session=session
     routeSegment='edit-feature'
     model=model}}
+</div>
 </div>

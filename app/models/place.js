@@ -57,11 +57,42 @@ export default DS.Model.extend({
     console.log("DSDSCEFEDFEWF",this.get('employment.firstObject'));
     return this.get('employment.firstObject.value');
   }),
-  is_activating: Ember.computed('employment', function() {
-    return this.get('activating.firstObject.value') == 'true';
+  is_activating: Ember.computed('activating', function() {
+    if (this.get('activating.firstObject.value') == true){
+      return 'Yes';
+    } else {
+      return 'No';
+    }
+  }),
+  is_tdiasset: Ember.computed('tdi_asset', function() {
+    if (this.get('tdi_asset.firstObject.value') == true){
+      return 'Yes';
+    } else {
+      return 'No';
+    }
+  }),
+  is_engaged: Ember.computed('engaged_owner', function() {
+    if (this.get('engaged_owner.firstObject.value') == true){
+      return 'Yes';
+    } else {
+      return 'No';
+    }
+  }),
+  engaged_from: Ember.computed('engaged_owner', function() {
+    if (this.get('engaged_owner.firstObject.value') == true){
+      return this.get('engaged_owner.firstObject.date');
+    } else {
+      return '';
+    }
+  }),
+  more_info_link_url: Ember.computed('link_url', function() {
+    return this.get('link_url');
+  }),
+  more_info_link_desc: Ember.computed('link_description', function() {
+    return this.get('link_description');
   }),
   is_community_hub: Ember.computed('community_hub', function() {
-    return this.get('community_hub.firstObject.value') == 'true';
+    return this.get('community_hub.firstObject.value') == true;
   }),
   open_on: Ember.computed('status', function() {
     if (this.get('status.firstObject.value') == 'Open'){

@@ -9,7 +9,17 @@
     </div>
   </h2>
   {{investment-accord sourceType       = model.source_type
-                      investmentType = model.investment_type}}
+                      investmentType = model.investment_type
+                      estAmount = model.estimated_amount
+                      investmentStatus = model.investment_status_val
+                      exacAmount = model.exact_amount
+                      contactType = model.contact_type
+                      contactName = model.inv_contact_name
+                      contactRole = model.inv_contact_role
+                      contactOrg = model.inv_contact_org
+                      projectName = model.project_name
+
+                    }}
   <!-- <p>exact amount</p> -->
 
   <!-- {{get model 'exact_amount'}} -->

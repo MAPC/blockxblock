@@ -8,15 +8,58 @@
       </div>
       <div class="active content">
         <div class="ui vertical segment">
-            <div class="ui text vertical segment seg">
-              <p><strong>Source Type</strong></p>
-              <span class="place-detail">{{sourceType}}</span>
-            </div>
-            <div class="ui text vertical segment seg">
-              <p><strong>Investment Descriptor</strong></p>
-              <span class="place-detail">{{investmentType}}</span>
 
-            </div>
+          {{#if sourceType}}
+            {{accord-item itemVal=sourceType
+                          itemText='Source Type'}}
+          {{/if}}
+          {{#if investmentType}}
+            {{accord-item itemVal=investmentType
+                          itemText='Investment Type'}}
+          {{/if}}
+
+          {{#if estAmount}}
+            {{accord-item itemVal=estAmount
+                          itemText='Estimated Amount'}}
+          {{/if}}
+
+          {{#if exacAmount}}
+            {{accord-item itemVal=exacAmount
+                          itemText='Exact Amount'}}
+          {{/if}}
+
+          {{#if investmentStatus}}
+            {{accord-item itemVal=investmentStatus
+                          itemText='Status'}}
+          {{/if}}
+
+
+
+          {{#if projectName}}
+            {{accord-item itemVal=projectName
+                          itemText='Project Name'}}
+          {{/if}}
+
+          {{#if contactType}}
+            {{accord-item itemVal=contactType
+                          itemText='Contact Type'}}
+          {{/if}}
+
+          {{#if contactName}}
+            {{accord-item itemVal=contactName
+                          itemText='Contact Name'}}
+          {{/if}}
+
+          {{#if contactRole}}
+            {{accord-item itemVal=contactRole
+                          itemText='Contact Role'}}
+          {{/if}}
+          {{#if contactOrg}}
+            {{accord-item itemVal=contactOrg
+                          itemText='Contact Organization'}}
+          {{/if}}
+
+
         </div>
       </div>
     </div>

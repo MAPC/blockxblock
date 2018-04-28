@@ -10,53 +10,39 @@
       <div class="active content">
         <div class="ui vertical segment">
           {{#if streetAddress}}
-            <div class="ui text vertical segment seg">
-              <p><strong>Address</strong></p>
-              <span class="place-detail">{{streetAddress}}</span>
-            </div>
-            {{/if}}
-            {{#if landUse}}
-            <div class="ui text vertical segment seg">
-              <p><strong>Land Use</strong></p>
-              <span class="place-detail">{{landUse}}</span>
+            {{accord-item itemVal=streetAddress
+                          itemText='Address'}}
+          {{/if}}
+          {{#if landUse}}
+            {{accord-item itemVal=landUse
+                           itemText='Land Use'}}
+          {{/if}}
+          {{#if useType}}
+            {{accord-item itemVal=useType
+                          itemText='Use Type'}}
+          {{/if}}
+          {{#if yearBuilt}}
+            {{accord-item itemVal=yearBuilt
+              itemText='Year Built'}}
 
-            </div>
-            {{/if}}
-            {{#if useType}}
-            <div class="ui text vertical segment seg">
-              <p><strong>Use Type</strong></p>
-              <span class="place-detail">{{useType}}</span>
-
-            </div>
-            {{/if}}
-
-
-            {{#if yearBuilt}}
-            <div class="ui text vertical segment seg">
-              <p><strong>Year Built</strong></p>
-              <span class="place-detail">{{yearBuilt}}</span>
-
-            </div>
-            {{/if}}
+          {{/if}}
 
 
 
             {{#if gFloorVacancy}}
-            <div class="ui text vertical segment seg">
-              <p><strong>Ground Floor/Vacancy Status</strong></p>
-              <span class="place-detail">{{gFloorVacancy}}</span>
+              {{accord-item itemVal=gFloorVacancy
+                itemText='Ground Floor/Vacancy Status'}}
 
-            </div>
+
             {{/if}}
 
 
 
             {{#if assessedValue}}
-            <div class="ui text vertical segment seg">
-              <p><strong>Assessed Value</strong></p>
-              <span class="place-detail">{{assessedValue}}</span>
+              {{accord-item itemVal=assessedValue
+                itemText='Assessed Value'}}
 
-            </div>
+
             {{/if}}
         </div>
       </div>

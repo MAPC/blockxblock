@@ -61,6 +61,12 @@ export default DS.Model.extend({
     return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${investment_type.dasherize()}.png`;
   }),
 
+  investment_status_val: Ember.computed('investment_status',function(){
+    let investmet_stat_v = this.get('investment_status.firstObject.value');
+    return investmet_stat_v;
+
+  }),
+
   investmentAmountEst: Ember.computed('estimated_amount','exact_amount',function(){
     let { estimated_amount, exact_amount } = this.getProperties('estimated_amount','exact_amount')
   }),

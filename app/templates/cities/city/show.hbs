@@ -33,12 +33,12 @@
         <div class="ui basic segment">
           <h4 class="ui header">Place Status</h4>
           <div class="ui filter-label-group labels">
-            <a class="ui {{if currentCity.is_employer 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.is_employer) (not currentCity.is_employer)}}>Employer</a> 
-             <a class="ui {{if currentCity.activating 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.activating) (not currentCity.activating)}}>Street Activating</a> 
-            <a class="ui {{if currentCity.community_hub 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.community_hub) (not currentCity.community_hub)}}>Community Hub</a> 
+            <a class="ui {{if currentCity.is_employer 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.is_employer) (not currentCity.is_employer)}}>Employer</a>
+             <a class="ui {{if currentCity.activating 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.activating) (not currentCity.activating)}}>Street Activating</a>
+            <a class="ui {{if currentCity.community_hub 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.community_hub) (not currentCity.community_hub)}}>Community Hub</a>
             {{#if session.isAuthenticated}}
-              <a class="ui {{if currentCity.tdi_asset 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.tdi_asset) (not currentCity.tdi_asset)}}>TDI Asset</a> 
-              <a class="ui {{if currentCity.engaged_owner 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.engaged_owner) (not engaged_owner)}}>Owner Engaged</a> 
+              <a class="ui {{if currentCity.tdi_asset 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.tdi_asset) (not currentCity.tdi_asset)}}>TDI Asset</a>
+              <a class="ui {{if currentCity.engaged_owner 'inverted tdi-blue' 'filters-label'}} even-spaced label" onclick={{action (mut currentCity.engaged_owner) (not engaged_owner)}}>Owner Engaged</a>
             {{/if}}
           </div>
         </div>
@@ -51,11 +51,11 @@
               <div class="column">
                 {{#each group as |option|}}
                   <div class="ui vertical list">
-                    {{#ui-checkbox 
+                    {{#ui-checkbox
                       class="item"
                       checked=(array-contains currentCity.assetTypesArray option)
                       onChange=(action 'composeList' option 'currentCity.assetTypes')}}
-                      <img src="images/icons/features/filters/{{dasherize option}}.png" class="ui avatar image" /> 
+                      <img src="/images/icons/features/filters/{{dasherize option}}.png" class="ui avatar image" />
                       <span>{{option}}</span>
                     {{/ui-checkbox}}
                   </div>
@@ -83,11 +83,11 @@
               {{#each (chunk 2 currentCity.investmentTypeOptions) as |group|}}
                 <div class="column">
                   {{#each group as |option|}}
-                    {{#ui-checkbox 
+                    {{#ui-checkbox
                       class="item"
                       checked=(array-contains currentCity.investmentTypesArray option)
                       onChange=(action 'composeList' option 'currentCity.investmentTypes')}}
-                      <img src="images/icons/investments/{{dasherize option}}.png" /> 
+                      <img src="/images/icons/investments/{{dasherize option}}.png" />
                       {{option}}
                     {{/ui-checkbox}}
                   {{/each}}
@@ -95,8 +95,8 @@
               {{/each}}
             </div>
             {{#if session.isAuthenticated}}
-              {{ui-checkbox 
-                label='TDI Influenced' 
+              {{ui-checkbox
+                label='TDI Influenced'
                 class="item"
                 checked=currentCity.is_tdi_influenced
                 onChange=(action (mut currentCity.is_tdi_influenced (not currentCity.is_tdi_influenced)))}}
@@ -107,8 +107,8 @@
           </h4>
           <div class="ui horizontal list">
             {{#each currentCity.investmentStatusesOptions as |option|}}
-              {{ui-checkbox 
-                label=option 
+              {{ui-checkbox
+                label=option
                 class="item"
                 checked=(array-contains currentCity.investmentStatusesArray option)
                 onChange=(action 'composeList' option 'currentCity.investmentStatuses')}}
@@ -119,11 +119,11 @@
           </h4>
           <div class="ui horizontal list">
             {{#each currentCity.investmentSourcesOptions as |option|}}
-              {{#ui-checkbox 
+              {{#ui-checkbox
                 class="item"
                 checked=(array-contains currentCity.investmentSourcesArray option)
                 onChange=(action 'composeList' option 'currentCity.investmentSources')}}
-                <img src="images/icons/investments/badge/{{lowercase option}}.png" /> 
+                <img src="/images/icons/investments/badge/{{lowercase option}}.png" />
                 {{option}}
               {{/ui-checkbox}}
             {{/each}}
@@ -158,7 +158,7 @@
               {{#each currentCity.parcelChoroplethSets as |colorSet|}}
                 <a class="ui {{if (eq colorSet currentCity.choroplethLayer) 'inverted tdi-blue' 'filters-label'}} even-spaced label" {{action 'changeProperty' 'currentCity.choroplethLayer' colorSet}}>
                   {{colorSet}}
-                </a> 
+                </a>
               {{/each}}
             </div>
           </div>
@@ -185,7 +185,7 @@
             </h4>
             <div class="ui vertical list">
               {{#each currentCity.landuseTypeOptions as |option|}}
-                {{ui-checkbox 
+                {{ui-checkbox
                   label=option
                   class="item"
                   checked=(array-contains currentCity.landuseTypesArray option)
@@ -212,7 +212,7 @@
             </h4>
             <div class="ui vertical list">
               {{#each OwnershipTypesOptions as |option|}}
-                {{ui-checkbox 
+                {{ui-checkbox
                   label=option
                   class="item"
                   checked=(array-contains OwnershipTypesArray option)
@@ -224,7 +224,7 @@
             </h4>
             <div class="ui vertical list">
               {{#each GFVacancyStatusesOptions as |option|}}
-                {{ui-checkbox 
+                {{ui-checkbox
                   label=option
                   class="item"
                   checked=(array-contains GFVacancyStatusesArray option)
@@ -236,7 +236,7 @@
             </h4>
             <div class="ui vertical list">
               {{#each UFVacancyStatusesOptions as |option|}}
-                {{ui-checkbox 
+                {{ui-checkbox
                   label=option
                   class="item"
                   checked=(array-contains UFVacancyStatusesArray option)
@@ -250,11 +250,11 @@
   {{/ui-accordion}}
 
   {{!-- RESULTS --}}
-  {{tabbed-results  visibleFeatures     = currentCity.visibleFeatures 
+  {{tabbed-results  visibleFeatures     = currentCity.visibleFeatures
                     showPlaces          = currentCity.showPlaces
                     visibleInvestments  = currentCity.visibleInvestments
-                    showInvestments     = currentCity.showInvestments 
-                    maxInvestments      = currentCity.maxInvestments   
+                    showInvestments     = currentCity.showInvestments
+                    maxInvestments      = currentCity.maxInvestments
                     visibleParcels      = currentCity.visibleParcels
                     showParcels         = currentCity.showParcels}}
 </div>

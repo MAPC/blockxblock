@@ -1,0 +1,54 @@
+
+<div class="ui vertical segment">
+
+  <div class="ui accordion">
+      <div class="active title">
+
+        <h3>Attributes <i class="dropdown icon"></i></h3>
+      </div>
+
+      <div class="active content">
+        <div class="ui vertical segment">
+          {{#if streetAddress}}
+            {{accord-item itemVal=streetAddress
+                          itemText='Address'}}
+          {{/if}}
+          {{#if landUse}}
+            {{accord-item itemVal=landUse
+                           itemText='Land Use'}}
+          {{/if}}
+          {{#if useType}}
+            {{accord-item itemVal=useType
+                          itemText='Use Type'}}
+          {{/if}}
+          {{#if yearBuilt}}
+            {{accord-item itemVal=yearBuilt
+              itemText='Year Built'}}
+
+          {{/if}}
+
+
+
+            {{#if gFloorVacancy}}
+              {{accord-item itemVal=gFloorVacancy
+                itemText='Ground Floor/Vacancy Status'}}
+
+
+            {{/if}}
+
+
+
+            {{#if assessedValue}}
+              {{accord-item itemVal=assessedValue
+                itemText='Assessed Value'}}
+
+
+            {{/if}}
+        </div>
+      </div>
+
+
+
+
+    </div>
+</div>

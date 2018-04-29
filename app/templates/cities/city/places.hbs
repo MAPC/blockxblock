@@ -1,3 +1,4 @@
+<div class="place-view">
 <div class="ui basic segment">
   <h2 class="ui header">
     <img class="ui circular image" style="min-height: 60px;" src={{model.splash}}/>
@@ -7,9 +8,9 @@
     </div>
   </h2>
 
-  <div class="ui green segment">
+  <div class="ui vertical segment">
     <strong>
-      Want to learn more about {{if model.feature_name model.feature_name 'this place'}}? 
+      Want to learn more about {{if model.feature_name model.feature_name 'this place'}}?
     </strong>
     {{#if model.cta_contact}}
       Contact {{model.cta_contact}}.
@@ -21,19 +22,54 @@
     </p>
   </div>
 
-  {{enumerate-properties 
+  <!-- {{enumerate-properties
     model=model
     properties=(array 'address'  'non_addressy_location'  'feature_type'  'feature_subtype'  'is_employer'  'is_street_activating'   'featured_photo'  'pub_docs'  'priv_docs'  'related_link_title'  'related_link_url'  'related_features'  'related_investments'  'relation_notes'  'pub_notes'  'cta_text'  'cta_contact'  'pub_contact_1'  'pub_contact_org_1'  'pub_contact_role_1'  'pub_contact_phone_1'  'pub_contact_email_1'  'pub_contact_website_1'  'pub_contact_2'  'pub_contact_org_2'  'pub_contact_role_2'  'pub_contact_phone_2'  'pub_contact_email_2'  'pub_contact_website_2'  'is_collision_point' 'open_or_closed')}}
 
+      <div class="sub header">{{model.feature_type}}</div> -->
+<div class="ui vertical segment">
+  <h3>Feature Name</h3>
+
+  <div class="content">
+    {{model.feature_name}}</div>
+</div>
+
+  {{place-accord streetAddress       = model.address
+                 nonAddressyLocation = model.non_addressy_location
+                 investmentsRel   = model.investmentAmount
+                 featureStart        = model.tdi_asset_start
+                 featureType         = model.type
+                 featureSubType      = model.subtype
+                 status              = model.status
+                 open_on             = model.open_on
+                 close_on             = model.close_on
+                 amountInvestments    = totalInvestments
+                 is_employer          = model.is_employer
+                 isActivating         = model.is_activating
+                 isContributing       = model.is_tdiasset
+                 isEngaged            = model.is_engaged
+                 engagedFrom          = model.engaged_from
+                 moreInfoLinkUrl   = model.more_info_link_url
+                 moreInfoLinkDesc = model.more_info_link_desc
+                 contactName      = model.owner_name
+                 contactTitle     = model.owner_title
+                 notes           = model.notes
+                 ownerPhone      = model.owner_phone
+                 ownerEmail      = model.owner_email
+                 relDocument     = model.file_upload
+                 model                 = model}}
+
   <h3>Related</h3>
+
   {{tabbed-results  visibleInvestments  = model.investments
-                    showInvestments     = true   
+                    showInvestments     = true
                     visibleFeatures     = model.relatedFeatures
                     showFeatures        = true          }}
 
 
-  {{resource-nav-menu 
-    session=session 
+  {{resource-nav-menu
+    session=session
     routeSegment='edit-feature'
     model=model}}
+</div>
 </div>

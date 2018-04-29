@@ -10,6 +10,7 @@ export default Ember.Controller.extend({
   currentCity: service(),
   searchables: Ember.computed('currentCity.city', 'currentCity.city.places.[]', 'currentCity.city.investments.[]', function() {
     let places = this.get('currentCity.places');
+    console.log(places)
     let investments = this.get('currentCity.investments');
     let structured = [];
 
@@ -68,4 +69,3 @@ export default Ember.Controller.extend({
     { to: (num) => number_format(num, 0) }
   ]
 });
-

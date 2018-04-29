@@ -6,7 +6,7 @@ const { alias } = Ember.computed;
 
 export default DS.Model.extend({
   // new attributes
-  // place_id: DS.attr('string'), // this is throwing ember off 
+  // place_id: DS.attr('string'), // this is throwing ember off
   name: DS.attr('string'),
   latitude: DS.attr('number'),
   longitude: DS.attr('number'),
@@ -54,14 +54,61 @@ export default DS.Model.extend({
 
   // computeds
   is_employer: Ember.computed('employment', function() {
-    return !!this.get('employment.firstObject');
+    // console.log("DSDSCEFEDFEWF",this.get('employment.firstObject'));
+    return this.get('employment.firstObject.value');
   }),
-  is_activating: Ember.computed('employment', function() {
-    return this.get('activating.firstObject.value') == 'true';
+  is_activating: Ember.computed('activating', function() {
+    if (this.get('activating.firstObject.value') == true){
+      return 'Yes';
+    } else {
+      return 'No';
+    }
+  }),
+  is_tdiasset: Ember.computed('tdi_asset', function() {
+    if (this.get('tdi_asset.firstObject.value') == true){
+      return 'Yes';
+    } else {
+      return 'No';
+    }
+  }),
+  is_engaged: Ember.computed('engaged_owner', function() {
+    if (this.get('engaged_owner.firstObject.value') == true){
+      return 'Yes';
+    } else {
+      return 'No';
+    }
+  }),
+  engaged_from: Ember.computed('engaged_owner', function() {
+    if (this.get('engaged_owner.firstObject.value') == true){
+      return this.get('engaged_owner.firstObject.date');
+    } else {
+      return '';
+    }
+  }),
+  more_info_link_url: Ember.computed('link_url', function() {
+    return this.get('link_url');
+  }),
+  more_info_link_desc: Ember.computed('link_description', function() {
+    return this.get('link_description');
   }),
   is_community_hub: Ember.computed('community_hub', function() {
-    return this.get('community_hub.firstObject.value') == 'true';
+    return this.get('community_hub.firstObject.value') == true;
   }),
+  open_on: Ember.computed('status', function() {
+    if (this.get('status.firstObject.value') == 'Open'){
+      return this.get('status.firstObject.date');
+    } else if (this.get('status.secondObject.value') == 'Open'){
+      return this.get('status.secondObject.date');
+    }
+  }),
+  close_on: Ember.computed('status', function() {
+    if (this.get('status.firstObject.value') == 'Closed'){
+      return this.get('status.firstObject.date');
+    } else if (this.get('status.secondObject.value') == 'Closed'){
+      return this.get('status.secondObject.date');
+    }
+  }),
+  // this.get('city.latitude')
   iconUrl: Ember.computed('feature_type', function() {
     let featureType = this.get('feature_type').dasherize().replace('/', '');
     return `${config.prepend ? config.prepend : '/'}images/icons/features/${featureType}.png`;
@@ -69,6 +116,19 @@ export default DS.Model.extend({
   iconWatermarkUrl: Ember.computed('feature_type', function() {
     let featureType = this.get('feature_type').dasherize().replace('/', '');
     return `${config.prepend ? config.prepend : '/'}images/icons/features/filters/${featureType}.png`;
+  }),
+  investmentAmount: Ember.computed('investments.[]', function(){
+    let investments_rel = this.get('investments').mapBy('estimated_amount');
+    let amount_t = 0;
+    investments_rel.forEach(function(ea){
+      if (ea){
+        amount_t = amount_t + ea
+      }
+
+
+    })
+    console.log("SDSDFSDFSSFDSCSDCSDD", investments_rel,amount_t)
+    return amount_t;
   }),
   splash: Ember.computed('latitude,longitude', function() {
     let { latitude, longitude } = this.getProperties('latitude', 'longitude');

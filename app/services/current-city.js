@@ -43,8 +43,11 @@ export default Ember.Service.extend({
       });
     });
   },
-
+  setAllInvestments(investments) {
+    this.set('all_investments', investments);
+  },
   city: '',
+  all_investments: null,
 
   parcelChoroplethSets: PARCEL_MAP_CONFIG.mapBy('setName'),
   parcelChoroplethConfig: PARCEL_MAP_CONFIG,
@@ -83,12 +86,12 @@ export default Ember.Service.extend({
   isPlottingPoint: false,
   newPointLatitude: SOUTHWICK_LATITUDE,
   newPointLongitude: SOUTHWICK_LONGITUDE,
-  visibleFeatures: computed(...FEATURE_PARAMS, 'city.places', 
+  visibleFeatures: computed(...FEATURE_PARAMS, 'city.places',
     applyFiltersTo('city.places', FEATURE_FILTERS_CONFIG)),
 
-  visibleInvestments: computed(...INVESTMENT_PARAMS, 'city.investments', 
+  visibleInvestments: computed(...INVESTMENT_PARAMS, 'city.investments',
     applyFiltersTo('city.investments', INVESTMENT_FILTERS_CONFIG)),
 
-  visibleParcels: computed(...PARCEL_PARAMS, 'city.parcels', 
+  visibleParcels: computed(...PARCEL_PARAMS, 'city.parcels',
     applyFiltersTo('city.parcels', PARCEL_FILTERS_CONFIG)),
 });

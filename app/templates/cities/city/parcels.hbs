@@ -1,3 +1,4 @@
+<div class="parcel-view">
 <div class="ui basic segment">
   <div class="parcels">
     <h2 class="ui header">
@@ -7,13 +8,20 @@
         <div class="sub header">{{model.type}}</div>
       </div>
     </h2>
-    {{enumerate-properties 
+    {{parcel-accord streetAddress       = model.street_address
+                    yearBuilt       = model.year_built
+                    gFloorVacancy = model.ground_floor_vacancy
+                    assessedValue = model.assessed_value_d
+                    landUse             = model.land_use
+                    useType             = model.use_type}}
+    <!-- {{enumerate-properties
       model=model
       properties=(array 'name' 'value' 'contact' 'employer' 'activating' 'assetType' 'subtype' 'comment' 'opendate' 'closedate' 'ownership_type' 'is_engaged_owner' 'land_use' 'zoning' 'parcel_id' 'is_for_sale' 'is_for_lease' 'year_built' 'is_vacant_lot' 'vacancy' 'ground_floor_vacancy' 'upper_floor_vacancy' 'own_contact_name' 'own_contact_role' 'own_contact_organization' 'own_contact_phone' 'own_contact_email' 'pub_notes' 'cta_text' 'cta_contact' 'pub_contact_1' 'pub_contact_org_1' 'pub_contact_role_1' 'pub_contact_phone_1' 'pub_contact_email_1' 'pub_contact_website_1' 'pub_contact_2' 'pub_contact_org_2' 'pub_contact_role_2' 'pub_contact_phone_2' 'pub_contact_email_2' 'pub_contact_website_2'
-    )}}
-    {{resource-nav-menu 
-      session=session 
+    )}} -->
+    {{resource-nav-menu
+      session=session
       routeSegment='edit-parcel'
       model=model}}
   </div>
+</div>
 </div>

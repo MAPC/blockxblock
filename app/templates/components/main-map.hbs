@@ -19,7 +19,9 @@
       {{/if}}
 
       {{#each model as |city|}}
-        {{image-layer imageUrl=city.imageOverlay bounds=city.imageOverlayBBox opacity=0.9}}
+        {{#if (and city.imageOverlay city.imageOverlayBBox)}}
+          {{image-layer imageUrl=city.imageOverlay bounds=city.imageOverlayBBox opacity=0.9}}
+        {{/if}}
       {{/each}}
 
       {{#if currentCity.showPlaces}}

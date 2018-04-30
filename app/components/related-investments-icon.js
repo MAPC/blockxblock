@@ -17,7 +17,9 @@ export default Ember.Component.extend({
     const feature = this.get('feature');
     const showInvestments = this.get('showInvestments');
     const icons = feature.get('investments').mapBy('iconUrl').map(icon=> {
-      return `<img src=${icon} />`;
+      let iconName = icon.split('/');
+      iconName = iconName[iconName.length - 1].replace('.png', '');
+      return `<img src=${icon} data-icon="${iconName}"/>`;
     });
 
     return `

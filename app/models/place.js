@@ -111,6 +111,7 @@ export default DS.Model.extend({
   // this.get('city.latitude')
   iconUrl: Ember.computed('feature_type', function() {
     let featureType = this.get('feature_type').dasherize().replace('/', '');
+    console.log(featureType);
     return `${config.prepend ? config.prepend : '/'}images/icons/features/${featureType}.png`;
   }),
   iconWatermarkUrl: Ember.computed('feature_type', function() {

@@ -169,7 +169,7 @@ export default Ember.Component.extend({
 
   actions: {
     update(value) {
-      console.log(new Date(value));
+      // TODO ?
     }
   }
 });

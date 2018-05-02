@@ -1,0 +1,521 @@
+// /* dependencies */
+
+// @import "ember-searchable-select/style";
+// @import "ember-power-select";
+// @import "ember-modal-dialog/ember-modal-structure";
+// @import "ember-modal-dialog/ember-modal-appearance";
+
+* { position: relative; }
+
+@mixin font-face($name) {
+    @font-face {
+        font-family: $name;
+        src: url("../fonts/#{$name}.eot?") format("eot"),
+        url("../fonts/#{$name}.woff") format("woff");
+    }
+}
+
+@include font-face('Dosis-ExtraLight');
+@include font-face('Dosis-Light');
+@include font-face('Dosis-ExtraBold');
+@include font-face('Dosis-Bold');
+@include font-face('Dosis-Medium');
+@include font-face('Dosis-Regular');
+@include font-face('Dosis-SemiBold');
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+em,
+li,
+ul {
+    font-family: 'Dosis-Regular' !important;
+}
+
+// colors
+$primary-color: #0A4650;
+$gray: #E1E1E1;
+$red: #B40028;
+$secondary-color: #00AFAA;
+$tertiary-color: #A0C8BE;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// app structure
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.box .row.header {
+  flex: 0 1 auto;
+  // background-color: purple;
+  /* The above is shorthand for:
+  flex-grow: 0,
+  flex-shrink: 1,
+  flex-basis: auto
+  */
+}
+
+.box .row.content {
+  flex: 1 1 auto;
+  // background-color: pink;
+  display: flex;
+
+  .column-structure {
+    flex: 1;
+  }
+
+  .column-structure.sidebar {
+    flex: 0 0 33.3333%;
+    overflow-y: scroll;
+  }
+}
+
+.box .row.footer {
+  flex: 0 1 40px;
+  // background-color: green;
+}
+
+// map structure
+.ember-application > .ember-view {
+  height: 100%;
+  width: 100%;
+}
+
+.main-map {
+  height: 100%;
+  width: 100%;
+  .leaflet-container {
+      height: 100%;
+  }
+}
+
+.cities-map {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+main {
+  height: 100%;
+}
+
+.map-popup {
+  position: absolute;
+  z-index: 9999;
+  max-width: 180px;
+}
+
+.hidden {
+  display: none;
+  visibility: inherit;
+}
+
+// footer
+.footer-nav {
+  width: 100%;
+  background-color: white;
+  border-top-color: $primary-color;
+  border-top-width: 3px;
+  border-top-style: solid;
+  z-index: 9999;
+  .item {
+      color: $primary-color;
+  }
+  .ui.borderless.menu {
+      border-radius: 0;
+      border-width: 0;
+  }
+}
+
+.basemap-menu {
+    position: absolute;
+    right: 15px;
+    bottom: 60px;
+    z-index: 498;
+}
+
+// semantic-ui overrides
+.ui.grid .column.collapsed { padding: 0; }
+
+// main-nav
+// Semantic UI overrides
+.ui.inverted.main.menu {
+    background: $primary-color;
+}
+
+.ui.menu.main.inverted {
+    border-radius: 0;
+}
+
+// headers
+.ui.header {
+    font-family: 'Dosis-Regular';
+}
+.ui.header.splash {
+    color: $primary-color;
+}
+
+.ui.header.splash.semi-bold {
+    font-family: 'Dosis-ExtraBold';
+}
+.header.item {
+  strong {
+    font-size: 1.1em;
+  }
+}
+
+h1.splash.header .content{
+    font-family: 'Dosis-ExtraBold' !important;
+}
+
+// cards
+.ui.card > .content.splash-inverted {
+  background: $primary-color;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'Dosis-SemiBold';
+}
+
+.card {
+  .image {
+    background-color: $primary-color !important;
+    z-index: 2;
+  }
+}
+
+.fluid.card .card-image {
+  opacity: 0.5;
+  -webkit-transition: opacity .25s ease;
+}
+
+.fluid.card .card-image:hover {
+  opacity: 1;
+}
+
+// index page
+.statewide-view {
+    height: 640px;
+}
+
+// filters
+.ui.label.legend {
+    background-color: inherit;
+}
+
+.ui.label.filters-label {
+    color: $primary-color;
+    border: 2px solid $primary-color;
+    background-color: white;
+}
+
+.ui.label.even-spaced {
+    min-width: 100px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.ui.label.filters-label:hover {
+    border: 2px solid $primary-color;
+    background-color: $primary-color;
+    color: white;
+}
+
+.ui.label.tdi-blue {
+    background: $secondary-color;
+    border: 2px solid $primary-color;
+}
+
+.ui.label.tdi-blue:hover {
+    background-color: $primary-color;
+    border: 2px solid $primary-color;
+}
+
+.ui.tdi-blue.divider:not(.vertical):not(.horizontal) {
+    border-top: 2px solid $primary-color;
+}
+
+.tdi-semi-bold.title {
+    font-family: 'Dosis-SemiBold' !important;
+}
+
+.ui.accordion .title.tdi-semi-bold:not(.ui) {
+    font-size: 1.429em;
+}
+
+.place-detail {
+  text-transform: uppercase;
+  bottom: 0px;
+}
+
+.seg {
+  padding-bottom: 0px !important;
+}
+.parcel-view,.investment-view,.place-view{
+    background: none #A0C8BE;
+    color: #0A4650;
+
+  }
+
+  .parcel-view h3, .investment-view h3, .place-view h3 {
+      background: none #A0C8BE;
+      color: #0A4650;
+
+    }
+
+.column-structure.sideba .parcel-view, .column-structure.sideba .investment-view, .column-structure.sideba .place-view {
+  background: none #A0C8BE;
+  color: #0A4650;
+
+}
+
+
+// resources / places show
+.resource-nav-menu {
+    position: absolute;
+    top: 0px;
+    right: 15px;
+}
+
+// .ember-modal-overlay {
+//     z-index: 500;
+// }
+
+// .choropleth-menu {
+//     position: absolute;
+//     right: 0;
+//     z-index: 9999;
+// }
+
+// .sidebar-tab {
+//     position: absolute;
+//     left: 0px;
+//     z-index: 498;
+//     top: 49%;
+// }
+
+// .hidden-custom {
+//     display: none;
+//     visibility: inherit;
+// }
+
+
+// /* nav */
+
+
+// .hide-sidebar {
+//     display: none;
+// }
+
+
+
+// .regionX {
+//     visibility: hidden;
+// }
+
+
+// .has-pointer {
+//     cursor: pointer;
+// }
+
+
+// /* details */
+
+// .Searchable-select {
+//     min-width: 350px;
+// }
+
+// .detail-full-screen {
+//     background-color: white;
+// }
+
+
+// .c3-event-rect {
+//     cursor: pointer;
+// }
+
+// // .liquid-child { position: relative !important;}
+// .detail-full-height {
+//     z-index: 9999;
+//     height: 100%;
+//     top: 63px;
+//     position: fixed;
+//     width: 100%;
+//     z-index: 5;
+// }
+
+// .ui-visibility-sticky {
+//     // width: 100%;
+//     background-color: white;
+// }
+
+// .Searchable-select__option,
+// .Searchable-select__input {
+//     color: black;
+// }
+
+// .ember-power-select-trigger-multiple-input {
+//     width: 100% !important;
+// }
+
+
+
+// .c3-grid line {
+//     stroke: black;
+//     stroke-width: 2px;
+// }
+
+// .c3-xgrid-line text {
+//     fill: black;
+// }
+
+// .noUi-ltr {
+//     z-index: 1000;
+//     color: black;
+// }
+
+// .noUi-tooltip {
+//     width: 100px;
+// }
+
+// .filter-label-group {
+//     display: flex;
+// }
+
+// .flex-direction-column {
+//     flex-direction: column;
+// }
+
+// .ui.menu {
+//   .text {
+//     font-size: 1.3em;
+//   }
+// }
+
+
+
+.dynamic-cluster {
+  width: 39px;
+  height: 39px;
+  background-image: url('/images/icons/investments/cluster.png');
+  padding-top: 6px;
+  text-align: center;
+  color: white;
+}
+
+// .over-time-chart {
+//     position: fixed;
+//     width:50%;
+//     z-index:499;
+//     bottom:40px;
+// }
+
+// .edit-mode {
+//   background-color: $tertiary-color;
+// }
+
+// .city-details .liquid-container {
+//     .liquid-container {
+//         padding: 0 !important;
+//     }
+//   padding: 2em !important;
+// }
+
+// .city-details .container {
+//   padding: 2em !important;
+//   margin: 2em;
+// }
+
+// .add-data.menu {
+//     background-color: $tertiary-color !important;
+// }
+
+// .ui.menu .ui.dropdown .add-data.menu > .item:hover {
+//     background: rgba(0, 0, 0, 0) !important;
+//     cursor: default;
+// }
+
+.related-investments-icon {
+  .images {
+    background-color: $primary-color;
+    border-radius: 20px;
+    border-width: 0;
+  }
+
+  .ui.images {
+    margin: 0;
+  }
+
+  .ui.images img {
+    margin: 0;
+  }
+}
+
+// .noUi-handle {
+//     background-color: teal;
+// }
+
+// loading
+
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #333;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+}

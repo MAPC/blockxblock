@@ -1,0 +1,14 @@
+<div class="search-input">
+  {{input 
+    placeholder=inputPlaceholder 
+    value=query
+  }}
+
+</div>
+
+{{#if results}}
+  <ul class="search-results">
+    {{#each results as |result|}}
+    {{/each}}
+  </ul>
+{{/if}}

@@ -1,4 +1,10 @@
 <main class="row content">
+
+  {{search-bar 
+    model=model.places
+    city=currentCity.city.name
+  }} 
+
   <div class="column-structure sidebar">
     {{outlet}}
   </div>

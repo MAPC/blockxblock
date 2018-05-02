@@ -3,12 +3,14 @@
     placeholder=inputPlaceholder 
     value=query
   }}
-
 </div>
 
 {{#if results}}
   <ul class="search-results">
     {{#each results as |result|}}
+      <li onclick={{action "showResult" result}}>
+        {{result.name}}
+      </li>
     {{/each}}
   </ul>
 {{/if}}

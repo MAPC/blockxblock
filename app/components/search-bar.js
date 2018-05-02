@@ -25,7 +25,7 @@ export default Ember.Component.extend({
 
   results: Ember.computed('query', 'places', function() {
     const places = this.get('places');
-    let query = this.get('query');
+    const query = this.get('query');
     let results = [];
 
     if (query.length > 0) {

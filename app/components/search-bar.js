@@ -29,12 +29,16 @@ export default Ember.Component.extend({
     let results = [];
 
     if (query.length > 0) {
-      query = query.toLowerCase();
+      const queryWords = query.toLowerCase().split(' ');
 
       results = places.filter(place => {
-        const words = place.get('name').toLowerCase().split(' ');
+        const keywords = place.get('name').toLowerCase().split(' ');
 
-        return words.any(word => word.startsWith(query));
+        const matchesKeywords = queryWords.every(queryWord => (
+          keywords.any(keyword => keyword.startsWith(queryWord))
+        ));
+
+        return matchesKeywords;
       }).sortBy(place => place.name);
     }
 

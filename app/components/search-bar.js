@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     const city = this.get('currentCity.city.name');
     const text = 'Search Places';
 
-    return city ? `${text} in ${city}` : text;
+    return city ? `${text} in ${city} ...` : `${text} ...`;
   }),
 
 
@@ -32,8 +32,10 @@ export default Ember.Component.extend({
       query = query.toLowerCase();
 
       results = places.filter(place => {
-        return place.get('name').toLowerCase().indexOf(query) !== -1;
-      });
+        const words = place.get('name').toLowerCase().split(' ');
+
+        return words.any(word => word.startsWith(query));
+      }).sortBy(place => place.name);
     }
 
     return results;
@@ -44,8 +46,12 @@ export default Ember.Component.extend({
     showResult(result) {
       this.set('query', '');
 
-      this.sendAction('click', result);
-    }
+      this.sendAction('handleClick', result);
+    },
+
+    clearQuery() {
+      this.set('query', '');
+    },
   },
 
 });

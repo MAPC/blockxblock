@@ -91,8 +91,12 @@ export default DS.Model.extend({
   // relationships
   related_investments: DS.hasMany('investment', { inverse: 'relatedInvestment' }),
   relatedInvestment: DS.belongsTo('investment', { inverse: 'related_investments' }),
-  feature: DS.hasMany('feature'),
+  place: DS.belongsTo('place'),
   city: DS.belongsTo("city"),
+
+  splash: Ember.computed('place.splash', function() {
+    return this.get('place.splash');
+  }),
 
   // local session state
   isSelected: false,

@@ -1,0 +1,130 @@
+.component.search-bar {
+
+  $border_radius: 4px;
+  $search_height: 35px;
+
+  position: fixed;
+  top: 6px;
+  right: 60px;
+  z-index: 999;
+
+  height: $search_height;
+
+
+  * { position: relative; }
+
+  .search-input {
+    $angle_size: 15px;
+
+    background: $color_bg-medium;
+    border-radius: $border_radius;
+
+    &.searching {
+      border-radius: $border_radius $border_radius 0 0;
+
+      h5 { border-radius: $border_radius $border_radius 0 0; }
+    }
+
+    h5 {
+      display: inline-block; 
+      z-index: 2;
+
+      padding: 8px; 
+      margin: 0;
+      margin-right: $angle_size * 2;
+
+      color: $color_brand-primary;
+      font-size: 15px;
+      font-weight: 600;
+
+      background: $color_bg-light;
+      border-radius: $border_radius;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -$angle_size;
+        display: block;
+
+        height: 0;
+
+        border-top: $search_height solid transparent;
+        border-left: $angle_size solid $color_bg-light;
+      }
+    }  
+
+    input {
+      display: inline-block;
+      
+      height: $search_height;
+      width: 240px;
+      margin-right: 10px;
+
+      background: $color_bg-medium; 
+      border: none;
+
+      outline: none;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: block;
+
+      height: 50%;
+
+      img { height: 100%; }
+
+      & > span { 
+        top: -3px;
+
+        font-size: 20px;
+        font-weight: bold;
+
+        cursor: pointer; 
+        opacity: .6;
+        transition: opacity .1s;
+
+        &:hover { 
+          opacity: 1; 
+          transition: opacity .1s;
+        }
+      }
+    }
+  }
+
+  .search-results {
+    width: 100%;
+    max-height: 30vh;
+    padding: 0;
+    margin: 0 auto;
+
+    border: 1px solid darken($color_bg-light, 8);
+    border-top-width: 0;
+    border-radius: 0 0 $border_radius $border_radius;
+    list-style: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    li {
+      width: 100%;
+      padding: 7px 12px;
+
+      cursor: pointer;
+      background: $color_bg-light;
+      transition: background .1s;
+
+      & + li { border-top: 1px solid darken($color_bg-medium, 5); }
+      &:last-of-type { border-radius: 0 0 $border_radius $border_radius; }
+
+      &:hover {
+        background: $color_bg-medium; 
+        transition: background .1s;
+      }
+    }   
+  }
+
+}

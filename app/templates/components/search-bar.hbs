@@ -1,0 +1,26 @@
+<div class="search-input {{if results 'searching'}}">
+  <h5>Search</h5>
+
+  {{input 
+    placeholder=inputPlaceholder 
+    value=query
+  }}
+  
+  <span class="search-icon" onclick={{action "clearQuery"}}>
+    {{#if query.length}}
+      <span>x</span>
+    {{else}}
+      <img src="/images/icons/search.svg">
+    {{/if}}
+  </span>
+</div>
+
+{{#if results}}
+  <ul class="search-results">
+    {{#each results as |result|}}
+      <li onclick={{action "showResult" result}}>
+        {{result.name}}
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}

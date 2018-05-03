@@ -456,6 +456,18 @@ h1.splash.header .content{
 
   .ui.images img {
     margin: 0;
+
+    // This is the only icon that isn't naturally squared
+    &[data-icon="planning-or-strategy"] { 
+      position: relative;
+      top: -3px;
+      left: 3px;
+
+      width: auto;
+      height: auto;
+      max-width: 35px !important; 
+      max-height: 35px !important;
+    }
   }
 }
 

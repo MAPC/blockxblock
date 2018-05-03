@@ -10,6 +10,9 @@
 
   height: $search_height;
 
+
+  * { position: relative; }
+
   .search-input {
     $angle_size: 15px;
 

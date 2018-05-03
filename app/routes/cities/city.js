@@ -6,9 +6,7 @@ export default Ember.Route.extend({
   model(params) {
     let cities = this.modelFor('cities');
     let city = cities.findBy('id', params.city_id);
-    console.log("#$%^&*()")
-    console.log(params)
-    console.log(cities)
+
     return RSVP.hash({
       city,
       places: this.store.query(

@@ -54,7 +54,6 @@ export default DS.Model.extend({
 
   // computeds
   is_employer: Ember.computed('employment', function() {
-    // console.log("DSDSCEFEDFEWF",this.get('employment.firstObject'));
     return this.get('employment.firstObject.value');
   }),
   is_activating: Ember.computed('activating', function() {
@@ -111,6 +110,7 @@ export default DS.Model.extend({
   // this.get('city.latitude')
   iconUrl: Ember.computed('feature_type', function() {
     let featureType = this.get('feature_type').dasherize().replace('/', '');
+    console.log(featureType);
     return `${config.prepend ? config.prepend : '/'}images/icons/features/${featureType}.png`;
   }),
   iconWatermarkUrl: Ember.computed('feature_type', function() {
@@ -149,7 +149,7 @@ export default DS.Model.extend({
 });
 
 // form / filter types
-export const FEATURE_TYPES = ["Arts and Culture","Civic Institution","Education","Food Sales","Health Care","Industrial","Office","Open Space","Parking","Public Transit","Housing","Retail","Temporary","Mixed-Use Development"];
+export const FEATURE_TYPES = ["Arts and Culture","Civic Institution","Education","Food Sales","Health Care","Office","Open Space","Parking","Public Transit","Housing","Retail","Temporary","Mixed-Use Development"];
 export const FEATURE_SUBTYPES = {
   "Food Sales": [
     "Coffee Shop",

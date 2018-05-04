@@ -25,15 +25,21 @@
       {{/each}}
 
       {{#if currentCity.showPlaces}}
-        {{#each currentCity.visibleFeatures as |feature|}}
-          {{#if (and feature.latitude feature.id)}}
-            {{related-investments-icon 
-              feature=feature 
-              showInvestments=currentCity.showInvestments
-              linkTo=(transition-to 'cities.city.places' feature.id)
-            }}
-          {{/if}}
-        {{/each}}
+        {{#marker-cluster-layer 
+          maxClusterRadius=maxClusterRadius 
+          disbableClusteringAtZoom=disabledClusteringAtZoom
+          as |cluster|
+        }}
+          {{#each currentCity.visibleFeatures as |feature|}}
+            {{#if (and feature.latitude feature.id)}}
+              {{related-investments-icon 
+                feature=feature 
+                showInvestments=currentCity.showInvestments
+                linkTo=(transition-to 'cities.city.places' feature.id)
+              }}
+            {{/if}}
+          {{/each}}
+        {{/marker-cluster-layer}}
       {{/if}}
 
       {{#if currentCity.showParcels}}

@@ -1,15 +1,15 @@
 {
-  "name": "cityxcity",
-  "version": "0.0.0",
+  "name": "blockxblock",
+  "version": "1.0.0-pre",
   "private": true,
-  "description": "Small description for cityxcity goes here",
+  "description": "Ember frontend for Block x Block",
   "license": "MIT",
-  "author": "",
+  "author": "Matt Gardner <https://github.com/allthesignals>",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://github.com/mapc/blockxblock",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
@@ -23,6 +23,10 @@
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-babel": "^6.3.0",
     "ember-cli-dependency-checker": "^2.0.0",
+    "ember-cli-deploy": "^1.0.2",
+    "ember-cli-deploy-build": "^1.1.1",
+    "ember-cli-deploy-revision-data": "^1.0.0",
+    "ember-cli-deploy-rsync": "^0.0.5",
     "ember-cli-eslint": "^4.0.0",
     "ember-cli-github-pages": "0.2.0",
     "ember-cli-htmlbars": "^2.0.1",

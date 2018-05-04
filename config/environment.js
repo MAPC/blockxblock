@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'cityxcity',
+    modulePrefix: 'blockxblock',
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
@@ -170,12 +170,9 @@ module.exports = function(environment) {
 
 
   if (environment === 'production') {
-    ENV.locationType = 'hash';
-    ENV.rootURL = 'https://allthesignals.github.io/cityxcity/';
     ENV['ember-cli-mirage'] = {
       enabled: false
     }
-    ENV.prepend = 'https://allthesignals.github.io/cityxcity/';
   }
 
   return ENV;

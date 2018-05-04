@@ -1,8 +1,26 @@
-module.exports = function(deployTarget) {  
-  return {
-    pagefront: {
-      app: 'blockxblock',
-      key: process.env.PAGEFRONT_KEY
-    }
+/* eslint-env node */
+'use strict';
+
+module.exports = function(deployTarget) {
+  let ENV = {
+    build: {
+      environment: deployTarget,
+    },
+
+    'revision-data': {
+      type: 'git-commit',
+    },
   };
+
+  if (deployTarget === 'staging') {
+    ENV.rsync = {
+      dest: 'blockxblock@prep.mapc.org:/var/www/blockxblock',
+      delete: false,
+    };
+  }
+
+  if (deployTarget === 'production') {
+  }
+
+  return ENV;
 };

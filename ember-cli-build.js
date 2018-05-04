@@ -7,7 +7,6 @@ module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     fingerprint: {
       exclude: ['images/'],
-      prepend: 'https://allthesignals.github.io/cityxcity/',
     },
   });
 

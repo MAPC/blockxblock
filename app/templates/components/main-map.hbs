@@ -25,7 +25,11 @@
       {{/each}}
 
       {{#if currentCity.showPlaces}}
-        {{#marker-cluster-layer as |cluster|}}
+        {{#marker-cluster-layer 
+          maxClusterRadius=maxClusterRadius 
+          disbableClusteringAtZoom=disabledClusteringAtZoom
+          as |cluster|
+        }}
           {{#each currentCity.visibleFeatures as |feature|}}
             {{#if (and feature.latitude feature.id)}}
               {{related-investments-icon 

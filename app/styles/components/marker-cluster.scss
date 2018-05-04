@@ -1,0 +1,24 @@
+.marker-cluster {
+  border-radius: 0;
+
+  div {
+    background-color: initial;
+    border-radius: 0;
+
+    span { 
+      color: $color_font-light; 
+      font-weight: bold;
+      line-height: 25px;
+    }
+  }
+}
+
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large {
+  background-color: initial;
+  background-image: url('/images/icons/investments/cluster.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 70%;
+}

@@ -5,8 +5,7 @@ import config from '../config/environment';
 const { alias } = Ember.computed;
 
 export default DS.Model.extend({
-  // new attributes
-  // place_id: DS.attr('string'), // this is throwing ember off
+
   name: DS.attr('string'),
   latitude: DS.attr('number'),
   longitude: DS.attr('number'),
@@ -57,25 +56,13 @@ export default DS.Model.extend({
     return this.get('employment.firstObject.value');
   }),
   is_activating: Ember.computed('activating', function() {
-    if (this.get('activating.firstObject.value') == true){
-      return 'Yes';
-    } else {
-      return 'No';
-    }
+    return this.get('activating.firstObject.value') == true;
   }),
   is_tdiasset: Ember.computed('tdi_asset', function() {
-    if (this.get('tdi_asset.firstObject.value') == true){
-      return 'Yes';
-    } else {
-      return 'No';
-    }
+    return this.get('tdi_asset.firstObject.value') == true;
   }),
   is_engaged: Ember.computed('engaged_owner', function() {
-    if (this.get('engaged_owner.firstObject.value') == true){
-      return 'Yes';
-    } else {
-      return 'No';
-    }
+    return this.get('engaged_owner.firstObject.value') == true;
   }),
   engaged_from: Ember.computed('engaged_owner', function() {
     if (this.get('engaged_owner.firstObject.value') == true){

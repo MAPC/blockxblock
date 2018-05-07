@@ -12,27 +12,28 @@ export default function applyFilterTo(enumerable, config) {
 export function getFilter(context, enumerable, config) {
   let models = context.get(enumerable);
 
-      if (models) config.forEach((propertyConfig) => {
-        let filter;
-        let filterType = propertyConfig.filterType;
+  if (models) {
+    config.forEach((propertyConfig) => {
+      let filter;
+      let filterType = propertyConfig.filterType;
 
+      if(filterType == "isWithin") {
+        let [ min, max ] = propertyConfig.filter;
+        filter = [context.get(min), context.get(max)];
+      } else {
+        filter = context.get(propertyConfig.filter);
+      }
 
-        if(filterType == "isWithin") {
-          let [ min, max ] = propertyConfig.filter;
-          filter = [context.get(min), context.get(max)];
-        } else {
-          filter = context.get(propertyConfig.filter);
-        }
+      let property = propertyConfig.property;
+      
+      models = models.filter(
+        (findFilterFunction(filterType))
+        .bind(context, filter, property)
+      );
+    });
+  }
 
-        let property = propertyConfig.property;
-        
-        models = models.filter(
-          (findFilterFunction(filterType))
-          .bind(context, filter, property)
-        );
-      });
-
-      return models;
+  return models;
 }
 
 function findFilterFunction(filterType) {

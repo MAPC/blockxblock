@@ -8,14 +8,11 @@ export default DS.Transform.extend({
       if (snapshot.value === 'true' || snapshot.value === 'false') {
         snapshot.value = (snapshot.value === 'true');
       }
+
+      snapshot.date = new Date(snapshot.date);
     });
 
-    return serialized.sort((snapshot1, snapshot2) => {
-      const { a } = snapshot1;
-      const { b } = snapshot2;
-
-      return b - a;
-    });
+    return serialized.sort((a, b) => b.date.getTime() - a.date.getTime());
   },
 
   serialize(deserialized) {

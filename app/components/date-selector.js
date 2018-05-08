@@ -5,6 +5,9 @@ export default Ember.Component.extend({
   classNames: ['component', 'date-selector'],
 
   options: Ember.computed('startValue', 'scope', function() {
+
+    console.log(this.get('selectedValue'));
+
     const { startValue, scope } = this.getProperties('startValue', 'scope');
 
     if (scope === 'month') {

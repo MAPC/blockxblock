@@ -50,8 +50,12 @@ export default Ember.Service.extend({
   all_investments: null,
 
   startYear: 2010,
-  timelineYear: (new Date()).getFullYear(),
-  timelineMonth: (new Date()).getMonth(),
+  timelineYear: String((new Date()).getFullYear()),
+  timelineMonth: (() => {
+    const month = (new Date()).getMonth() + 1;
+    
+    return String(month >= 10 ? month : `0${month}`);
+  })(),
 
   parcelChoroplethSets: PARCEL_MAP_CONFIG.mapBy('setName'),
   parcelChoroplethConfig: PARCEL_MAP_CONFIG,

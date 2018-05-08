@@ -1,8 +1,19 @@
 {{#if ready}}
   <div class="history-selectors">
     <h5>Historical Snapshot:</h5>
-    {{date-selector scope="month" onSelect=(action 'setTimelineMonth')}}
-    {{date-selector scope="year" startValue=currentCity.startYear onSelect=(action 'setTimelineYear')}}
+
+    {{date-selector 
+      scope="month" 
+      selectedValue=currentCity.timelineMonth
+      onSelect=(action 'setTimelineMonth')
+    }}
+
+    {{date-selector 
+      scope="year" 
+      startValue=currentCity.startYear 
+      selectedValue=currentCity.timelineYear
+      onSelect=(action 'setTimelineYear')
+    }}
   </div>
   <div class="ui horizontal list basemap-options">    
     <div class="item has-pointer" onclick={{action (mut basemap) 'default'}}>

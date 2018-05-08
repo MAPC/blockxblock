@@ -49,6 +49,10 @@ export default Ember.Service.extend({
   city: '',
   all_investments: null,
 
+  startYear: 2010,
+  timelineYear: (new Date()).getFullYear(),
+  timelineMonth: (new Date()).getMonth(),
+
   parcelChoroplethSets: PARCEL_MAP_CONFIG.mapBy('setName'),
   parcelChoroplethConfig: PARCEL_MAP_CONFIG,
   choroplethLayer: 'Land Use',

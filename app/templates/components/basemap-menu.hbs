@@ -1,5 +1,10 @@
 {{#if ready}}
-  <div class="ui horizontal list basemap-menu">    
+  <div class="history-selectors">
+    <h5>Historical Snapshot:</h5>
+    {{date-selector scope="month" onSelect=(action 'setTimelineMonth')}}
+    {{date-selector scope="year" startValue=currentCity.startYear onSelect=(action 'setTimelineYear')}}
+  </div>
+  <div class="ui horizontal list basemap-options">    
     <div class="item has-pointer" onclick={{action (mut basemap) 'default'}}>
       <img src="http://c.basemaps.cartocdn.com/light_all/{{z}}/{{x}}/{{y}}.png" class="ui mini circular bordered image"/>
       <div class="content">

@@ -7,7 +7,7 @@ const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   currentCity: Ember.inject.service(),
-  classNames: ['main-map'],
+  classNames: ['component', 'main-map'],
 
   choroplethLayer: 'Available Spaces',
   parcelsChoroplethMapping: computed('visibleParcels', 'currentCity.choroplethLayer', function() {

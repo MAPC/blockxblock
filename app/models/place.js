@@ -273,4 +273,8 @@ export const FEATURE_FILTERS_CONFIG = [{
   property: 'is_community_hub',
   filter: 'community_hub',
   filterType: 'isTrue'
-}];
+}, /* {
+  property: 'status',
+  filter: '_timeline',
+  filterType: 'isTimely',
+}*/];

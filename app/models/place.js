@@ -53,7 +53,7 @@ export default DS.Model.extend({
 
   // computeds
   is_employer: Ember.computed('employment', function() {
-    return this.get('employment.firstObject.value');
+    return this.get('employment.firstObject.value') != 0;
   }),
   is_activating: Ember.computed('activating', function() {
     return this.get('activating.firstObject.value') == true;

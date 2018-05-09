@@ -131,4 +131,9 @@ export const INVESTMENT_FILTERS_CONFIG =
     filter: 'tdi_influence',
     filterType: 'isTrue'
   },
+  {
+    property: 'investment_status',
+    filter: 'timelineDate',
+    filterType: 'isTimely',
+  },
 ];

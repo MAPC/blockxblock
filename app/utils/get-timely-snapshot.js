@@ -12,7 +12,6 @@ export default function getTimelySnapshot(filter, snapshots) {
 
   snapshots.any(snapshot => {
     const snapshotDate = dtoi(snapshot.date.getFullYear(), snapshot.date.getMonth());
-
     return (snapshotDate < filterDate) || !(++i);
   });
 

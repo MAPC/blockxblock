@@ -48,12 +48,12 @@ export default Ember.Service.extend({
   },
   city: '',
   all_investments: null,
+  maxClusterRadius: 25,
 
   startYear: 2010,
   timelineYear: String((new Date()).getFullYear()),
   timelineMonth: (() => {
     const month = (new Date()).getMonth() + 1;
-    
     return String(month >= 10 ? month : `0${month}`);
   })(),
   timelineDate: computed('timelineYear', 'timelineMonth', function() {

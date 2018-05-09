@@ -1,0 +1,15 @@
+._vertical-center {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+._strip-appearance {
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  -o-appearance: none;
+  -ms-appearance: none;
+  appearance: none; 
+}

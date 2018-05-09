@@ -1,24 +1,37 @@
 .component.basemap-menu {
 
   position: absolute;
-  bottom: 60px;
+  bottom: 10px;
   z-index: 498;
 
   width: 100%;
 
   .history-selectors {
+    position: relative;
+    left: 10px;
     display: inline-block;
 
-    background: $color_bg-light;
+    padding: 8px;
 
-    .date-selector {
-      display: inline-block; 
-    } 
+    font-size: 12px;
+
+    background: $color_bg-light;
+    border: 1px solid rgba($color_brand-primary, .3);
+    border-radius: 4px;
+
+    h5 {
+      display: inline-block;
+
+      margin: 0;
+      margin-right: 8px;
+    }
+
+    .date-selector { display: inline-block; } 
   }
 
   .basemap-options {
     position: absolute;
     right: 15px;
   }
-}
 
+}

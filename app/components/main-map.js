@@ -27,7 +27,7 @@ export default Ember.Component.extend({
     }
   }),
   city: Ember.computed.alias('currentCity.city'),
-  maxClusterRadius: Ember.computed.alias('currentCity.maxClusterRadius'),
+  maxClusterRadius: 25,
   maxZoom: 20,
   maxNativeZoom: 18,
   disableClusteringAtZoom: 17,

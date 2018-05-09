@@ -48,7 +48,6 @@ export default Ember.Service.extend({
   },
   city: '',
   all_investments: null,
-  maxClusterRadius: 25,
 
   startYear: 2010,
   timelineYear: String((new Date()).getFullYear()),

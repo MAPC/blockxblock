@@ -94,7 +94,6 @@ export default DS.Model.extend({
       return this.get('status.secondObject.date');
     }
   }),
-  // this.get('city.latitude')
   iconUrl: Ember.computed('feature_type', function() {
     let featureType = this.get('feature_type').dasherize().replace('/', '');
     return `${config.prepend ? config.prepend : '/'}images/icons/features/${featureType}.png`;
@@ -273,8 +272,8 @@ export const FEATURE_FILTERS_CONFIG = [{
   property: 'is_community_hub',
   filter: 'community_hub',
   filterType: 'isTrue'
-}, /* {
+}, {
   property: 'status',
-  filter: '_timeline',
+  filter: 'timelineDate',
   filterType: 'isTimely',
-}*/];
+}];

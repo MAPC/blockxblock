@@ -1,6 +1,7 @@
 import isAnyFilter from '../utils/is-any-filter';
 import isTrueFilter from '../utils/is-true-filter';
 import isWithinFilter from '../utils/is-within-filter';
+import isTimelyFilter from '../utils/is-timely-filter';
 import isLongitudinalFilter from '../utils/is-longitudinal-filter';
 
 export default function applyFilterTo(enumerable, config) {
@@ -27,7 +28,7 @@ export function getFilter(context, enumerable, config) {
       let property = propertyConfig.property;
       
       models = models.filter(
-        (findFilterFunction(filterType))
+        (filterFactory(filterType))
         .bind(context, filter, property)
       );
     });
@@ -36,7 +37,7 @@ export function getFilter(context, enumerable, config) {
   return models;
 }
 
-function findFilterFunction(filterType) {
+function filterFactory(filterType) {
   switch(filterType) {
     case 'isAny':
       return isAnyFilter
@@ -46,5 +47,7 @@ function findFilterFunction(filterType) {
       return isWithinFilter
     case 'isLongitudinal':
       return isLongitudinalFilter
+    case 'isTimely':
+      return isTimelyFilter
   }
 }

@@ -49,7 +49,7 @@ export default Ember.Service.extend({
   city: '',
   all_investments: null,
 
-  startYear: 2010,
+  startYear: 2013,
   timelineYear: String((new Date()).getFullYear()),
   timelineMonth: (() => {
     const month = (new Date()).getMonth() + 1;

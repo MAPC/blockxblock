@@ -1,10 +1,22 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 import config from '../config/environment';
+import getTimelySnapshot from '../utils/get-timely-snapshot';
 
 const { alias } = Ember.computed;
 
+const timelyAttributes = [
+  'status', 
+  'employment',
+  'activating',
+  'community_hub',
+  'tdi_asset',
+  'engaged_owner',
+];
+
 export default DS.Model.extend({
+
+  currentCity: Ember.inject.service(),
 
   name: DS.attr('string'),
   latitude: DS.attr('number'),
@@ -15,13 +27,7 @@ export default DS.Model.extend({
   is_in_district: DS.attr('boolean'),
   type: DS.attr('string'),
   subtype: DS.attr('string'),
-  status: DS.attr('timeline'),
-  employment: DS.attr('timeline'),
-  activating: DS.attr('timeline'),
-  community_hub: DS.attr('timeline'),
-  tdi_asset: DS.attr('timeline'),
   tdi_asset_start: DS.attr('date'),
-  engaged_owner: DS.attr('timeline'),
   engaged_owner_start: DS.attr('date'),
   owner_name: DS.attr('string'),
   owner_title: DS.attr('string'),
@@ -45,6 +51,24 @@ export default DS.Model.extend({
   related_places: DS.attr('string'),
   related_places_text: DS.attr('string'),
   related_investments_text: DS.attr('string'),
+
+  status: DS.attr('timeline'),
+  employment: DS.attr('timeline'),
+  activating: DS.attr('timeline'),
+  community_hub: DS.attr('timeline'),
+  tdi_asset: DS.attr('timeline'),
+  engaged_owner: DS.attr('timeline'),
+
+  timely: Ember.computed(...timelyAttributes.map(a => `${a}.[]`), 'currentCity.timelineDate', function() {
+    const date = this.get('currentCity.timelineDate');
+
+    const timelyValues = timelyAttributes.reduce((attrs, attr) => {
+      attrs[attr] = getTimelySnapshot(date, this.get(attr) || []);
+      return attrs;
+    }, {});
+
+    return Ember.Object.extend(timelyValues);
+  }),
 
   // aliases
   feature_name: alias('name'),

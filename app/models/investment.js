@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 import config from '../config/environment';
+import getTimelySnapshot from '../utils/get-timely-snapshot';
 
 const { alias } = Ember.computed;
 
@@ -12,7 +13,12 @@ const mapTypes = type => {
   return typeMap[type.toLowerCase()] || type;
 };
 
+const timelyAttributes = ['investment_status'];
+
 export default DS.Model.extend({
+
+  currentCity: Ember.inject.service(),
+
   // new attributes
   investment_id: DS.attr('string'),
   investment_descriptor: DS.attr('string'),
@@ -26,7 +32,6 @@ export default DS.Model.extend({
   private_product: DS.attr('string'),
   use_type: DS.attr('string'),
   tdi_influence: DS.attr('boolean'),
-  investment_status: DS.attr('timeline'),
   amount_is_public: DS.attr('boolean'),
   amount_is_exact: DS.attr('boolean'),
   exact_amount: DS.attr('number'),
@@ -55,9 +60,20 @@ export default DS.Model.extend({
   pub_email: DS.attr('string'),
   pub_website: DS.attr('string'),
 
+  investment_status: DS.attr('timeline'),
+
+  timely: Ember.computed(...timelyAttributes.map(a => `${a}.[]`), 'currentCity.timelineDate', function() {
+    const date = this.get('currentCity.timelineDate');
+
+    return timelyAttributes.reduce((attrs, attr) => {
+      attrs[attr] = getTimelySnapshot(date, this.get(attr) || []);
+      return attrs;
+    }, {});
+  }),
+
   // computeds
-  investment_status_latest: Ember.computed('investment_status', function() {
-    return this.get('investment_status.firstObject.value');
+  investment_status_latest: Ember.computed('timely.investment_status.value', function() {
+    return this.get('timely.investment_status.value');
   }),
   iconUrl: Ember.computed('source_type', 'investment_type', function() {
     let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
@@ -69,9 +85,8 @@ export default DS.Model.extend({
     return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${mapTypes(investment_type).dasherize()}.png`;
   }),
 
-  investment_status_val: Ember.computed('investment_status',function(){
-    let investmet_stat_v = this.get('investment_status.firstObject.value');
-    return investmet_stat_v;
+  investment_status_val: Ember.computed('timely.investment_status.value',function(){
+    return this.get('timely.investment_status.value');
   }),
 
   investmentAmountEst: Ember.computed('estimated_amount','exact_amount',function(){

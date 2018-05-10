@@ -21,7 +21,7 @@ import {  PARCEL_PARAMS,
 
 const INVESTMENT_PARAMS = ['is_tdi_influenced', 'investmentTypesArray.[]', 'valueMin', 'valueMax', 'investmentStatuses', 'investmentSources', 'investments_fake_open_or_closed'];
 const FEATURE_PARAMS = ['assetTypesArray.[]','activating','isOpen','is_employer','tdi_asset','engaged_owner','community_hub'];
-
+[INVESTMENT_PARAMS, FEATURE_PARAMS].forEach(paramsList => paramsList.push('timelineDate'));
 
 const SOUTHWICK_LATITUDE = 42.1;
 const SOUTHWICK_LONGITUDE = -71.6;
@@ -48,6 +48,19 @@ export default Ember.Service.extend({
   },
   city: '',
   all_investments: null,
+
+  startYear: 2013,
+  timelineYear: String((new Date()).getFullYear()),
+  timelineMonth: (() => {
+    const month = (new Date()).getMonth() + 1;
+    return String(month >= 10 ? month : `0${month}`);
+  })(),
+  timelineDate: computed('timelineYear', 'timelineMonth', function() {
+    return {
+      year: this.get('timelineYear'),
+      month: this.get('timelineMonth'),
+    };
+  }),
 
   parcelChoroplethSets: PARCEL_MAP_CONFIG.mapBy('setName'),
   parcelChoroplethConfig: PARCEL_MAP_CONFIG,

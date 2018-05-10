@@ -1,6 +1,7 @@
 import isAnyFilter from '../utils/is-any-filter';
 import isTrueFilter from '../utils/is-true-filter';
 import isWithinFilter from '../utils/is-within-filter';
+import isTimelyFilter from '../utils/is-timely-filter';
 import isLongitudinalFilter from '../utils/is-longitudinal-filter';
 
 export default function applyFilterTo(enumerable, config) {
@@ -12,30 +13,31 @@ export default function applyFilterTo(enumerable, config) {
 export function getFilter(context, enumerable, config) {
   let models = context.get(enumerable);
 
-      if (models) config.forEach((propertyConfig) => {
-        let filter;
-        let filterType = propertyConfig.filterType;
+  if (models) {
+    config.forEach((propertyConfig) => {
+      let filter;
+      let filterType = propertyConfig.filterType;
 
+      if(filterType == "isWithin") {
+        let [ min, max ] = propertyConfig.filter;
+        filter = [context.get(min), context.get(max)];
+      } else {
+        filter = context.get(propertyConfig.filter);
+      }
 
-        if(filterType == "isWithin") {
-          let [ min, max ] = propertyConfig.filter;
-          filter = [context.get(min), context.get(max)];
-        } else {
-          filter = context.get(propertyConfig.filter);
-        }
+      let property = propertyConfig.property;
+      
+      models = models.filter(
+        (filterFactory(filterType))
+        .bind(context, filter, property)
+      );
+    });
+  }
 
-        let property = propertyConfig.property;
-        
-        models = models.filter(
-          (findFilterFunction(filterType))
-          .bind(context, filter, property)
-        );
-      });
-
-      return models;
+  return models;
 }
 
-function findFilterFunction(filterType) {
+function filterFactory(filterType) {
   switch(filterType) {
     case 'isAny':
       return isAnyFilter
@@ -45,5 +47,7 @@ function findFilterFunction(filterType) {
       return isWithinFilter
     case 'isLongitudinal':
       return isLongitudinalFilter
+    case 'isTimely':
+      return isTimelyFilter
   }
 }

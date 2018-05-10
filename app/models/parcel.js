@@ -1,14 +1,25 @@
 import DS from 'ember-data';
 import Ember from 'ember';
+import getTimelySnapshot from '../utils/get-timely-snapshot';
 
 const { alias } = Ember.computed;
 
+const timelyAttributes = [
+  'property_for_sale',
+  'property_for_lease',
+  'ground_floor_vacancy_status',
+  'upper_floor_vacancy_status',
+  'assessed_value',
+  'site_control',
+  'engaged_owner',
+];
+
 export default DS.Model.extend({
+
+  currentCity: Ember.inject.service(),
+
   // new attributes
-  // parcel_id: DS.attr('string'),
   street_address: DS.attr('string'),
-  property_for_sale: DS.attr('timeline'),
-  property_for_lease: DS.attr('timeline'),
   listing_type: DS.attr('string'),
   invitation_to_connect: DS.attr('boolean'),
   invitation_to_connect_text: DS.attr('string'),
@@ -20,11 +31,6 @@ export default DS.Model.extend({
   realestate_contact_website: DS.attr('string'),
   year_built: DS.attr('number'),
   land_use: DS.attr('string'),
-  ground_floor_vacancy_status: DS.attr('timeline'),
-  upper_floor_vacancy_status: DS.attr('timeline'),
-  assessed_value: DS.attr('timeline'),
-  site_control: DS.attr('timeline'),
-  engaged_owner: DS.attr('timeline'),
   owner_contact_name: DS.attr('string'),
   owner_contact_role: DS.attr('string'),
   owner_contact_org: DS.attr('string'),
@@ -49,31 +55,34 @@ export default DS.Model.extend({
   parcel_contact_website: DS.attr('string'),
   geom: DS.attr(),
 
+  property_for_sale: DS.attr('timeline'),
+  property_for_lease: DS.attr('timeline'),
+  ground_floor_vacancy_status: DS.attr('timeline'),
+  upper_floor_vacancy_status: DS.attr('timeline'),
+  assessed_value: DS.attr('timeline'),
+  site_control: DS.attr('timeline'),
+  engaged_owner: DS.attr('timeline'),
+
+  timely: Ember.computed(...timelyAttributes.map(a => `${a}.[]`), 'currentCity.timelineDate', function() {
+    const date = this.get('currentCity.timelineDate');
+
+    return timelyAttributes.reduce((attrs, attr) => {
+      attrs[attr] = getTimelySnapshot(date, this.get(attr) || []);
+      return attrs;
+    }, {});
+  }),
+
   // aliases
-  is_engaged_owner: alias('engaged_owner'),
+  is_engaged_owner: alias('timely.engaged_owner'),
+  assessed_value_d: alias('timely.assessed_value.value'),
+  ground_floor_vacancy: alias('timely.ground_floor_vacancy_status.value'),
+  property_for_sale_latest: alias('timely.property_for_sale.value'),
+  property_for_lease_latest: alias('timely.property_for_lease.value'),
 
   // computeds
-  assessed_value_d: Ember.computed('assessed_value', function(){
-    let assessed_value_d = this.get('assessed_value.firstObject.value');
-    return assessed_value_d;
-
-
-  }),
-  ground_floor_vacancy: Ember.computed('ground_floor_vacancy_status', function(){
-    let ground_floor_vacancy_status = this.get('ground_floor_vacancy_status.firstObject.value');
-    return ground_floor_vacancy_status;
-
-
-  }),
   splash: Ember.computed('latitude,longitude', function() {
     let { latitude, longitude } = this.getProperties('latitude','longitude');
     return `https://maps.googleapis.com/maps/api/streetview?size=450x300&location=${latitude},${longitude}&key=AIzaSyCO654zBIabvjSOV4Ys59Pku8pmzM387ps`;
-  }),
-  property_for_sale_latest: Ember.computed('property_for_sale', function() {
-    return this.get('property_for_sale.lastObject.value');
-  }),
-  property_for_lease_latest: Ember.computed('property_for_lease', function() {
-    return this.get('property_for_lease.lastObject.value');
   }),
   latitude: Ember.computed('geojson', function() {
     let geojson=this.get('geojson');

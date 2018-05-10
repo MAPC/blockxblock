@@ -1,0 +1,64 @@
+.component.date-selector {
+
+  $arrow_size: 4px;
+  $trans_dur: .15s;
+
+  position: relative;
+
+  background: $color_bg-light;
+  border: 2px solid $color_brand-primary;
+  border-radius: 4px;
+  transition: background $trans_dur;
+
+  * { cursor: pointer; }
+
+  & + .date-selector { margin-left: 3px; }
+
+  &:before {
+    @extend ._vertical-center;
+    top: 50%;
+    left: inherit;
+    right: $arrow_size;
+    content: '';
+    display: inline-block;
+    z-index: 10;
+
+    height: 0;
+    width: 0;
+
+    border-top: $arrow_size solid $color_brand-primary;
+    border-left: $arrow_size solid transparent;
+    border-right: $arrow_size solid transparent;
+    transition: border-color $trans_dur;
+  }
+
+  select {
+    @extend ._strip-appearance; 
+
+    padding: 3px 6px;
+    padding-right: $arrow_size * 4;
+
+    color: $color_brand-primary; 
+
+    background: none;
+    border: none;
+    outline: none;
+    transition: color $trans_dur;
+  }
+
+  &:hover {
+    background: $color_brand-primary;   
+    transition: background $trans_dur;
+
+    select { 
+      color: $color_bg-light;
+
+      transition: color $trans_dur;
+    }
+
+    &:before {
+      border-top-color: $color_bg-light;
+      transition: border-color $trans_dur;
+    }
+  }
+}

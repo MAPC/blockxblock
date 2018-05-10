@@ -1,26 +1,47 @@
 import Ember from 'ember';
+
 const ICON_SIZE = 35;
 
 export default Ember.Component.extend({
+
+  currentCity: Ember.inject.service(),
+
   showInvestments: true,
-  iconSize: Ember.computed('feature.investments.[]', 'showInvestments', function() {
-    const showInvestments = this.get('showInvestments');
-    const pixelsForInvestments =
-      showInvestments ? this.get('feature.investments.length') * ICON_SIZE : 0;
 
-
-    return [
-      (35 + pixelsForInvestments), 35
-    ];
-  }),
-  markup: Ember.computed('feature.investments.[]', 'showInvestments', function() {
+  icons: Ember.computed('feature.investments.[]', 'currentCity.visibleInvestments.[]', function() {
     const feature = this.get('feature');
     const showInvestments = this.get('showInvestments');
-    const icons = feature.get('investments').mapBy('iconUrl').map(icon=> {
-      let iconName = icon.split('/');
-      iconName = iconName[iconName.length - 1].replace('.png', '');
-      return `<img src=${icon} data-icon="${iconName}"/>`;
-    });
+    const visibleInvestments = this.get('currentCity.visibleInvestments');
+
+    const icons = feature.get('investments').map(investment => {
+      if (visibleInvestments.includes(investment)) {
+        const icon = investment.get('iconUrl');
+        let iconName = icon.split('/');
+        iconName = iconName[iconName.length - 1].replace('.png', '');
+        return `<img src=${icon} data-icon="${iconName}"/>`;
+      }
+      else {
+        return null; 
+      }
+    }).filter(icon => icon !== null);
+
+    return icons;
+  }),
+
+
+  iconContainerSize: Ember.computed('icons.[]', 'showInvestments', function() {
+    const showInvestments = this.get('showInvestments');
+    const pixelsForInvestments =
+      showInvestments ? this.get('icons.length') * ICON_SIZE : 0;
+
+    return [(ICON_SIZE + pixelsForInvestments), ICON_SIZE];
+  }),
+
+
+  markup: Ember.computed('showInvestments', 'icons.[]', function() {
+    const showInvestments = this.get('showInvestments');
+    const feature = this.get('feature');
+    const icons = this.get('icons');
 
     return `
       <div class="ui mini images">
@@ -28,5 +49,6 @@ export default Ember.Component.extend({
         ${showInvestments ? icons : ''}
       </div>
     `;
-  })
+  }),
+
 });

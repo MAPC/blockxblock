@@ -27,7 +27,7 @@
       {{#if currentCity.showPlaces}}
         {{#marker-cluster-layer 
           maxClusterRadius=maxClusterRadius 
-          disbableClusteringAtZoom=disabledClusteringAtZoom
+          disableClusteringAtZoom=disableClusteringAtZoom
           as |cluster|
         }}
           {{#each currentCity.visibleFeatures as |feature|}}

@@ -1,33 +1,30 @@
 <div class="ui vertical segment">
-
   <div class="ui accordion">
-      <div class="title">
+    <div class="title">
+      <h3>Location <i class="dropdown icon"></i></h3>
+    </div>
 
-        <h3>Location <i class="dropdown icon"></i></h3>
-      </div>
-      <div class="content">
-        <div class="ui vertical segment">
-            <div class="ui text vertical segment seg">
-              <p><strong>Street address</strong></p>
-              <span class="place-detail">{{streetAddress}}</span>
-            </div>
-            <div class="ui text vertical segment seg">
-              <p><strong>Amount</strong></p>
-              <span class="place-detail">{{investmentsRel}}</span>
+    <div class="content">
+      <div class="ui vertical segment">
+          <div class="ui text vertical segment seg">
+            <p><strong>Street address</strong></p>
+            <span class="place-detail">{{streetAddress}}</span>
+          </div>
 
-            </div>
-        </div>
+          <div class="ui text vertical segment seg">
+            <p><strong>Amount</strong></p>
+            <span class="place-detail">{{investmentsRel}}</span>
+          </div>
       </div>
     </div>
+  </div>
 </div>
-<div class="ui vertical segment">
 
+<div class="ui vertical segment">
   <div class="ui accordion">
     <div class="active title">
-
       <h3>Attributes <i class="dropdown icon"></i></h3>
     </div>
-
 
     <div class="active content">
       <div class="ui vertical segment">
@@ -36,129 +33,131 @@
             <p><strong>Feature type</strong></p>
             <span class="place-detail">{{featureType}}</span>
           </div>
-          {{/if}}
-          {{#if featureSubType}}
+        {{/if}}
+
+        {{#if featureSubType}}
           <div class="ui text vertical segment seg">
             <p><strong>Feature sub-type</strong></p>
             <span class="place-detail">{{featureSubType}}</span>
           </div>
-          {{/if}}
+        {{/if}}
 
-          {{#if open_on}}
+        {{#if open_on}}
           <div class="ui text vertical segment seg">
             <p><strong>Open and close dates</strong></p>
-              <span class="place-detail"><strong>Opened </strong>{{open_on}}</span>
-            </div>
-            {{/if}}
-            {{#if close_on}}
-          <div class="ui text vertical segment seg">
-              <span class="place-detail"><strong>Closed </strong>{{close_on}}</span>
+            <span class="place-detail"><strong>Opened</strong>{{open_on}}</span>
           </div>
-          {{/if}}
+        {{/if}}
 
-          {{#if is_employer}}
+        {{#if close_on}}
+          <div class="ui text vertical segment seg">
+            <p><strong>Open and close dates</strong></p>
+            <span class="place-detail"><strong>Closed</strong>{{close_on}}</span>
+          </div>
+        {{/if}}
+
+        {{#if is_employer}}
           <div class="ui text vertical segment seg">
             <p><strong>Is this feature an employer?</strong></p>
             <span class="place-detail">{{is_employer}}</span>
           </div>
-          {{/if}}
-          {{#if isActivating}}
+        {{/if}}
+
+        {{#if isActivating}}
           <div class="ui text vertical segment seg">
             <p><strong>Does this feature activate the street nearby?</strong></p>
             <span class="place-detail">{{isActivating}}</span>
           </div>
-          {{/if}}
+        {{/if}}
 
-          {{#if isContributing}}
+        {{#if isContributing}}
           <div class="ui text vertical segment seg">
             <p><strong>Does this feature contribute to goals of the TDI program?</strong></p>
             <span class="place-detail">{{isContributing}}</span>
           </div>
-          {{/if}}
-          {{#if isEngaged}}
+        {{/if}}
+
+        {{#if isEngaged}}
           <div class="ui text vertical segment seg">
             <p><strong>Is the owner of this feature engaged with the TDI program or other community activities?</strong></p>
             <span class="place-detail">{{isEngaged}} {{engagedFrom}}</span>
           </div>
-          {{/if}}
-
-
-
-        </div>
+        {{/if}}
+      </div>
     </div>
   </div>
 </div>
-  <div class="ui vertical segment">
-    <div class="ui accordion">
-
-    <div class="title">
-      <h3>Documents and Links <i class="dropdown icon"></i></h3>
-    </div>
-    <div class="content">
-      {{#if relDocument}}
-      <div class="ui text vertical segment seg">
-        <p><strong>Related documents</strong></p>
-        <span class="place-detail"></span>
-      </div>
-      {{/if}}
-
-        {{#if moreInfoLinkDesc}}
-        <p>For more info visit:</p>
-        <div class="ui text vertical segment seg">
-
-      <span class="place-detail"><a href={{moreInfoLinkUrl}} target="_blank">{{moreInfoLinkDesc}}</a></span>
-    </div>
-      {{/if}}
-    </div>
-</div>
-  </div>
-
-
-
-  <div class="ui vertical segment">
-    <div class="ui accordion">
-
-    <div class="title">
-      <h3>Contacts <i class="dropdown icon"></i></h3>
-    </div>
-    <div class="content">
-      {{#if contactName}}
-      <div class="ui text vertical segment seg">
-        <p>Owner name </p>
-        <span class="place-detail">{{contactName}}</span>
-      </div>
-      {{/if}}
-      {{#if contactTitle}}
-      <div class="ui text vertical segment seg">
-        <p>Owner title </p>
-        <span class="place-detail">{{contactTitle}}</span>
-      </div>
-      {{/if}}
-      {{#if ownerPhone}}
-      <div class="ui text vertical segment seg">
-        <p>Owner phone </p>
-        <span class="place-detail">{{ownerPhone}}</span>
-      </div>
-      {{/if}}
-      {{#if ownerEmail}}
-        <div class="ui text vertical segment seg">
-          <p>Owner email </p>
-        <span class="place-detail">{{ownerEmail}}</span>
-      </div>
-      {{/if}}
-
-    </div>
-</div>
-  </div>
 
 <div class="ui vertical segment">
   <div class="ui accordion">
+    <div class="title">
+      <h3>Documents and Links <i class="dropdown icon"></i></h3>
+    </div>
 
-  <div class="title">
-    <h3>Notes<i class="dropdown icon"></i></h3>
-  </div>
-  <div class="content">
-    <span class="place-detail">{{notes}}</span>
+    <div class="content">
+      {{#if relDocument}}
+        <div class="ui text vertical segment seg">
+          <p><strong>Related documents</strong></p>
+          <span class="place-detail"></span>
+        </div>
+      {{/if}}
+
+      {{#if moreInfoLinkDesc}}
+        <p>For more info visit:</p>
+        <div class="ui text vertical segment seg">
+          <span class="place-detail"><a href={{moreInfoLinkUrl}} target="_blank">{{moreInfoLinkDesc}}</a></span>
+        </div>
+      {{/if}}
+    </div>
   </div>
 </div>
+
+<div class="ui vertical segment">
+  <div class="ui accordion">
+    <div class="title">
+      <h3>Contacts <i class="dropdown icon"></i></h3>
+    </div>
+
+    <div class="content">
+      {{#if contactName}}
+        <div class="ui text vertical segment seg">
+          <p>Owner name </p>
+          <span class="place-detail">{{contactName}}</span>
+        </div>
+      {{/if}}
+
+      {{#if contactTitle}}
+        <div class="ui text vertical segment seg">
+          <p>Owner title </p>
+          <span class="place-detail">{{contactTitle}}</span>
+        </div>
+      {{/if}}
+
+      {{#if ownerPhone}}
+        <div class="ui text vertical segment seg">
+          <p>Owner phone </p>
+          <span class="place-detail">{{ownerPhone}}</span>
+        </div>
+      {{/if}}
+
+      {{#if ownerEmail}}
+        <div class="ui text vertical segment seg">
+          <p>Owner email </p>
+          <span class="place-detail">{{ownerEmail}}</span>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+<div class="ui vertical segment">
+  <div class="ui accordion">
+    <div class="title">
+      <h3>Notes<i class="dropdown icon"></i></h3>
+    </div>
+
+    <div class="content">
+      <span class="place-detail">{{notes}}</span>
+    </div>
+  </div>
 </div>

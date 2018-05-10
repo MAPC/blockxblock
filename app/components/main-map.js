@@ -7,7 +7,7 @@ const { alias } = Ember.computed;
 
 export default Ember.Component.extend({
   currentCity: Ember.inject.service(),
-  classNames: ['main-map'],
+  classNames: ['component', 'main-map'],
 
   choroplethLayer: 'Available Spaces',
   parcelsChoroplethMapping: computed('visibleParcels', 'currentCity.choroplethLayer', function() {
@@ -26,14 +26,11 @@ export default Ember.Component.extend({
       }
     }
   }),
-  zoom: Ember.computed.alias('currentCity.zoom'),
-  lat: Ember.computed.alias('currentCity.latitude'),
-  lng: Ember.computed.alias('currentCity.longitude'),
   city: Ember.computed.alias('currentCity.city'),
   maxZoom: 20,
   maxNativeZoom: 18,
-  maxClusterRadius: 35,
-  disabledClusteringAtZoom: 17,
+  maxClusterRadius: 25,
+  disableClusteringAtZoom: 17,
 
   basemap: 'default', 
 

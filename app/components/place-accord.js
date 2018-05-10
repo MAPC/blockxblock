@@ -29,12 +29,6 @@ export default Ember.Component.extend({
   open_on: alias('model.open_on'),
   close_on: alias('model.close_on'),
 
-  totalInvestments: Ember.computed('currentCity', function() {
-    let m = this.get('model')
-
-    return 0;
-  }),
-
   didInsertElement() {
     Ember.run.schedule('afterRender', this, function(){
       this.$('.ui.accordion').accordion();

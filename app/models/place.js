@@ -62,12 +62,10 @@ export default DS.Model.extend({
   timely: Ember.computed(...timelyAttributes.map(a => `${a}.[]`), 'currentCity.timelineDate', function() {
     const date = this.get('currentCity.timelineDate');
 
-    const timelyValues = timelyAttributes.reduce((attrs, attr) => {
+    return timelyAttributes.reduce((attrs, attr) => {
       attrs[attr] = getTimelySnapshot(date, this.get(attr) || []);
       return attrs;
     }, {});
-
-    return Ember.Object.extend(timelyValues);
   }),
 
   // aliases
@@ -76,56 +74,40 @@ export default DS.Model.extend({
   feature_type: alias('type'),
 
   // computeds
-  is_employer: Ember.computed('employment', function() {
-    return this.get('employment.firstObject.value') != 0;
+  is_employer: Ember.computed('timely.employment.value', function() {
+    return this.get('timely.employment.value') != 0;
   }),
-  is_activating: Ember.computed('activating', function() {
-    return this.get('activating.firstObject.value') == true;
+  is_activating: Ember.computed('timely.activating.value', function() {
+    return this.get('timely.activating.value') == true;
   }),
-  is_tdiasset: Ember.computed('tdi_asset', function() {
-    return this.get('tdi_asset.firstObject.value') == true;
+  is_tdiasset: Ember.computed('timely.tdi_asset.value', function() {
+    return this.get('timely.tdi_asset.value') == true;
   }),
-  is_engaged: Ember.computed('engaged_owner', function() {
-    return this.get('engaged_owner.firstObject.value') == true;
+  is_engaged: Ember.computed('timely.engaged_owner.value', function() {
+    return this.get('timely.engaged_owner.value') == true;
   }),
-  engaged_from: Ember.computed('engaged_owner', function() {
-    if (this.get('engaged_owner.firstObject.value') == true){
-      return this.get('engaged_owner.firstObject.date');
+  is_community_hub: Ember.computed('timely.community_hub.value', function() {
+    return this.get('timely.community_hub.value') == true;
+  }),
+  engaged_from: Ember.computed('timely.engaged_owner', function() {
+    if (this.get('timely.engaged_owner.value') == true){
+      return this.get('timely.engaged_owner.date');
     } else {
       return '';
     }
   }),
-  more_info_link_url: Ember.computed('link_url', function() {
-    return this.get('link_url');
-  }),
-  more_info_link_desc: Ember.computed('link_description', function() {
-    return this.get('link_description');
-  }),
-  is_community_hub: Ember.computed('community_hub', function() {
-    return this.get('community_hub.firstObject.value') == true;
-  }),
-  open_on: Ember.computed('status', function() {
-    if (this.get('status.firstObject.value') == 'Open'){
-      return this.get('status.firstObject.date');
-    } else if (this.get('status.secondObject.value') == 'Open'){
-      return this.get('status.secondObject.date');
+  open_on: Ember.computed('timely.status', function() {
+    if (this.get('timely.status.value') == 'Open'){
+      return this.get('timely.status.date');
     }
   }),
-  close_on: Ember.computed('status', function() {
-    if (this.get('status.firstObject.value') == 'Closed'){
-      return this.get('status.firstObject.date');
-    } else if (this.get('status.secondObject.value') == 'Closed'){
-      return this.get('status.secondObject.date');
+  close_on: Ember.computed('timely.status', function() {
+    if (this.get('timely.status.value') == 'Closed'){
+      return this.get('timely.status.date');
     }
   }),
-  iconUrl: Ember.computed('feature_type', function() {
-    let featureType = this.get('feature_type').dasherize().replace('/', '');
-    return `${config.prepend ? config.prepend : '/'}images/icons/features/${featureType}.png`;
-  }),
-  iconWatermarkUrl: Ember.computed('feature_type', function() {
-    let featureType = this.get('feature_type').dasherize().replace('/', '');
-    return `${config.prepend ? config.prepend : '/'}images/icons/features/filters/${featureType}.png`;
-  }),
+  // TODO Implement timely investment values to filter related investments
+  // by valid investment status date.
   investmentAmount: Ember.computed('investments.[]', function(){
     let investments_rel = this.get('investments').mapBy('estimated_amount');
     let amount_t = 0;
@@ -135,6 +117,20 @@ export default DS.Model.extend({
       }
     })
     return amount_t;
+  }),
+  more_info_link_url: Ember.computed('link_url', function() {
+    return this.get('link_url');
+  }),
+  more_info_link_desc: Ember.computed('link_description', function() {
+    return this.get('link_description');
+  }),
+  iconUrl: Ember.computed('feature_type', function() {
+    let featureType = this.get('feature_type').dasherize().replace('/', '');
+    return `${config.prepend ? config.prepend : '/'}images/icons/features/${featureType}.png`;
+  }),
+  iconWatermarkUrl: Ember.computed('feature_type', function() {
+    let featureType = this.get('feature_type').dasherize().replace('/', '');
+    return `${config.prepend ? config.prepend : '/'}images/icons/features/filters/${featureType}.png`;
   }),
   splash: Ember.computed('latitude,longitude', function() {
     let { latitude, longitude } = this.getProperties('latitude', 'longitude');

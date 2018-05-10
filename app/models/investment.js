@@ -71,10 +71,11 @@ export default DS.Model.extend({
     }, {});
   }),
 
+  // aliases
+  investment_status_latest: alias('timely.investment_status.value'),
+  investment_status_val: alias('timely.investment_status.value'),
+
   // computeds
-  investment_status_latest: Ember.computed('timely.investment_status.value', function() {
-    return this.get('timely.investment_status.value');
-  }),
   iconUrl: Ember.computed('source_type', 'investment_type', function() {
     let { source_type, investment_type } = this.getProperties('source_type', 'investment_type');
     return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${mapTypes(investment_type).dasherize()}.png`;
@@ -85,9 +86,6 @@ export default DS.Model.extend({
     return `${config.prepend ? config.prepend : '/'}images/icons/investments/${source_type.decamelize()}/${mapTypes(investment_type).dasherize()}.png`;
   }),
 
-  investment_status_val: Ember.computed('timely.investment_status.value',function(){
-    return this.get('timely.investment_status.value');
-  }),
 
   investmentAmountEst: Ember.computed('estimated_amount','exact_amount',function(){
     let { estimated_amount, exact_amount } = this.getProperties('estimated_amount','exact_amount')

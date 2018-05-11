@@ -1,0 +1,30 @@
+.route.index {
+
+  ul {
+    max-width: 750px;
+    margin: 0 auto 50px;
+
+    text-align: left;
+
+    list-style: none; 
+  }
+
+  li {
+    display: flex;
+
+    margin: 20px auto; 
+
+    label {
+      flex: 1 0 25%; 
+
+      font-weight: 800;
+    }
+
+    p {
+      flex: 1 0 75%;
+
+      padding-left: 20px;
+    }
+  }
+
+}

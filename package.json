@@ -46,6 +46,7 @@
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
     "ember-scroll-to": "^0.6.4",
+    "ember-simple-auth": "^1.6.0",
     "ember-source": "~2.15.0",
     "ember-string-helpers": "^1.0.2",
     "ember-transition-helper": "^0.0.6",

@@ -151,7 +151,7 @@ module.exports = function(environment) {
       enabled: false
     }
 
-    ENV.secretService = 'http://localhost:3000/';
+    ENV.secretService = 'http://localhost:6000/';
   }
 
   if (environment === 'test') {

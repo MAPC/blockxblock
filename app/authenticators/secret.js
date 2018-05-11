@@ -11,7 +11,10 @@ export default Base.extend({
   },
 
   authenticate(secret) {
-    return this.get('ajax').post(config.secretService, { secret });
+    return this.get('ajax').request('/', { 
+      host: config.secretService, 
+      data: { secret },
+    });
   },
 
   invalidate(data) {

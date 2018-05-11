@@ -20,6 +20,10 @@ module.exports = function(deployTarget) {
   }
 
   if (deployTarget === 'production') {
+    ENV.rsync = {
+      dest: 'blockxblock@live.mapc.org:/var/www/blockxblock',
+      delete: false,
+    };
   }
 
   return ENV;

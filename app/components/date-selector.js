@@ -11,7 +11,7 @@ export default Ember.Component.extend({
       return [...Array(12).keys()].map(i => String(++i >= 10 ? i : `0${i}`));
     }
     else { // year
-      const startYear = this.get('startYear') || 2010;
+      const startYear = this.get('startYear') || 2013;
       const endYear = (new Date()).getFullYear();
       const range = Math.abs(startYear - endYear) + 1; // Inclusive year range
 

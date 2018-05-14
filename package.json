@@ -41,7 +41,7 @@
     "ember-composable-helpers": "^2.1.0",
     "ember-data": "~2.15.0",
     "ember-export-application-global": "^2.0.0",
-    "ember-leaflet": "^3.0.13",
+    "ember-leaflet": "ericyoungberg/ember-leaflet#master",
     "ember-leaflet-marker-cluster": "^0.2.0",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",

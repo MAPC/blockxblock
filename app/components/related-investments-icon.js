@@ -7,7 +7,6 @@ export default Ember.Component.extend({
   currentCity: Ember.inject.service(),
 
   showInvestments: true,
-  _rendered: null,
 
   icons: Ember.computed('feature.investments.[]', 'currentCity.visibleInvestments.[]', function() {
     const feature = this.get('feature');
@@ -44,20 +43,12 @@ export default Ember.Component.extend({
     const feature = this.get('feature');
     const icons = this.get('icons');
 
-    const rendered = `
+    return `
       <div class="ui mini images">
         <img src="${feature.get('iconUrl').dasherize()}"/>
         ${showInvestments ? icons : ''}
       </div>
     `;
-
-    if (icons.length > 0) {
-      this.set('_rendered', rendered);
-      return rendered;
-    }
-    else {
-      return this.get('_rendered');
-    }
   }),
 
 });

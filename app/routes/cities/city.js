@@ -20,7 +20,7 @@ export default Ember.Route.extend({
           'investment',
           {
             city: city.get('name'),
-            include: 'id,record_url,investment_id,source_type,place_id,city,use_type,investment_status,estimated_amount,investment_descriptor'
+            include: 'id,record_url,investment_id,source_type,place_id,city,use_type,investment_status,estimated_amount,investment_descriptor,tdi_influence'
           }
         ),
       parcels: this.store.query(

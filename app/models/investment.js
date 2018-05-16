@@ -144,12 +144,14 @@ export const INVESTMENT_FILTERS_CONFIG =
   },
   {
     property: 'tdi_influence',
-    filter: 'tdi_influence',
+    filter: 'is_tdi_influenced',
     filterType: 'isTrue'
   },
+  /*
   {
     property: 'investment_status',
     filter: 'timelineDate',
     filterType: 'isTimely',
   },
+  */
 ];

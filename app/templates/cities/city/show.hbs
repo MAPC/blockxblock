@@ -75,6 +75,11 @@
       </div>
       <div class="active content">
         <div class="ui basic segment">
+          {{ui-checkbox
+            label='TDI Influenced'
+            class="item"
+            checked=currentCity.is_tdi_influenced
+            onChange=(action (mut currentCity.is_tdi_influenced (not currentCity.is_tdi_influenced)))}}
           <h4 class="ui header">
             Investment Types
           </h4>
@@ -94,13 +99,6 @@
                 </div>
               {{/each}}
             </div>
-            {{#if session.isAuthenticated}}
-              {{ui-checkbox
-                label='TDI Influenced'
-                class="item"
-                checked=currentCity.is_tdi_influenced
-                onChange=(action (mut currentCity.is_tdi_influenced (not currentCity.is_tdi_influenced)))}}
-            {{/if}}
           </div>
           <h4 class="ui header">
             Investment Statuses

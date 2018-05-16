@@ -8,14 +8,24 @@ export default Ember.Component.extend({
     const { startValue, scope } = this.getProperties('startValue', 'scope');
 
     if (scope === 'month') {
-      return [...Array(12).keys()].map(i => String(++i >= 10 ? i : `0${i}`));
+      const months = [];
+      for (let i = 0; i < 12;) {
+        months.push(String(++i >= 10 ? i : `0${i}`));
+      }
+
+      return months;
     }
     else { // year
       const startYear = this.get('startYear') || 2013;
       const endYear = (new Date()).getFullYear();
       const range = Math.abs(startYear - endYear) + 1; // Inclusive year range
 
-      return [...Array(range).keys()].map(i => String(startYear + i));
+      const years = [];
+      for (let i = 0; i < range; i++) {
+        years.push(String(startYear + i));
+      }
+
+      return years;
     }
   }),
 

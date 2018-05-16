@@ -44,6 +44,8 @@
     border: none;
     outline: none;
     transition: color $trans_dur;
+
+    option { color: $color_font-dark; }
   }
 
   &:hover {

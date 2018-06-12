@@ -17,6 +17,7 @@ const timelyAttributes = [
 export default DS.Model.extend({
 
   currentCity: Ember.inject.service(),
+  place_id: DS.attr('string'),
 
   name: DS.attr('string'),
   latitude: DS.attr('number'),
@@ -25,7 +26,8 @@ export default DS.Model.extend({
   address: DS.attr('string'),
   description: DS.attr('string'),
   is_in_district: DS.attr('boolean'),
-  type: DS.attr('string'),
+  place_type: DS.attr('string'),
+  type: Ember.computed.alias('place_type'),
   subtype: DS.attr('string'),
   tdi_asset_start: DS.attr('date'),
   engaged_owner_start: DS.attr('date'),

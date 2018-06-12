@@ -13,7 +13,7 @@ export default Ember.Route.extend({
           'place',
           {
             city: city.get('name'),
-            include: 'status,latitude,longitude,type,subtype,description,city,investments,employment,activating,community_hub,name,location_type'
+            include: 'id,place_id,status,latitude,longitude,place_type,subtype,description,city,investments,employment,activating,community_hub,name,location_type'
           }
         ),
       investments: this.store.query(

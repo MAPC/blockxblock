@@ -34,6 +34,8 @@ export function getFilter(context, enumerable, config) {
     });
   }
 
+  console.log(enumerable, models);
+
   return models;
 }
 

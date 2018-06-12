@@ -2,6 +2,8 @@ import DS from 'ember-data';
 
 export default DS.JSONSerializer.extend({
   normalizeResponse(store, primaryModelClass, payload, id, requestType) {
+    console.log(payload, primaryModelClass);
+
     if(requestType === 'query') {
       payload.forEach(record => {
         if (record.city) {

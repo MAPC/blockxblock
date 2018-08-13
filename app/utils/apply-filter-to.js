@@ -26,15 +26,13 @@ export function getFilter(context, enumerable, config) {
       }
 
       let property = propertyConfig.property;
-      
+
       models = models.filter(
         (filterFactory(filterType))
         .bind(context, filter, property)
       );
     });
   }
-
-  console.log(enumerable, models);
 
   return models;
 }

@@ -6,7 +6,6 @@ export default Ember.Component.extend({
       // let model = this.get("model");
       // let streetAddress = this.get("streetAddress")
       // let addrs = model.get(streetAddress);
-      // console.log(model,streetAddress,addrs)
 
       this.$('.ui.accordion').accordion();
     });

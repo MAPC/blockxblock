@@ -2,8 +2,6 @@ import DS from 'ember-data';
 
 export default DS.JSONSerializer.extend({
   normalizeResponse(store, primaryModelClass, payload, id, requestType) {
-    console.log(payload, primaryModelClass);
-
     if(requestType === 'query') {
       payload.forEach(record => {
         if (record.city) {
@@ -37,7 +35,7 @@ export default DS.JSONSerializer.extend({
         payload.investments = payload.investments.map(inv=>inv.id);
       }
     }
-    
+
     return this._super(store, primaryModelClass, payload, id, requestType);
   },
 });
